@@ -8,10 +8,11 @@ const works = [
     id: '01', c: '#8CCFF8', n: 'LeadWin', t: ['SaaS', 'Lead management'], kind: 'Web app + marketing site', at: 'Never Before Italia', status: 'Live, used by client companies', ai: true,
     url: 'https://leadwin.it', extra: { id: '01-site', label: 'Marketing site' }, label: 'Product',
     sum: 'A lead management platform for companies that advertise on Meta and Google: leads land in real time, get routed into pipelines, scored and assigned to sales agents, who follow up on WhatsApp and book appointments in the same place.',
-    role: ['Product and UI design', 'Front-end development', 'Integrations: Meta, Google Ads, WhatsApp, Google Calendar', 'Marketing site, design and build'],
-    stack: ['React', 'TypeScript', 'Vite', 'Tailwind', 'Supabase (Postgres, Edge Functions)', 'Make.com', 'Meta Graph API', 'Google Ads API', 'MCP'],
+    role: ['Product and UI design', 'Front-end development', 'Meta developer: the LeadWin Meta app (official Tech Provider)', 'Integrations: Google Ads, Google Calendar, Make.com', 'Marketing site, design and build'],
+    stack: ['React', 'TypeScript', 'Vite', 'Tailwind', 'Supabase (Postgres, Edge Functions)', 'Make.com', 'Meta Graph API', 'Meta Lead Ads', 'WhatsApp Business Platform', 'Google Ads API', 'MCP'],
     points: [
       ['AI where the work happens', '"Ask Leady" answers questions about your own leads with your permissions, a WhatsApp agent qualifies contacts and books visits, and a read-only MCP server lets clients query their data from Claude or ChatGPT.'],
+      ['Meta developer', 'I built and maintain the LeadWin Meta app: Facebook Login, Lead Ads webhooks routed to the right client by Page, ad insights and the WhatsApp Business Platform with Embedded Signup, so a client connects everything in a few clicks. LeadWin is an official Meta Tech Provider.'],
       ['Built for the sales floor', 'Pipelines, lead scoring (hot / warm / cold), a team calendar with conflict-free booking and an inbox for WhatsApp, so agents never leave the app.'],
       ['A marketing site that loads fast', 'Static site, 95–100 on mobile Lighthouse, structured data and an llms.txt, so both search engines and AI assistants can read it.'],
     ],
