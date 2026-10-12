@@ -97,7 +97,7 @@ const EDITOR = {
   if (EDITOR.edit) document.querySelectorAll('[data-editable]').forEach(el => {
     const html = el.innerHTML;
     let timer;
-    el.title = 'Doppio clic per modificare';
+    el.title = 'Double-click to edit';
     el.addEventListener('dblclick', () => {
       clearTimeout(timer);
       el.contentEditable = 'true'; el.focus();
@@ -114,7 +114,7 @@ const EDITOR = {
   // ---------- ispeziona ----------
   if (EDITOR.inspect) {
     const box = document.createElement('div'); box.className = 'ins-box'; box.innerHTML = '<span></span>';
-    const pill = document.createElement('div'); pill.className = 'ins-pill'; pill.textContent = 'Ispeziona · clicca un elemento · Esc per uscire';
+    const pill = document.createElement('div'); pill.className = 'ins-pill'; pill.textContent = 'Inspect · click an element · Esc to exit';
     const panel = document.createElement('aside'); panel.className = 'ins-panel'; panel.setAttribute('aria-live', 'polite');
     document.body.append(box, pill, panel);
     document.querySelectorAll('[data-inspect-toggle]').forEach(b => b.hidden = false); // il bottone compare solo se la funzione è accesa
@@ -124,7 +124,7 @@ const EDITOR = {
     const hex = c => {
       const m = c.match(/[\d.]+/g);
       if (!m) return c;
-      if (m[3] === '0') return 'trasparente';
+      if (m[3] === '0') return 'transparent';
       return '#' + m.slice(0, 3).map(v => (+v).toString(16).padStart(2, '0')).join('').toUpperCase() + (m[3] ? ` · ${Math.round(m[3] * 100)}%` : '');
     };
     const frame = () => {
@@ -137,16 +137,16 @@ const EDITOR = {
       const s = getComputedStyle(el), r = el.getBoundingClientRect();
       const sw = c => `<i style="background:${c}"></i>${hex(c)}`;
       const rows = [
-        ['elemento', name(el)],
-        ['misure', `${Math.round(r.width)} × ${Math.round(r.height)}`],
+        ['element', name(el)],
+        ['size', `${Math.round(r.width)} × ${Math.round(r.height)}`],
         ['font', `${s.fontFamily.split(',')[0].replace(/["']/g, '')} ${s.fontWeight} · ${parseFloat(s.fontSize)}px`],
-        ['colore', sw(s.color)],
-        ['sfondo', sw(s.backgroundColor)],
+        ['color', sw(s.color)],
+        ['background', sw(s.backgroundColor)],
         ['padding', s.padding],
         ['margin', s.margin],
-        ['raggio', s.borderRadius],
+        ['radius', s.borderRadius],
       ];
-      panel.innerHTML = `<header><span>Ispeziona</span><button type="button" data-ins-close>Chiudi</button></header><dl>${rows.map(([k, v]) => `<div><dt>${k}:</dt><dd>${v}</dd></div>`).join('')}</dl>`;
+      panel.innerHTML = `<header><span>Inspect</span><button type="button" data-ins-close>Close</button></header><dl>${rows.map(([k, v]) => `<div><dt>${k}:</dt><dd>${v}</dd></div>`).join('')}</dl>`;
       panel.classList.add('open');
     };
     const toggle = v => {
@@ -176,10 +176,10 @@ const EDITOR = {
   if (EDITOR.breakpoints && track) {
     const now = document.getElementById('bpNow'), label = document.getElementById('bpNowLabel');
     const pv = document.createElement('div'); pv.className = 'bp-preview'; pv.setAttribute('aria-hidden', 'true');
-    pv.innerHTML = '<iframe title="Anteprima della home" tabindex="-1"></iframe>';
+    pv.innerHTML = '<iframe title="Home preview" tabindex="-1"></iframe>';
     track.append(pv);
     const frameEl = pv.firstChild;
-    const names = [[390, 'Telefono'], [768, 'Tablet'], [1024, 'Laptop'], [1440, 'Desktop']];
+    const names = [[390, 'Phone'], [768, 'Tablet'], [1024, 'Laptop'], [1440, 'Desktop']];
     let timer;
     const set = w => {
       const s = track.clientWidth / 1440;

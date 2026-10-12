@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="it">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Antonio Nocella — Web developer e UI designer</title>
-<meta name="description" content="Portfolio e CV di Antonio Nocella, web developer e UI designer a Bari: dieci anni in agenzia tra siti aziendali, e-commerce, configuratori 3D, automazioni e integrazioni AI.">
+<title>Antonio Nocella — UX/UI designer</title>
+<meta name="description" content="Portfolio of Antonio Nocella, UX/UI designer: SaaS products, mobile apps, configurators and websites, designed and built with AI in the loop.">
 <meta name="author" content="Antonio Nocella">
 <meta name="theme-color" content="#050505">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -259,6 +259,25 @@
   .to-top { width: var(--blk); padding: 0; }
   .legal { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-top: 56px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--muted); }
 
+
+  /* anteprime video: come le foto, riempiono il riquadro; le app verticali stanno intere su fondo scuro */
+  .ph > video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 0; }
+  .ph:has(> video)::after { content: none; }
+  .ph.tall { background: #0B0B0C; }
+  .ph.tall > video, .ph.tall > img { object-fit: contain; object-position: 50% 50%; }
+  .pin .sum { color: var(--soft); font-size: 16px; line-height: 1.45; margin-top: 16px; max-width: 54ch; }
+
+  /* ---------- AI nel metodo: passi come righe di un pannello ---------- */
+  .flow { list-style: none; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 8px clamp(20px, 3vw, 40px); }
+  .flow li { display: grid; grid-template-columns: 64px 1fr; gap: 16px; padding: 22px 0; border-top: 1px solid var(--line); }
+  .flow li:first-child { border-top: 0; }
+  .flow b { color: var(--accent); font-size: 30px; font-weight: 500; letter-spacing: -0.05em; line-height: 1; font-variant-numeric: tabular-nums; }
+  .flow strong { display: block; font-size: 21px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.15; }
+  .flow p { color: var(--soft); font-size: 16px; margin-top: 6px; max-width: 52ch; }
+  .ai-in { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 24px; }
+  .ai-in a { font-family: var(--pixel); font-size: 17px; text-transform: uppercase; letter-spacing: .04em; color: var(--soft); padding: 2px 10px; border: 1px solid var(--line); border-radius: 999px; }
+  .ai-in a:hover { color: var(--fg); border-color: var(--accent); }
+
   /* ---------- responsive ---------- */
   @media (max-width: 1100px) {
     .thumbs { display: none; }
@@ -280,6 +299,7 @@
     .strip > div { padding: 8px 10px; }
     .pin { grid-template-columns: 1fr; }
     .pin .media { aspect-ratio: 16 / 9; }
+    .pin .sum { display: none; }
     .buyrow { flex-wrap: wrap; margin-top: 18px; }
     .pin .actions { width: 100%; }
     .pin .actions .blk { flex: 1; }
@@ -289,13 +309,14 @@
     .hero-grid { position: relative; inset: auto; grid-template-columns: 1fr; grid-template-rows: none; row-gap: 28px; padding-top: 110px; }
     .hero-grid .side { grid-column: 1; grid-row: auto; justify-self: stretch; width: 100%; padding-top: 0; }
     .hero-cta { grid-row: auto; margin-top: 0; }
+    .sel { margin-bottom: 26px; } /* la misura sotto il titolo non tocca il paragrafo */
     .hero-cta .blk { width: 100%; }
     .numbers { grid-template-columns: repeat(2, 1fr); }
     .numbers > div + div { border-left: 0; }
     .numbers > div:nth-child(even) { border-left: 1px solid var(--line); }
     .numbers > div:nth-child(n+3) { border-top: 1px solid var(--line); }
     .method-grid, .faq-grid { grid-template-columns: 1fr; }
-    .method .media { min-height: 340px; }
+    .flow li { grid-template-columns: 48px 1fr; }
     .services { grid-template-columns: 1fr; }
     .foot-grid > :last-child { grid-column: 1 / -1; }
   }
@@ -315,84 +336,83 @@
 </head>
 <body>
 
-<div class="announce px">Disponibile per nuove esperienze nel digitale<a href="#contatti">Scrivimi</a></div>
+<div class="announce px">Open to new roles in product design<a href="#contact">Get in touch</a></div>
 
 <header class="hdr" id="hdr">
   <a href="#" class="brand" aria-label="Antonio Nocella, home">
     <span class="word">Antonio Nocella</span>
   </a>
-  <nav class="thumbs" id="thumbs" aria-label="Lavori in vetrina"></nav>
+  <nav class="thumbs" id="thumbs" aria-label="Featured projects"></nav>
   <div class="cluster">
-    <button class="blk blk-dark" id="contactBtn">Contatti</button>
-    <button class="blk blk-light" id="workBtn">Lavori <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 8h16M4 16h10"/></svg></button>
+    <button class="blk blk-dark" id="contactBtn">Contact</button>
+    <button class="blk blk-light" id="workBtn">Work <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 8h16M4 16h10"/></svg></button>
   </div>
 </header>
 
 <div class="scrim" id="scrim"></div>
 
-<aside class="drawer" id="workDrawer" aria-label="Tutti i lavori" aria-hidden="true">
-  <header><span class="px">Portfolio · 14 lavori</span><button class="close" data-close>Chiudi</button></header>
+<aside class="drawer" id="workDrawer" aria-label="All projects" aria-hidden="true">
+  <header><span class="px" id="workCount">Portfolio</span><button class="close" data-close>Close</button></header>
   <div class="body work-list" id="workList"></div>
-  <footer><a href="#lavori" class="blk blk-light" data-close>Vedi i 5 in vetrina <span>→</span></a></footer>
+  <footer><a href="#work" class="blk blk-light" data-close>Back to the showcase <span>→</span></a></footer>
 </aside>
 
-<aside class="drawer" id="contactDrawer" aria-label="Contatti" aria-hidden="true">
-  <header><span class="px">Contatti</span><button class="close" data-close>Chiudi</button></header>
+<aside class="drawer" id="contactDrawer" aria-label="Contact" aria-hidden="true">
+  <header><span class="px">Contact</span><button class="close" data-close>Close</button></header>
   <div class="body contact-list">
     <a class="line-item" href="mailto:antonio.nocella3@gmail.com"><div><strong>antonio.nocella3@gmail.com</strong><span class="px px-muted">Email</span></div><span class="px">↗</span></a>
-    <div class="line-item"><div><strong>Adelfia, Bari</strong><span class="px px-muted">Lavoro anche da remoto</span></div><span class="px">ITA</span></div>
+    <div class="line-item"><div><strong>Adelfia, Bari</strong><span class="px px-muted">Italy · also available remotely</span></div><span class="px">IT</span></div>
   </div>
-  <footer><a href="mailto:antonio.nocella3@gmail.com" class="blk blk-light">Scrivimi <span>→</span></a></footer>
+  <footer><a href="mailto:antonio.nocella3@gmail.com" class="blk blk-light">Write to me <span>→</span></a></footer>
 </aside>
 
 <main>
-  <!-- HERO -->
+  <!-- HERO (senza ASCII, per ora) -->
   <section class="hero shade">
-    <canvas class="asc" data-ascii="hot" aria-hidden="true"></canvas>
     <div class="hero-grid">
       <div class="title">
         <span class="px" id="coords">X 0 · Y 0 · 1440 × 900 · Adelfia, Bari</span>
         <div class="sel" data-resize="scale">
-          <h1 data-editable>Web developer<br>e UI designer.</h1>
+          <h1 data-editable>UX/UI designer<br>who ships.</h1>
           <span class="sel-tag" aria-hidden="true">H1 · Geist 600</span>
           <span class="sel-size" data-size aria-hidden="true"></span>
           <i></i><i></i><i></i><i></i>
         </div>
       </div>
       <div class="side">
-        <p>Sono Antonio Nocella: dieci anni in agenzia tra siti aziendali, e-commerce, configuratori 3D, automazioni e integrazioni AI. Oggi in Never Before Italia, disponibile per una nuova esperienza.</p>
+        <p>I'm Antonio Nocella. For ten years I've designed digital products in agencies and built them myself: SaaS platforms, mobile apps, configurators, websites. Today AI is part of every step, from the first spec to the code in production.</p>
         <article class="feature-box">
-          <div class="ph" data-label="Foto" id="fbPic"></div>
+          <div class="ph" data-label="Preview" id="fbPic"></div>
           <div class="fb-body">
-            <span class="fb-kicker" id="fbKicker">Ultimo lavoro · 14</span>
-            <strong id="fbName">Blackshape</strong>
-            <div class="fb-row"><span class="px px-muted" id="fbTags">Web · Aeronautica</span><a href="progetto.html?id=14" class="blk blk-light" id="fbLink">Scheda <span>↗</span></a></div>
+            <span class="fb-kicker" id="fbKicker">Featured · 01</span>
+            <strong id="fbName"></strong>
+            <div class="fb-row"><span class="px px-muted" id="fbTags"></span><a href="progetto.html?id=01" class="blk blk-light" id="fbLink">Case <span>↗</span></a></div>
           </div>
         </article>
       </div>
-      <div class="hero-cta"><a href="#lavori" class="blk blk-accent">Guarda i lavori <span>↓</span></a></div>
+      <div class="hero-cta"><a href="#work" class="blk blk-accent">See the work <span>↓</span></a></div>
     </div>
   </section>
 
 
   <!-- LAVORI -->
-  <section class="showcase" id="lavori">
+  <section class="showcase" id="work">
     <div class="bg" id="bg" aria-hidden="true"></div>
     <div class="intro wrap">
-      <span class="px px-muted">Portfolio · 5 lavori scelti su 14</span>
-      <h2>I lavori più recenti.</h2>
+      <span class="px px-muted" id="workIntro">Selected work</span>
+      <h2>Products and sites I designed and built.</h2>
     </div>
     <div id="stack"></div>
-    <div class="more-cta"><button class="blk blk-dark" id="allWorks">Tutti i 14 lavori <span>→</span></button></div>
+    <div class="more-cta"><button class="blk blk-dark" id="allWorks">All projects in a list <span>→</span></button></div>
   </section>
 
   <!-- MANIFESTO -->
   <section class="manifesto">
     <div class="chart" aria-hidden="true"></div>
-    <p class="text wrap" id="manifesto">Il mio lavoro è rendere semplice quello che un'azienda vende ed è difficile da spiegare: aerei, capannoni, case in legno, macchinari.</p>
+    <p class="text wrap" id="manifesto">My job is making complicated things simple to use: sales pipelines, parcels on the move, fabric catalogues, aircraft.</p>
     <div class="bp" aria-hidden="true">
       <div class="bp-track">
-        <div class="bp-mark" style="left:27.08%"><span><b>390</b>Telefono</span></div>
+        <div class="bp-mark" style="left:27.08%"><span><b>390</b>Phone</span></div>
         <div class="bp-mark" style="left:53.33%"><span><b>768</b>Tablet</span></div>
         <div class="bp-mark" style="left:71.11%"><span><b>1024</b>Laptop</span></div>
         <div class="bp-mark" style="left:100%"><span><b>1440</b>Desktop</span></div>
@@ -402,24 +422,30 @@
     <dl class="numbers wrap" id="numbers"></dl>
     <div class="foot wrap">
       <span class="px px-muted">Antonio Nocella · 2026</span>
-      <a href="#percorso" class="blk blk-dark">Il mio percorso <span>↓</span></a>
+      <a href="#experience" class="blk blk-dark">Experience <span>↓</span></a>
     </div>
   </section>
 
-  <!-- METODO + SERVIZI -->
-  <section class="method" id="servizi">
+  <!-- AI NEL METODO + SERVIZI -->
+  <section class="method" id="ai">
     <div class="wrap">
       <div class="method-grid">
-        <div class="media ph" data-label="Foto 4:5">
-          <span class="px">Dal progetto al codice</span>
-        </div>
+        <ol class="flow" aria-label="How I work with AI">
+          <li><b>01</b><div><strong>Frame the problem</strong><p>Before opening a design tool I write the brief with an LLM: goals, edge cases, risks and what not to build.</p></div></li>
+          <li><b>02</b><div><strong>Explore wide, cut fast</strong><p>Several directions side by side, then I keep the one that holds up on a real phone, not the one that looks best in a mockup.</p></div></li>
+          <li><b>03</b><div><strong>Prototype in code</strong><p>With Claude Code the design becomes a working prototype in hours: real data, real devices, a link to share.</p></div></li>
+          <li><b>04</b><div><strong>Check what matters</strong><p>Small automated checks on permissions, scoring and data parsing, so speed doesn't turn into bugs.</p></div></li>
+          <li><b>05</b><div><strong>Ship and keep going</strong><p>Most projects on this page are live. I keep iterating on what people actually do with them.</p></div></li>
+        </ol>
         <div class="copy">
-          <div class="top px px-muted"><span>Come lavoro</span><span>Grafica e codice</span></div>
+          <div class="top px px-muted"><span>How I work</span><span>AI in the loop</span></div>
           <div>
-            <h2>Non faccio siti belli e basta.</h2>
-            <p>Faccio siti dove ogni scelta ha un motivo, e chi deve decidere capisce in dieci secondi. Seguo il progetto dall'inizio alla fine: disegno l'interfaccia, la sviluppo, la metto online e poi resto a mantenerla.</p>
+            <h2>Designing with AI, not around it.</h2>
+            <p>AI is how I work every day: to think faster, to try more ideas and to build real things instead of static screens. The decisions stay mine, and so does the responsibility for what ships.</p>
+            <p>It also ends up inside the products: assistants that answer on your own data, agents on WhatsApp, AI-generated rooms in a showroom.</p>
+            <div class="ai-in" id="aiIn"></div>
           </div>
-          <a href="#contatti" class="blk blk-light">Contattami <span>→</span></a>
+          <a href="#contact" class="blk blk-light">Get in touch <span>→</span></a>
         </div>
       </div>
       <div class="services" id="services"></div>
@@ -427,43 +453,43 @@
   </section>
 
   <!-- COMPETENZE -->
-  <section class="faq" id="competenze">
+  <section class="faq" id="skills-section">
     <div class="wrap faq-grid">
       <div>
-        <span class="px px-muted">Stack · 20</span>
-        <h2>Competenze</h2>
-        <p class="lead">Nessun passaggio di mano tra grafica e codice, e dove serve ci metto dentro 3D e AI.</p>
+        <span class="px px-muted" id="skillCount">Stack</span>
+        <h2>Skills</h2>
+        <p class="lead">No hand-off between design and code: the same person takes a screen from idea to production.</p>
       </div>
       <div id="skills"></div>
     </div>
   </section>
 
   <!-- PERCORSO -->
-  <section class="faq" id="percorso">
+  <section class="faq" id="experience">
     <div class="wrap faq-grid">
       <div>
-        <span class="px px-muted">Percorso · 4 agenzie</span>
-        <h2>Dieci anni tra progetto e codice.</h2>
+        <span class="px px-muted">Experience · 4 agencies</span>
+        <h2>Ten years between design and code.</h2>
       </div>
       <ul class="jobs" id="jobs"></ul>
     </div>
   </section>
 
   <!-- CHIUSURA + CONTATTI -->
-  <section class="closing shade warm" id="contatti">
+  <section class="closing shade warm" id="contact">
     <canvas class="asc" data-ascii="cold" aria-hidden="true"></canvas>
     <div class="overlay">
       <div class="wrap">
         <div class="copy">
-          <span class="px">Contatti · Disponibile anche da remoto</span>
-          <h2>Pronto per una nuova squadra.</h2>
+          <span class="px">Contact · Also available remotely</span>
+          <h2>Ready for a new team.</h2>
           <div class="ctas">
-            <a href="mailto:antonio.nocella3@gmail.com" class="blk blk-accent">Scrivimi <span>↗</span></a>
-            <a href="#percorso" class="blk blk-dark">Il mio percorso <span>↑</span></a>
+            <a href="mailto:antonio.nocella3@gmail.com" class="blk blk-accent">Write to me <span>↗</span></a>
+            <a href="#experience" class="blk blk-dark">Experience <span>↑</span></a>
           </div>
-          <small>antonio.nocella3@gmail.com · Adelfia, Bari</small>
+          <small>antonio.nocella3@gmail.com · Adelfia, Bari, Italy</small>
         </div>
-        <div class="aside"><a href="#lavori" class="blk blk-dark">Rivedi i lavori <span>↑</span></a></div>
+        <div class="aside"><a href="#work" class="blk blk-dark">Back to the work <span>↑</span></a></div>
       </div>
     </div>
   </section>
@@ -474,16 +500,16 @@
     <div class="foot-grid">
       <div>
         <span class="word">Antonio Nocella</span>
-        <p>Web developer e UI designer a Bari. Siti aziendali, e-commerce, configuratori 3D, automazioni e integrazioni AI.</p>
+        <p>UX/UI designer. I build what I design: SaaS products, mobile apps, configurators and websites, with AI in the loop.</p>
       </div>
-      <div><h4 class="px">Ultimi lavori</h4><ul id="footWorks"></ul></div>
-      <div><h4 class="px">Sezioni</h4><ul><li><a href="#lavori">Lavori</a></li><li><a href="#servizi">Cosa so fare</a></li><li><a href="#competenze">Competenze</a></li><li><a href="#percorso">Percorso</a></li></ul></div>
-      <div><h4 class="px">Contatti</h4><ul><li><a href="mailto:antonio.nocella3@gmail.com">Email</a></li><li>Adelfia, Bari</li></ul></div>
-      <div><a href="#" class="blk blk-dark to-top" aria-label="Torna su"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg></a></div>
+      <div><h4 class="px">Latest work</h4><ul id="footWorks"></ul></div>
+      <div><h4 class="px">Sections</h4><ul><li><a href="#work">Work</a></li><li><a href="#ai">How I work</a></li><li><a href="#skills-section">Skills</a></li><li><a href="#experience">Experience</a></li></ul></div>
+      <div><h4 class="px">Contact</h4><ul><li><a href="mailto:antonio.nocella3@gmail.com">Email</a></li><li>Adelfia, Bari</li></ul></div>
+      <div><a href="#" class="blk blk-dark to-top" aria-label="Back to top"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg></a></div>
     </div>
     <div class="legal px">
       <span>© 2026 Antonio Nocella · Adelfia, Bari</span>
-      <span>ITA <button class="px" data-inspect-toggle hidden>Ispeziona la pagina (I)</button></span>
+      <span>EN <button class="px" data-inspect-toggle hidden>Inspect this page (I)</button></span>
     </div>
   </div>
 </footer>
@@ -492,57 +518,65 @@
 <script src="ascii.js" defer></script>
 <script src="editor.js" defer></script>
 <script>
-  const featured = works.slice(0, 5);
+  const featured = works;
   const skills = {
-    'Front-end':        [['HTML','Linguaggio'],['CSS','Linguaggio'],['JavaScript','Linguaggio'],['jQuery','Libreria'],['React','Base'],['GSAP','Libreria']],
-    'Back-end e CMS':   [['PHP','Linguaggio'],['WordPress','CMS'],['MySQL','Database'],['E-commerce','WordPress']],
-    '3D e automazione': [['Model Viewer','Libreria'],['glTF e GLB','Formato'],['Webhook e API HTTP','Integrazione'],['Workflow email e CRM','Automazione'],['Google Analytics','Analisi']],
-    'AI':               [['Integrazione API di modelli','API'],['Chatbot e assistenti','Prodotto'],['Automazioni con AI','Workflow'],['Generazione contenuti e immagini','Contenuti'],['Assistenti al codice','Strumento']],
+    'Design':            [['Product and UX design','Practice'],['UI design and design systems','Practice'],['Material 3','System'],['Prototyping','Practice'],['Motion and SVG animation','Practice'],['Photoshop and Adobe CC','Tool']],
+    'AI':                [['Claude Code','Tool'],['LLMs for specs and research','Practice'],['LLM APIs: Claude, Gemini','API'],['MCP servers','Integration'],['AI agents on WhatsApp','Product'],['Image generation','Content']],
+    'Front-end':         [['HTML and CSS','Language'],['JavaScript and TypeScript','Language'],['React and Next.js','Framework'],['Expo (React Native)','Mobile'],['GSAP, Lenis','Library'],['Tailwind','Library']],
+    'Back-end and data': [['Supabase: Postgres, RLS, Edge Functions','Platform'],['PHP, WordPress, WooCommerce','CMS'],['MySQL','Database'],['REST APIs and webhooks','Integration'],['Make.com automations','Workflow']],
   };
   const jobs = [
-    ['Never Before Italia', 'Web developer',         '2023 — oggi'],
-    ['Apuliasmart',         'Web developer',         '2021 — 2022'],
-    ['Naycom Agency',       'Web developer',         '2020 — 2021'],
-    ['Studio Artesia',      'Grafico e web design',  '2016 — 2020'],
+    ['Never Before Italia', 'Web developer and UI designer', '2023 — today'],
+    ['Apuliasmart',         'Web developer',                 '2021 — 2022'],
+    ['Naycom Agency',       'Web developer',                 '2020 — 2021'],
+    ['Studio Artesia',      'Graphic and web designer',      '2016 — 2020'],
   ];
-  const numbers = [['Anni di lavoro','10'],['Agenzie','04'],['Siti online','14'],['Configuratori 3D','02'],['Settori toccati','08']];
+  const pad = n => String(n).padStart(2, '0');
+  const numbers = [['Years of work','10'],['Agencies','04'],['Projects here', pad(works.length)],['Live links', pad(works.filter(w => w.url).length)],['With AI inside', pad(works.filter(w => w.ai).length)]];
   const $ = s => document.querySelector(s);
-  const total = String(featured.length).padStart(2, '0');
+  const total = pad(featured.length);
+  const shot = (w, extra = '') => `<div class="media ph${w.tall ? ' tall' : ''}${extra}" data-label="Recording coming soon">${workPic(w)}</div>`;
 
-  // vetrina: solo i cinque lavori scelti, gli altri nel pannello "Lavori"
+  // vetrina: tutti i progetti, uno per card impilata
+  $('#workIntro').textContent = `Selected work · ${total} projects`;
+  $('#workCount').textContent = `Portfolio · ${total} projects`;
   $('#stack').innerHTML = featured.map((w, i) => `
     <div class="anchor" id="p-${w.id}"></div>
     <article class="pcard">
       <div class="pin">
-        <div class="media ph" data-label="Screenshot ${w.n} · 16:10">${workPic(w)}</div>
+        ${shot(w)}
         <div class="info">
           <div class="code"><b>${w.id}</b><span class="px px-muted">${w.t.join(' · ')}</span></div>
           <h3>${w.n}</h3>
+          <p class="sum">${w.sum}</p>
           <dl class="strip">
-            <div><dt class="px px-muted">tipo:</dt><dd>${workType(w)}</dd></div>
-            <div><dt class="px px-muted">settore:</dt><dd>${w.t[1]}</dd></div>
-            <div><dt class="px px-muted">vetrina:</dt><dd>${String(i + 1).padStart(2, '0')} / ${total}</dd></div>
-            <div><dt class="px px-muted">stato:</dt><dd>online</dd></div>
+            <div><dt class="px px-muted">type:</dt><dd>${w.kind}</dd></div>
+            <div><dt class="px px-muted">made at:</dt><dd>${w.at}</dd></div>
+            <div><dt class="px px-muted">sector:</dt><dd>${w.t[1]}</dd></div>
+            <div><dt class="px px-muted">status:</dt><dd>${w.status}</dd></div>
           </dl>
-          <div class="buyrow"><span class="px px-muted">Portfolio · ${w.id}</span><span class="actions"><a href="${workUrl(w)}" class="blk blk-light">Scheda progetto <span>↗</span></a>${w.url ? `<a href="${w.url}" target="_blank" rel="noopener" class="blk blk-dark">Sito <span>↗</span></a>` : ''}</span></div>
+          <div class="buyrow"><span class="px px-muted">${pad(i + 1)} / ${total}</span><span class="actions"><a href="${workUrl(w)}" class="blk blk-light">Case <span>↗</span></a>${w.url ? `<a href="${w.url}" target="_blank" rel="noopener" class="blk blk-dark">Live <span>↗</span></a>` : ''}</span></div>
         </div>
       </div>
     </article>`).join('');
-  $('#bg').innerHTML = featured.map((w, i) => `<div class="bgi${i ? '' : ' on'}">${workPic(w, '')}</div>`).join('');
-  $('#thumbs').innerHTML = featured.map(w => `<button class="ph" data-go="${w.id}" aria-label="${w.n}">${w.id}${workPic(w)}</button>`).join('');
-  $('#workList').innerHTML = works.map(w => `<a href="${workUrl(w)}" class="line-item"><span class="ph">${workPic(w)}</span><div><strong>${w.n}</strong><span class="px px-muted">${w.t.join(' · ')}</span></div><span class="px">${w.id}</span></a>`).join('');
-  // riquadro "Ultimo lavoro" nell'hero: il primo dell'elenco
+  $('#bg').innerHTML = featured.map((w, i) => `<div class="bgi${i ? '' : ' on'}">${w.video === false ? '' : workPic(w, '', { still: true })}</div>`).join('');
+  $('#thumbs').innerHTML = featured.map(w => `<button class="ph" data-go="${w.id}" aria-label="${w.n}">${w.id}${workPic(w, w.n, { still: true })}</button>`).join('');
+  $('#workList').innerHTML = works.map(w => `<a href="${workUrl(w)}" class="line-item"><span class="ph">${workPic(w, w.n, { still: true })}</span><div><strong>${w.n}</strong><span class="px px-muted">${w.t.join(' · ')} · ${w.at}</span></div><span class="px">${w.id}</span></a>`).join('');
+  // riquadro in evidenza nell'hero: il primo dell'elenco
   const last = featured[0];
   $('#fbPic').innerHTML = workPic(last);
-  $('#fbKicker').textContent = `Ultimo lavoro · ${last.id}`;
+  $('#fbKicker').textContent = `Featured · ${last.id}`;
   $('#fbName').textContent = last.n;
   $('#fbTags').textContent = last.t.join(' · ');
   $('#fbLink').href = workUrl(last);
-  $('#footWorks').innerHTML = featured.map(w => `<li><a href="${workUrl(w)}">${w.n}</a></li>`).join('');
+  $('#footWorks').innerHTML = featured.slice(0, 5).map(w => `<li><a href="${workUrl(w)}">${w.n}</a></li>`).join('');
   $('#numbers').innerHTML = numbers.map(([k, v]) => `<div><dt class="px px-muted">${k}</dt><dd>${v}</dd></div>`).join('');
-  $('#services').innerHTML = services.map(([h, p, tags]) => `<div class="service"><span class="px">${h}</span><div class="ph" data-label="Foto 16:11"></div><p>${p}</p><div class="tags">${tags.map(t => `<span>${t}</span>`).join('')}</div></div>`).join('');
-  $('#skills').innerHTML = Object.entries(skills).map(([g, list], i) => `<details${i ? '' : ' open'}><summary>${g} <span class="px">+</span></summary><ul>${list.map(([s, c]) => `<li>${s}<span class="px px-muted">${c}</span></li>`).join('')}</ul></details>`).join('');
+  $('#aiIn').innerHTML = works.filter(w => w.ai).map(w => `<a href="${workUrl(w)}">${w.n} ↗</a>`).join('');
+  $('#services').innerHTML = services.map(([h, p, tags]) => `<div class="service"><span class="px">${h}</span><p>${p}</p><div class="tags">${tags.map(t => `<span>${t}</span>`).join('')}</div></div>`).join('');
+  $('#skillCount').textContent = `Stack · ${Object.values(skills).flat().length}`;
+  $('#skills').innerHTML = Object.entries(skills).map(([g, list], i) => `<details${i < 2 ? ' open' : ''}><summary>${g} <span class="px">+</span></summary><ul>${list.map(([s, c]) => `<li>${s}<span class="px px-muted">${c}</span></li>`).join('')}</ul></details>`).join('');
   $('#jobs').innerHTML = jobs.map(([a, r, y]) => `<li><div><strong>${a}</strong>${r}</div><span class="px px-muted">${y}</span></li>`).join('');
+  autoplay();
 
   // header: segue la barra annunci finché è visibile, poi resta in alto
   const hdr = $('#hdr');
@@ -583,7 +617,7 @@
   const place = () => coords.textContent = `X 0 · Y ${Math.round(scrollY)} · ${innerWidth} × ${innerHeight} · Adelfia, Bari`;
   const measure = () => {
     $('#bpNow').style.left = Math.min(innerWidth / 1440, 1) * 100 + '%';
-    $('#bpNowLabel').textContent = `Sei qui · ${innerWidth}`;
+    $('#bpNowLabel').textContent = `You are here · ${innerWidth}`;
     place();
   };
   addEventListener('scroll', place, { passive: true });
