@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Antonio Nocella — Project</title>
 <meta name="description" content="A project from the portfolio of Antonio Nocella, web developer and designer.">
-<meta name="theme-color" content="#050505">
+<meta name="theme-color" content="#111113">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Sora:wght@200;400&family=VT323&display=swap" rel="stylesheet">
@@ -13,15 +13,15 @@
 <style>
   /* stessi token di index.html; struttura della scheda presa da prodotto.html dello shop Blackshape */
   :root {
-    --bg: #050505;
-    --panel: #121214;
-    --panel-2: #1D1D1F;
+    --bg: #111113;
+    --panel: #1A1A1D;
+    --panel-2: #242428;
     --fg: #FFFFFF;
     --soft: #C7C7CC;
     --muted: #A1A1A6;
     --line: rgba(255,255,255,.12);
     --white: #FFF;
-    --black: #050505;  /* testo sui fondi verdi e bianchi */
+    --black: #111113;  /* testo sui fondi verdi e bianchi */
     --accent: #FF9030;  /* arancione: accenti */
     --radius: 6px;
     --control-radius: 999px;
@@ -50,7 +50,7 @@
   :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
   .asc { position: absolute; inset: 0; width: 100%; height: 100%; display: block; pointer-events: none; color: var(--accent); } /* ascii.js usa questo colore */
   /* un solo blocco arancione pieno: la chiusura. .warm capovolge i colori (fondo arancione, testo nero) */
-  .warm { --bg: #FF9030; --panel: #FF9030; --panel-2: #F2831F; --fg: #050505; --soft: #1A1A1A; --muted: #3B2A1C; --line: rgba(5,5,5,.28); --white: #050505; --black: #FF9030; --accent: #050505; background: var(--bg); color: var(--fg); }
+  .warm { --bg: #FF9030; --panel: #FF9030; --panel-2: #F2831F; --fg: #050505; --soft: #1A1A1A; --muted: #3B2A1C; --line: rgba(17,17,19,.28); --white: #050505; --black: #FF9030; --accent: #050505; background: var(--bg); color: var(--fg); }
   .warm.shade::before { background: linear-gradient(0deg, rgba(255,144,48,.85) 0%, rgba(255,144,48,.3) 45%, rgba(255,144,48,0) 70%); }
   .warm .overlay small, .warm .px-muted { color: var(--soft); }
   .blk-dark { background: var(--panel-2); color: var(--fg); }
@@ -72,7 +72,7 @@
   .hdr { position: fixed; left: 0; right: 0; top: env(safe-area-inset-top, 0px); z-index: 50; padding: 16px var(--gutter); display: flex; align-items: center; justify-content: space-between; gap: 16px; pointer-events: none; }
   .hdr > * { pointer-events: auto; }
   .hdr::before { content: ""; position: absolute; inset: 0 0 -72px 0; z-index: -1; pointer-events: none; opacity: 0; transition: opacity .35s ease;
-    background: linear-gradient(180deg, rgba(5,5,5,.92) 0%, rgba(5,5,5,.9) 30%, rgba(5,5,5,.84) 42%, rgba(5,5,5,.74) 52%, rgba(5,5,5,.6) 61%, rgba(5,5,5,.45) 70%, rgba(5,5,5,.3) 78%, rgba(5,5,5,.17) 86%, rgba(5,5,5,.07) 93%, rgba(5,5,5,0) 100%);
+    background: linear-gradient(180deg, rgba(17,17,19,.92) 0%, rgba(17,17,19,.9) 30%, rgba(17,17,19,.84) 42%, rgba(17,17,19,.74) 52%, rgba(17,17,19,.6) 61%, rgba(17,17,19,.45) 70%, rgba(17,17,19,.3) 78%, rgba(17,17,19,.17) 86%, rgba(17,17,19,.07) 93%, rgba(17,17,19,0) 100%);
     backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
     -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 45%, rgba(0,0,0,.6) 68%, rgba(0,0,0,.2) 86%, transparent 100%); mask-image: linear-gradient(180deg, #000 0%, #000 45%, rgba(0,0,0,.6) 68%, rgba(0,0,0,.2) 86%, transparent 100%); }
   .hdr.solid::before { opacity: 1; }
@@ -128,7 +128,7 @@
   .p-hero > .ph { position: absolute; inset: 0; }
   .p-hero > .ph::after { position: absolute; right: var(--gutter); top: 50%; }
   /* il video sotto è pieno di dettagli: velo scuro forte a sinistra, dove sta il titolo */
-  .p-hero::before { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: linear-gradient(90deg, rgba(5,5,5,.88) 0%, rgba(5,5,5,.62) 38%, rgba(5,5,5,.2) 70%, rgba(5,5,5,.1) 100%), linear-gradient(180deg, rgba(0,0,0,.45) 0%, rgba(0,0,0,0) 25%, rgba(0,0,0,0) 60%, rgba(0,0,0,.6) 100%); }
+  .p-hero::before { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: linear-gradient(90deg, rgba(17,17,19,.88) 0%, rgba(17,17,19,.62) 38%, rgba(17,17,19,.2) 70%, rgba(17,17,19,.1) 100%), linear-gradient(180deg, rgba(0,0,0,.45) 0%, rgba(0,0,0,0) 25%, rgba(0,0,0,0) 60%, rgba(0,0,0,.6) 100%); }
   .p-hero .label { position: absolute; z-index: 2; left: var(--gutter); top: calc(50% - 20px); max-width: 12ch; font-size: clamp(48px, 7vw, 110px); line-height: .9; }
   .p-hero .kicker { position: absolute; z-index: 2; left: var(--gutter); top: calc(50% - 60px); }
 
@@ -214,7 +214,7 @@
   .mcard .row { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: auto; padding: 14px 4px 4px; border-top: 1px solid var(--line); }
   .mcard.on:hover h3 { text-decoration: underline; text-underline-offset: 4px; }
   .c-nav { position: relative; z-index: 1; display: flex; justify-content: center; gap: 12px; margin-top: 28px; }
-  .c-btn { display: grid; place-items: center; width: 64px; height: 64px; border-radius: 50%; border: 1px solid rgba(255,255,255,.4); background: rgba(5,5,5,.5); transition: background .2s, color .2s, border-color .2s; }
+  .c-btn { display: grid; place-items: center; width: 64px; height: 64px; border-radius: 50%; border: 1px solid rgba(255,255,255,.4); background: rgba(17,17,19,.5); transition: background .2s, color .2s, border-color .2s; }
   .c-btn:hover { background: var(--white); color: var(--black); border-color: var(--white); }
 
   /* ---------- chiusura + footer (come index) ---------- */
