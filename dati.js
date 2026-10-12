@@ -53,7 +53,7 @@ const works = [
     ],
   },
   {
-    id: '04', c: '#F5A623', n: 'FinishDecor Discover', t: ['Kiosk app', 'Interiors'], kind: 'Showroom touch screen', at: 'Never Before Italia', status: 'Prototype, shown to the client', ai: true, tall: true,
+    id: '04', c: '#F5A623', n: 'FinishDecor Discover', t: ['Kiosk app', 'Interiors'], kind: 'Showroom touch screen', at: 'Never Before Italia', status: 'Presented to the client', ai: true, tall: true,
     sum: 'A guided experience on a vertical touch screen in a finishes showroom. Visitors pick a kind of space, react to images and compare pairs; the system proposes three colour palettes, hands them to the phone with a QR code while they touch the real samples, then shows them in AI-generated rooms.',
     role: ['Flow and interface design', 'Development', 'AI integration'],
     stack: ['HTML, CSS, JavaScript', 'Vercel Functions', 'Gemini API'],

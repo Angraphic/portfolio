@@ -168,7 +168,7 @@
   .pin .info { display: flex; flex-direction: column; min-height: 0; padding: 8px 8px 4px; }
   .pin .code { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; padding-bottom: 16px; border-bottom: 1px solid var(--line); }
   .pin .code b { color: var(--accent); font-size: clamp(56px, 6vw, 96px); font-weight: 500; letter-spacing: -0.06em; line-height: .82; font-variant-numeric: tabular-nums; }
-  .pin .code .px { text-align: right; max-width: 18ch; }
+  .pin .code .px { text-align: right; white-space: nowrap; } /* categorie su una riga, una accanto all'altra */
   .pin h3 { font-size: clamp(30px, 3vw, 46px); letter-spacing: -0.05em; line-height: 1; margin-top: 20px; }
   .strip { display: grid; grid-template-columns: 1fr 1fr; margin-top: 20px; border: 1px solid var(--line); border-radius: 4px; }
   .strip > div { padding: 10px 12px; }
