@@ -21,7 +21,7 @@ const works = [
     id: '02', c: '#C6FF2D', n: 'Traccio', t: ['Mobile app', 'Logistics'], kind: 'iOS and Android app', at: 'Personal project', status: 'In development, tested on device',
     url: 'https://traccio-landing-six.vercel.app', label: 'Landing page',
     sum: 'My own product: an app that follows parcels across every carrier and only notifies you when you have to do something: held at a pickup point, failed delivery, handover to another carrier. Everything else stays quiet.',
-    role: ['Product idea and written spec', 'UX and UI design', 'Mobile and back-end development', 'Landing page'],
+    role: ['Product idea and written spec', 'Interface design', 'Mobile and back-end development', 'Landing page'],
     stack: ['Expo (React Native)', 'TypeScript', 'Supabase (Edge Functions, pg_cron, Realtime)', 'AfterShip and 17TRACK APIs', 'OpenFreeMap'],
     points: [
       ['Spec first, then data', 'I wrote the MVP spec before any screen, then compared tracking providers on real parcels: the provider was chosen on measured latency, not on its documentation.'],
@@ -33,7 +33,7 @@ const works = [
     id: '03', c: '#E8C6A0', n: 'InTessuto', t: ['Configurator', 'Interiors'], kind: 'Web app', at: 'Never Before Italia', status: 'Live demo', ai: true,
     url: 'https://intessuto.vercel.app',
     sum: 'A guided fabric configurator for upholstery. Instead of a catalogue of 84 fabrics and 1,700 colours, a few questions and a visual path that turns instinctive choices into a style profile, then a render of your own sofa in the chosen fabric.',
-    role: ['UX and UI design', 'Front-end and back-end development', 'Data pipeline for colours and datasheets'],
+    role: ['Interface design', 'Front-end and back-end development', 'Data pipeline for colours and datasheets'],
     stack: ['Next.js', 'Material 3', 'Supabase', 'sharp', 'Image generation API'],
     points: [
       ['A profile you can read', 'The style profile is rule-based, not a black box: every criterion shows the choice that produced it.'],
@@ -44,7 +44,7 @@ const works = [
   {
     id: '04', c: '#F5A623', n: 'FinishDecor Discover', t: ['Kiosk app', 'Interiors'], kind: 'Showroom touch screen', at: 'Never Before Italia', status: 'Prototype, shown to the client', ai: true, tall: true,
     sum: 'A guided experience on a vertical touch screen in a finishes showroom. Visitors pick a kind of space, react to images and compare pairs; the system proposes three colour palettes, hands them to the phone with a QR code while they touch the real samples, then shows them in AI-generated rooms.',
-    role: ['UX flow and UI design', 'Development', 'AI integration'],
+    role: ['Flow and interface design', 'Development', 'AI integration'],
     stack: ['HTML, CSS, JavaScript', 'Vercel Functions', 'Gemini API'],
     points: [
       ['Designed for a big screen', 'Type and touch targets sized for a tall monitor viewed standing up; it resets itself after two idle minutes.'],
@@ -103,7 +103,7 @@ const works = [
     id: '09', c: '#D9D9DE', n: 'Blackshape Store', t: ['E-commerce', 'Aviation'], kind: 'E-commerce', at: 'Never Before Italia', status: 'Live prototype',
     url: 'https://antonionocellanb4.github.io/blackshape-shop/',
     sum: 'The official merchandise store of an Italian aircraft manufacturer: apparel and gear for pilots. Two design directions, then the chosen one rebuilt as a custom WooCommerce theme the client can edit without a page builder.',
-    role: ['UX and UI design', 'Front-end development', 'WordPress and WooCommerce theme'],
+    role: ['Interface design', 'Front-end development', 'WordPress and WooCommerce theme'],
     stack: ['HTML, CSS, JavaScript', 'WordPress', 'WooCommerce', 'ACF'],
     points: [
       ['A shop, not a brochure', 'The first draft looked like a corporate site; the client wanted a store, so every page follows e-commerce structure: product, category, cart.'],
@@ -137,7 +137,7 @@ const works = [
   },
 ];
 const services = [
-  ['Product and UX design', 'From a fuzzy brief to flows people finish: research, specs, prototypes, and the small decisions that make an app feel obvious.', ['User flows', 'Specs', 'Prototyping', 'Usability']],
+  ['Product design', 'From a fuzzy brief to flows people finish: research, specs, prototypes, and the small decisions that make an app feel obvious.', ['User flows', 'Specs', 'Prototyping', 'Usability']],
   ['UI and motion',         'Grids, type, colour and motion that explain something, from design systems to a single screen.',                                  ['UI design', 'Design systems', 'Material 3', 'Motion', 'SVG']],
   ['Building in code',      'I build what I design, so the prototype is the product: web apps, mobile apps, sites and the integrations behind them.',           ['React', 'Next.js', 'Expo', 'Supabase', 'WordPress']],
 ];
