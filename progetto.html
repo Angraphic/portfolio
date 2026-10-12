@@ -8,7 +8,7 @@
 <meta name="theme-color" content="#050505">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=VT323&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Sora:wght@200;400&family=VT323&display=swap" rel="stylesheet">
 <link href="device.css" rel="stylesheet">
 <style>
   /* stessi token di index.html; struttura della scheda presa da prodotto.html dello shop Blackshape */
@@ -36,7 +36,7 @@
   a { color: inherit; text-decoration: none; }
   button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
   .wrap { max-width: 1520px; margin: 0 auto; padding: 0 var(--gutter); }
-  h1, h2, h3 { font-weight: 500; letter-spacing: -0.05em; line-height: .95; }
+  h1, h2, h3 { font-family: "Sora", sans-serif; font-weight: 400; letter-spacing: -0.075em; line-height: .95; }
   .px { font-family: var(--pixel); font-size: 19px; font-weight: 400; line-height: 1.1; text-transform: uppercase; letter-spacing: .04em; }
   .px-muted { color: #B5B5BA; }
   .todo { color: var(--muted); font-style: italic; }
@@ -80,7 +80,7 @@
   .hdr.on-warm { --fg: #050505; --white: #050505; --black: #FF9030; --panel-2: #F2831F; color: var(--fg); }
   .hdr.on-warm::before { background: linear-gradient(180deg, rgba(255,144,48,.94) 0%, rgba(255,144,48,.8) 40%, rgba(255,144,48,.45) 70%, rgba(255,144,48,0) 100%); }
   .brand { display: flex; align-items: center; gap: 16px; }
-  .brand .word { font-size: 22px; font-weight: 500; letter-spacing: -0.04em; transition: color .3s; }
+  .brand .word { font-size: 22px; font-family: "Sora", sans-serif; font-weight: 200; letter-spacing: -0.02em; transition: color .3s; }
   /* sopra il fondo chiaro della galleria il nome diventa nero */
   .hdr.light .brand .word { color: var(--black); }
   .cluster { display: flex; gap: 8px; }
@@ -129,7 +129,7 @@
   .p-hero > .ph::after { position: absolute; right: var(--gutter); top: 50%; }
   /* il video sotto è pieno di dettagli: velo scuro forte a sinistra, dove sta il titolo */
   .p-hero::before { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: linear-gradient(90deg, rgba(5,5,5,.88) 0%, rgba(5,5,5,.62) 38%, rgba(5,5,5,.2) 70%, rgba(5,5,5,.1) 100%), linear-gradient(180deg, rgba(0,0,0,.45) 0%, rgba(0,0,0,0) 25%, rgba(0,0,0,0) 60%, rgba(0,0,0,.6) 100%); }
-  .p-hero .label { position: absolute; z-index: 2; left: var(--gutter); top: calc(50% - 20px); max-width: 12ch; font-size: clamp(48px, 7vw, 110px); font-weight: 500; letter-spacing: -0.06em; line-height: .9; }
+  .p-hero .label { position: absolute; z-index: 2; left: var(--gutter); top: calc(50% - 20px); max-width: 12ch; font-size: clamp(48px, 7vw, 110px); line-height: .9; }
   .p-hero .kicker { position: absolute; z-index: 2; left: var(--gutter); top: calc(50% - 60px); }
 
   /* ---------- testo che si accende ---------- */
@@ -148,7 +148,7 @@
 
   /* ---------- dettagli: ritagli delle schermate, a griglia ---------- */
   .crops { padding: clamp(100px, 12vw, 160px) 0 0; }
-  .crops h2 { font-size: clamp(40px, 5vw, 76px); letter-spacing: -0.06em; margin: 14px 0 40px; }
+  .crops h2 { font-size: clamp(40px, 5vw, 76px); margin: 14px 0 40px; }
   .crop-grid { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: clamp(170px, 19vw, 290px); gap: 12px; }
   .crop { position: relative; overflow: hidden; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); }
   .crop:first-child { grid-column: span 2; grid-row: span 2; }
@@ -160,7 +160,7 @@
   .specs { position: relative; padding: clamp(120px, 14vw, 200px) 0 clamp(120px, 12vw, 180px); overflow: hidden; }
   .spec-card { position: relative; max-width: 760px; margin: 0 auto; background: rgba(22,22,24,.9); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--line); border-radius: 8px; padding: 16px; }
   .spec-card .top { display: flex; justify-content: space-between; gap: 16px; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
-  .spec-card h2 { font-size: clamp(34px, 4vw, 58px); letter-spacing: -0.055em; padding: clamp(60px, 9vw, 120px) 0 28px; }
+  .spec-card h2 { font-size: clamp(34px, 4vw, 58px); padding: clamp(60px, 9vw, 120px) 0 28px; }
   .spec-group { display: grid; grid-template-columns: 170px 1fr; gap: 16px; padding: 20px 0; border-top: 1px solid var(--line); }
   .spec-group ul { list-style: none; display: flex; flex-direction: column; gap: 6px; color: var(--soft); font-size: 16px; }
   .spec-group li::before { content: "·"; margin-right: 10px; color: var(--muted); }
@@ -168,7 +168,7 @@
 
   /* ---------- dettagli ---------- */
   .details { position: relative; padding: clamp(100px, 12vw, 160px) 0; overflow: hidden; }
-  .details h2 { position: relative; font-size: clamp(40px, 5vw, 76px); letter-spacing: -0.06em; max-width: 14ch; margin-top: 14px; }
+  .details h2 { position: relative; font-size: clamp(40px, 5vw, 76px); max-width: 14ch; margin-top: 14px; }
   /* struttura del progetto (pagine o schermate) stampata come l'albero di un terminale */
   .det-head { position: relative; display: grid; grid-template-columns: 1fr 1fr; align-items: start; gap: 24px; margin-bottom: 56px; }
   .tree { background: #000; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
@@ -180,8 +180,7 @@
   .det-grid { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
   .det { display: flex; flex-direction: column; padding: 12px; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; }
   .det .txt { padding: 20px 6px 6px; }
-  .det-n { color: var(--accent); font-size: clamp(40px, 4vw, 56px); font-weight: 500; letter-spacing: -0.06em; line-height: .85; font-variant-numeric: tabular-nums; }
-  .det h3 { font-size: clamp(24px, 2.2vw, 32px); letter-spacing: -0.045em; line-height: 1.02; margin-top: 16px; }
+  .det h3 { font-size: clamp(24px, 2.2vw, 32px); letter-spacing: -0.045em; line-height: 1.02; }
   .det p { color: var(--soft); font-size: 16px; margin-top: 12px; }
 
   /* ---------- prossimo progetto (era le recensioni) ---------- */
@@ -196,7 +195,7 @@
   .nf-tag, .nf-size { position: absolute; font-family: var(--pixel); font-size: 16px; line-height: 1; padding: 3px 6px 2px; border-radius: 3px; background: var(--accent); color: var(--black); white-space: nowrap; }
   .nf-tag { left: -1px; bottom: calc(100% + 10px); }
   .nf-size { left: 50%; top: calc(100% + 12px); transform: translateX(-50%); }
-  .reviews h2 { font-size: clamp(40px, 5vw, 76px); letter-spacing: -0.06em; margin-top: 16px; }
+  .reviews h2 { font-size: clamp(40px, 5vw, 76px); margin-top: 16px; }
   .reviews p { color: var(--soft); margin: 20px auto 32px; max-width: 48ch; }
 
   /* ---------- altri lavori ---------- */
@@ -224,12 +223,12 @@
   .overlay { position: absolute; z-index: 2; left: 0; right: 0; bottom: 150px; }
   .overlay .wrap { display: flex; justify-content: space-between; align-items: flex-end; gap: 32px; }
   .overlay .copy { max-width: 780px; }
-  .overlay h2 { font-size: clamp(56px, 7.4vw, 124px); letter-spacing: -0.06em; line-height: .9; margin-top: 18px; }
+  .overlay h2 { font-size: clamp(56px, 7.4vw, 124px); line-height: .9; margin-top: 18px; }
   .overlay .ctas { display: flex; gap: 8px; margin-top: 28px; flex-wrap: wrap; }
   .overlay small { display: block; margin-top: 10px; color: #D1D1D6; font-size: 13px; }
   footer.site { padding: 64px 0 calc(130px + env(safe-area-inset-bottom)); border-top: 1px solid var(--line); }
   .foot-grid { display: grid; grid-template-columns: 1.6fr repeat(3, 1fr) auto; gap: 32px; }
-  .foot-grid .word { font-size: 22px; font-weight: 500; letter-spacing: -0.04em; }
+  .foot-grid .word { font-size: 22px; font-family: "Sora", sans-serif; font-weight: 200; letter-spacing: -0.02em; }
   .foot-grid p { color: var(--soft); font-size: 15px; margin-top: 18px; max-width: 40ch; }
   .foot-grid h4 { margin-bottom: 14px; color: var(--muted); font-weight: 400; }
   .foot-grid ul { list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 15px; color: var(--soft); }
@@ -276,7 +275,7 @@
     body { font-size: 16px; }
     .px { font-size: 17px; }
     .blk { font-size: 19px; }
-    .brand .word { font-size: 16px; letter-spacing: -0.03em; }
+    .brand .word { font-size: 16px; }
     .cluster .blk { padding: 0 12px; }
     .spec-card .top span:nth-child(2) { display: none; }
     .foot-grid > div:first-child { grid-column: 1 / -1; }
@@ -288,7 +287,7 @@
 
 <header class="hdr" id="hdr">
   <a href="index.html" class="brand" aria-label="Antonio Nocella, home">
-    <span class="word">Antonio Nocella</span>
+    <span class="word">Nocella</span>
   </a>
   <div class="cluster">
     <button class="blk blk-dark" data-open="contact">Contact</button>
@@ -407,7 +406,7 @@
   <div class="wrap">
     <div class="foot-grid">
       <div>
-        <span class="word">Antonio Nocella</span>
+        <span class="word">Nocella</span>
         <p>Web developer and designer. I build what I design: SaaS products, mobile apps, configurators and websites, with AI in the loop.</p>
       </div>
       <div><h4 class="px">Latest work</h4><ul id="footWorks"></ul></div>
@@ -510,7 +509,7 @@
   if (!still) gsap.from('#tree li', { opacity: 0, x: -14, duration: .4, stagger: .06, ease: 'power2.out', scrollTrigger: { trigger: '#tree', start: 'top 80%' } });
 
   // tre punti del progetto, ognuno con la sua scena animata su misura (motivi.js); senza scena, una figura a rotazione
-  $('#details').innerHTML = p.points.map(([t, d], k) => `<article class="det"><div class="fig"></div><div class="txt"><b class="det-n">${pad(k + 1)}</b><h3>${t}</h3><p>${d}</p></div></article>`).join('');
+  $('#details').innerHTML = p.points.map(([t, d], k) => `<article class="det"><div class="fig"></div><div class="txt"><h3>${t}</h3><p>${d}</p></div></article>`).join('');
   document.querySelectorAll('.det .fig').forEach((f, k) => motivo(f, motivo.has(`${p.id}-${k}`) ? `${p.id}-${k}` : i + k * 3));
   $('#nfTag').textContent = `Frame · project-${pad(works.length + 1)}`;
 

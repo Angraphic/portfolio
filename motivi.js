@@ -539,3 +539,22 @@
   };
   window.motivo.has = k => k in H;
 })();
+
+// logo come testo in un editor: all'apertura si scrive lettera per lettera; scorrendo giù si cancella fino a "N"
+// col cursore che lampeggia, e si riscrive tornando su o passandoci sopra col mouse
+(() => {
+  const el = document.querySelector('.hdr .word');
+  if (!el || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  el.innerHTML = [...el.textContent].map(c => `<span>${c}</span>`).join('') + '<i style="display:none;width:2px;height:.9em;margin-left:2px;vertical-align:-.08em;background:var(--accent)"></i>';
+  const ls = [...el.children].slice(1, -1), caret = el.lastElementChild;
+  gsap.to(caret, { opacity: 0, duration: .5, repeat: -1, yoyo: true, ease: 'steps(1)' });
+  const tl = gsap.timeline({ paused: true }).set(caret, { display: 'inline-block' }, 0);
+  ls.reverse().forEach((s, i) => tl.set(s, { display: 'none' }, .06 + i * .06));
+  let hover = false, shut = true;
+  const upd = () => { const c = scrollY > 80 && !hover; if (c !== shut) { shut = c; c ? tl.play() : tl.reverse(); } };
+  tl.progress(1); gsap.delayedCall(.4, upd); // parte cancellato e si scrive
+  addEventListener('scroll', upd, { passive: true });
+  const a = el.closest('a');
+  a.addEventListener('pointerenter', () => { hover = true; upd(); });
+  a.addEventListener('pointerleave', () => { hover = false; upd(); });
+})();

@@ -9,7 +9,7 @@
 <meta name="theme-color" content="#050505">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=VT323&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Sora:wght@200;400&family=VT323&display=swap" rel="stylesheet">
 <link href="device.css" rel="stylesheet">
 <style>
   :root {
@@ -38,7 +38,7 @@
   a { color: inherit; text-decoration: none; }
   button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
   .wrap { max-width: 1520px; margin: 0 auto; padding: 0 var(--gutter); }
-  h1, h2, h3 { font-weight: 500; letter-spacing: -0.05em; line-height: .95; }
+  h1, h2, h3 { font-family: "Sora", sans-serif; font-weight: 400; letter-spacing: -0.075em; line-height: .95; }
 
   /* etichette: font pixel, maiuscolo spaziato (VT323 è piccolo di suo: corpo più alto) */
   .px { font-family: var(--pixel); font-size: 19px; font-weight: 400; line-height: 1.1; text-transform: uppercase; letter-spacing: .04em; }
@@ -79,7 +79,7 @@
   .hdr.on-warm { --fg: #050505; --white: #050505; --black: #FF9030; --panel-2: #F2831F; color: var(--fg); }
   .hdr.on-warm::before { background: linear-gradient(180deg, rgba(255,144,48,.94) 0%, rgba(255,144,48,.8) 40%, rgba(255,144,48,.45) 70%, rgba(255,144,48,0) 100%); }
   .brand { display: flex; align-items: center; gap: 16px; }
-  .brand .word { font-size: 22px; font-weight: 500; letter-spacing: -0.04em; }
+  .brand .word { font-size: 22px; font-family: "Sora", sans-serif; font-weight: 200; letter-spacing: -0.02em; }
   .cluster { display: flex; gap: 8px; }
   .cluster .blk { min-width: 124px; }
   /* miniature progetti: compaiono sulla vetrina */
@@ -116,20 +116,19 @@
   .drawer footer .blk { width: 100%; }
 
   /* ---------- hero ---------- */
-  /* testo in alto, muro sotto che prende lo spazio rimasto; le card escono dalla fascia verso l alto ma si fermano al bordo dell hero */
-  .hero { --cw: clamp(220px, 24vw, 360px); position: relative; z-index: 2; display: flex; flex-direction: column; min-height: 100vh; min-height: 100svh; overflow: clip; background: var(--black); }
+  /* testo in alto; sotto un ventaglio di card che sale dal fondo, passa dietro il titolo e viene tagliato dal bordo dell hero */
+  .hero { position: relative; z-index: 0; display: flex; flex-direction: column; min-height: 100vh; min-height: 100svh; overflow: clip; background: var(--black); }
   .shade::before { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: linear-gradient(180deg, rgba(0,0,0,.62) 0%, rgba(0,0,0,.2) 40%, rgba(0,0,0,.25) 70%, rgba(0,0,0,.7) 100%); }
-  /* muro di progetti: card su un cilindro visto da dentro (piccole al centro, grandi ai lati) che gira; script "hero" */
-  .ring-stage { position: relative; z-index: 1; flex: 1 0 auto; min-height: calc(var(--cw) * 1.1); overflow-x: clip; touch-action: pan-y; cursor: grab; user-select: none; }
+  /* card su un arco con il perno molto sotto l hero (script "hero"); quelle al centro stanno sopra */
+  .ring-stage { position: absolute; inset: 0; z-index: 1; touch-action: pan-y; cursor: grab; user-select: none; }
   .ring-stage:active { cursor: grabbing; }
-  .ring { position: absolute; left: 50%; top: 50%; transform-style: preserve-3d; }
-  .rc { position: absolute; width: var(--cw); height: calc(var(--cw) * 1.25); left: calc(var(--cw) / -2); top: calc(var(--cw) * -.625); border-radius: 24px; overflow: hidden; backface-visibility: hidden; -webkit-user-drag: none; }
+  .rc { position: absolute; left: 50%; top: 0; width: var(--cw, 300px); height: calc(var(--cw, 300px) * 1.4); margin-left: calc(var(--cw, 300px) / -2); border-radius: 14px; overflow: hidden; box-shadow: 0 -10px 40px rgba(0,0,0,.6); will-change: transform; -webkit-user-drag: none; }
   .rc .dev { position: absolute; inset: 0; }
   .rc img { -webkit-user-drag: none; }
-  .rc .rn { position: absolute; z-index: 3; left: 0; bottom: 8%; padding: 7px 14px 6px; background: #050505; color: #fff; font-family: var(--pixel); font-size: 19px; line-height: 1; letter-spacing: .06em; text-transform: uppercase; }
+  .rc .dtag { display: none; }
   .hero-grid { position: relative; z-index: 2; pointer-events: none; display: grid; grid-template-columns: 1.3fr 1fr; column-gap: 48px; padding: 120px var(--gutter) 40px; }
   .hero-grid > * { pointer-events: auto; }
-  .hero-grid .title h1 { font-size: calc(clamp(56px, 7.6vw, 132px) * var(--s, 1)); font-weight: 600; letter-spacing: -0.06em; line-height: .88; margin-top: 16px; }
+  .hero-grid .title h1 { font-size: calc(clamp(48px, 6.2vw, 108px) * var(--s, 1)); line-height: .88; margin-top: 16px; }
   .hero-grid .side { grid-column: 2; justify-self: end; display: flex; flex-direction: column; align-items: flex-start; gap: 24px; width: min(420px, 100%); padding-top: 34px; }
   .hero-grid .side p { color: #E5E5EA; font-size: 17px; line-height: 1.45; }
   /* titolo selezionato come in Figma: cornice, maniglie agli angoli, nome del livello e misure */
@@ -146,7 +145,7 @@
 
 
   /* ---------- vetrina lavori a card impilate ---------- */
-  .showcase { position: relative; padding: 0 0 80px; overflow: clip; }
+  .showcase { position: relative; z-index: 1; padding: 0 0 80px; overflow: clip; background: var(--bg); } /* scorre sopra l hero */
   /* fondo: foto del lavoro della card attiva, sfocata, in dissolvenza (senza foto resta scuro) */
   .showcase .bg { position: sticky; top: 0; height: 100vh; height: 100svh; margin-bottom: -100vh; margin-bottom: -100svh; overflow: hidden; pointer-events: none; }
   .showcase .bgi { position: absolute; inset: 0; opacity: 0; transition: opacity .8s ease; }
@@ -163,8 +162,7 @@
   /* scheda a "strip di volo": numero grande, campi in griglia */
   .pin .info { display: flex; flex-direction: column; min-height: 0; padding: 8px 8px 4px; }
   .pin .code { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; padding-bottom: 16px; border-bottom: 1px solid var(--line); }
-  .pin .code b { color: var(--accent); font-size: clamp(56px, 6vw, 96px); font-weight: 500; letter-spacing: -0.06em; line-height: .82; font-variant-numeric: tabular-nums; }
-  .pin .code .px { text-align: right; white-space: nowrap; } /* categorie su una riga, una accanto all'altra */
+  .pin .code .px { white-space: nowrap; } /* categorie su una riga, una accanto all'altra */
   .pin h3 { font-size: clamp(30px, 3vw, 46px); letter-spacing: -0.05em; line-height: 1; margin-top: 20px; }
   .strip { display: grid; grid-template-columns: 1fr 1fr; margin-top: 20px; border: 1px solid var(--line); border-radius: 4px; }
   .strip > div { padding: 10px 12px; }
@@ -201,7 +199,7 @@
   .manifesto .foot { position: relative; max-width: 920px; margin: 48px auto 0; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding-top: 16px; border-top: 1px solid var(--line); }
 
   /* ---------- metodo + servizi ---------- */
-  .method { padding: 0 0 clamp(80px, 10vw, 140px); overflow-x: clip; } /* i testi dei passi entrano da destra: niente scroll orizzontale */
+  .method { padding: 0 0 clamp(80px, 10vw, 140px); }
   .method-grid { display: grid; gap: 12px; }
   .method .media { position: relative; border-radius: 8px; min-height: 560px; }
   .method .media > .px { position: absolute; left: 16px; bottom: 16px; background: var(--black); padding: 8px 10px; border-radius: 4px; }
@@ -237,14 +235,14 @@
   .overlay { position: absolute; z-index: 2; left: 0; right: 0; bottom: clamp(32px, 7vh, 80px); }
   .overlay .wrap { display: flex; justify-content: space-between; align-items: flex-end; gap: 32px; }
   .overlay .copy { max-width: 780px; }
-  .overlay h2 { font-size: clamp(56px, 7.4vw, 124px); letter-spacing: -0.06em; line-height: .9; margin-top: 18px; }
+  .overlay h2 { font-size: clamp(56px, 7.4vw, 124px); line-height: .9; margin-top: 18px; }
   .overlay .ctas { display: flex; gap: 8px; margin-top: 28px; flex-wrap: wrap; }
   .overlay small { display: block; margin-top: 10px; color: #D1D1D6; font-size: 13px; }
 
   /* ---------- footer ---------- */
   footer.site { padding: 64px 0 calc(24px + env(safe-area-inset-bottom)); border-top: 1px solid var(--line); }
   .foot-grid { display: grid; grid-template-columns: 1.6fr repeat(3, 1fr) auto; gap: 32px; }
-  .foot-grid .word { font-size: 22px; font-weight: 500; letter-spacing: -0.04em; }
+  .foot-grid .word { font-size: 22px; font-family: "Sora", sans-serif; font-weight: 200; letter-spacing: -0.02em; }
   .foot-grid p { color: var(--soft); font-size: 15px; margin-top: 18px; max-width: 40ch; }
   .foot-grid h4 { margin-bottom: 14px; color: var(--muted); font-weight: 400; }
   .foot-grid ul { list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 15px; color: var(--soft); }
@@ -261,23 +259,27 @@
   .pin .sum { color: var(--soft); font-size: 16px; line-height: 1.45; margin-top: 16px; max-width: 54ch; }
 
   /* ---------- AI nel metodo: passi come righe di un pannello ---------- */
-  .flow { list-style: none; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 8px clamp(20px, 3vw, 40px); }
-  .flow li { position: relative; display: grid; grid-template-columns: 64px minmax(0, 1fr) minmax(0, 520px); gap: 16px 40px; align-items: start; padding: 28px 0; border-top: 1px solid var(--line); }
-  .flow li > div:not(.fig) { padding-top: 4px; }
-  /* passi animati (script): il filetto si riempie scorrendo, il passo letto resta acceso, gli altri si spengono */
-  .flow li::before { content: ""; position: absolute; left: 0; right: 0; top: -1px; height: 1px; background: var(--accent); transform-origin: 0 50%; transform: scaleX(var(--p, 0)); }
-  .flow.live li { opacity: .32; transition: opacity .5s; }
-  .flow.live li.on { opacity: 1; }
-  .flow li:first-child { border-top: 0; }
-  .flow b { color: var(--accent); font-size: 30px; font-weight: 500; letter-spacing: -0.05em; line-height: 1; font-variant-numeric: tabular-nums; }
-  .flow strong { display: block; font-size: 21px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.15; }
-  .flow p { color: var(--soft); font-size: 16px; margin-top: 6px; max-width: 52ch; }
+  /* passi del metodo: carosello di card come labs.google (frecce sotto, si sfoglia col dito o trascinando), stile del portfolio */
+  .steps { list-style: none; display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; cursor: grab; }
+  .steps::-webkit-scrollbar { display: none; }
+  .steps.drag { scroll-snap-type: none; cursor: grabbing; user-select: none; }
+  .steps li { position: relative; flex: 0 0 calc((100% - 24px) / 3); scroll-snap-align: start; display: flex; flex-direction: column; padding: 12px; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; }
+  .st-tags { display: flex; gap: 6px; padding: 16px 6px 0; }
+  .st-tags span { font-size: 16px; padding: 2px 10px; border: 1px solid var(--line); border-radius: 999px; background: rgba(5,5,5,.75); color: var(--soft); }
+  .st-body { padding: 18px 6px 6px; }
+  .st-body strong { display: block; font-size: clamp(22px, 2vw, 28px); font-family: "Sora", sans-serif; font-weight: 400; letter-spacing: -0.04em; line-height: 1.05; }
+  .st-body p { color: var(--soft); font-size: 16px; margin-top: 10px; }
+  .st-nav { display: flex; justify-content: center; gap: 12px; margin-top: 24px; }
+  .c-btn { display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; border: 1px solid rgba(255,255,255,.4); transition: background .2s, color .2s, border-color .2s, opacity .2s; }
+  .c-btn:hover { background: var(--white); color: var(--black); border-color: var(--white); }
+  .c-btn:disabled { opacity: .3; pointer-events: none; }
   .ai-in { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 24px; }
   .ai-in a { font-family: var(--pixel); font-size: 17px; text-transform: uppercase; letter-spacing: .04em; color: var(--soft); padding: 2px 10px; border: 1px solid var(--line); border-radius: 999px; }
   .ai-in a:hover { color: var(--fg); border-color: var(--accent); }
 
   /* ---------- responsive ---------- */
   @media (max-width: 1100px) {
+    .steps li { flex-basis: calc((100% - 12px) / 2); }
     .thumbs { display: none; }
     .pin { grid-template-columns: 1fr 1fr; height: auto; }
     .pin .media { aspect-ratio: 4 / 5; }
@@ -292,7 +294,6 @@
     .pcard { top: 72px; margin-bottom: 24px; }
     /* card alta quanto lo schermo sotto l'header: il video prende tutto lo spazio che il testo lascia */
     .pin { display: flex; flex-direction: column; height: calc(100svh - 88px); overflow: hidden; }
-    .pin .code b { font-size: 48px; }
     .pin h3 { margin-top: 14px; }
     .strip { display: none; } /* da telefono lo spazio va al video: i dati sono nella scheda del progetto */
     .pin { grid-template-columns: 1fr; }
@@ -303,10 +304,8 @@
     .pin .actions .blk { flex: 1; }
     .overlay .wrap { flex-direction: column; align-items: stretch; gap: 20px; }
     .overlay .ctas .blk, .overlay .aside .blk { flex: 1; width: 100%; }
-    .hero { --cw: 230px; }
     .hero-grid { grid-template-columns: 1fr; row-gap: 28px; padding-top: 110px; }
     .hero-grid .side { grid-column: 1; justify-self: stretch; width: 100%; padding-top: 0; }
-    .ring-stage { flex: 1 0 300px; min-height: 0; margin-top: -48px; }
     .sel { margin-bottom: 26px; } /* la misura sotto il titolo non tocca il paragrafo */
     .hero-grid .side .blk { width: 100%; }
     .numbers { grid-template-columns: repeat(2, 1fr); }
@@ -314,18 +313,17 @@
     .numbers > div:nth-child(even) { border-left: 1px solid var(--line); }
     .numbers > div:nth-child(n+3) { border-top: 1px solid var(--line); }
     .method-grid, .faq-grid { grid-template-columns: 1fr; }
-    .flow li { grid-template-columns: 48px 1fr; }
-    .flow .fig { grid-column: 1 / -1; }
+    .steps li { flex-basis: 100%; }
     .method .copy { grid-template-columns: 1fr; }
     .method .copy .blk { grid-column: 1; }
     .foot-grid > :last-child { grid-column: 1 / -1; }
   }
   @media (max-width: 560px) {
-    .hero-grid .title h1 { font-size: calc(clamp(40px, 13.4vw, 56px) * var(--s, 1)); } /* "Web developer" resta su una riga */
+    .hero-grid .title h1 { font-size: calc(clamp(32px, 10.5vw, 44px) * var(--s, 1)); } /* "Web developer" resta su una riga */
     body { font-size: 16px; }
     .px { font-size: 17px; }
     .blk { font-size: 19px; }
-    .brand .word { font-size: 16px; letter-spacing: -0.03em; }
+    .brand .word { font-size: 16px; }
     .cluster .blk { padding: 0 12px; }
     .manifesto .foot { flex-direction: column; align-items: flex-start; }
     .foot-grid > div:first-child { grid-column: 1 / -1; }
@@ -337,7 +335,7 @@
 
 <header class="hdr" id="hdr">
   <a href="#" class="brand" aria-label="Antonio Nocella, home">
-    <span class="word">Antonio Nocella</span>
+    <span class="word">Nocella</span>
   </a>
   <nav class="thumbs" id="thumbs" aria-label="Featured projects"></nav>
   <div class="cluster">
@@ -371,7 +369,7 @@
         <span class="px" id="coords">X 0 · Y 0 · 1440 × 900 · Adelfia, Bari</span>
         <div class="sel" data-resize="scale">
           <h1 data-editable>Web developer<br>and designer.</h1>
-          <span class="sel-tag" aria-hidden="true">H1 · Geist 600</span>
+          <span class="sel-tag" aria-hidden="true">H1 · Sora 400</span>
           <span class="sel-size" data-size aria-hidden="true"></span>
           <i></i><i></i><i></i><i></i>
         </div>
@@ -381,7 +379,7 @@
         <a href="#work" class="blk blk-accent">See the work <span>↓</span></a>
       </div>
     </div>
-    <nav class="ring-stage" id="ringStage" aria-label="Projects"><div class="ring" id="ring"></div></nav>
+    <nav class="ring-stage" id="ringStage" aria-label="Projects"></nav>
   </section>
 
 
@@ -432,13 +430,14 @@
           </div>
           <a href="#contact" class="blk blk-light">Get in touch <span>→</span></a>
         </div>
-        <ol class="flow" aria-label="How I work with AI">
-          <li><b>01</b><div><strong>Frame the problem</strong><p>Before opening a design tool I write the brief with an LLM: goals, edge cases, risks and what not to build.</p></div><div class="fig" data-fig="brief"></div></li>
-          <li><b>02</b><div><strong>Explore wide, cut fast</strong><p>Several directions side by side, then I keep the one that holds up on a real phone, not the one that looks best in a mockup.</p></div><div class="fig" data-fig="options"></div></li>
-          <li><b>03</b><div><strong>Prototype in code</strong><p>With Claude Code the design becomes a working prototype in hours: real data, real devices, a link to share.</p></div><div class="fig" data-fig="code"></div></li>
-          <li><b>04</b><div><strong>Check what matters</strong><p>Small automated checks on permissions, scoring and data parsing, so speed doesn't turn into bugs.</p></div><div class="fig" data-fig="checks"></div></li>
-          <li><b>05</b><div><strong>Ship and keep going</strong><p>Most projects on this page are live. I keep iterating on what people actually do with them.</p></div><div class="fig" data-fig="ship"></div></li>
+        <ol class="steps" id="steps" aria-label="How I work with AI">
+          <li><div class="fig" data-fig="brief"></div><div class="st-tags px"><span>Step 01</span><span>LLM</span></div><div class="st-body"><strong>Frame the problem</strong><p>Before opening a design tool I write the brief with an LLM: goals, edge cases, risks and what not to build.</p></div></li>
+          <li><div class="fig" data-fig="options"></div><div class="st-tags px"><span>Step 02</span><span>Options</span></div><div class="st-body"><strong>Explore wide, cut fast</strong><p>Several directions side by side, then I keep the one that holds up on a real phone, not the one that looks best in a mockup.</p></div></li>
+          <li><div class="fig" data-fig="code"></div><div class="st-tags px"><span>Step 03</span><span>Claude Code</span></div><div class="st-body"><strong>Prototype in code</strong><p>With Claude Code the design becomes a working prototype in hours: real data, real devices, a link to share.</p></div></li>
+          <li><div class="fig" data-fig="checks"></div><div class="st-tags px"><span>Step 04</span><span>Tests</span></div><div class="st-body"><strong>Check what matters</strong><p>Small automated checks on permissions, scoring and data parsing, so speed doesn't turn into bugs.</p></div></li>
+          <li><div class="fig" data-fig="ship"></div><div class="st-tags px"><span>Step 05</span><span>Live</span></div><div class="st-body"><strong>Ship and keep going</strong><p>Most projects on this page are live. I keep iterating on what people actually do with them.</p></div></li>
         </ol>
+        <div class="st-nav"><button class="c-btn" id="stPrev" aria-label="Previous step"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button><button class="c-btn" id="stNext" aria-label="Next step"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></div>
       </div>
     </div>
   </section>
@@ -490,7 +489,7 @@
   <div class="wrap">
     <div class="foot-grid">
       <div>
-        <span class="word">Antonio Nocella</span>
+        <span class="word">Nocella</span>
         <p>Web developer and designer. I build what I design: SaaS products, mobile apps, configurators and websites, with AI in the loop.</p>
       </div>
       <div><h4 class="px">Latest work</h4><ul id="footWorks"></ul></div>
@@ -541,7 +540,7 @@
       <div class="pin">
         ${shot(w)}
         <div class="info">
-          <div class="code"><b>${num(w)}</b><span class="px px-muted">${w.t.join(' · ')}</span></div>
+          <div class="code"><span class="px px-muted">${w.t.join(' · ')}</span></div>
           <h3>${w.n}</h3>
           <p class="sum">${w.sum}</p>
           <dl class="strip">
@@ -647,59 +646,62 @@
   addEventListener('scroll', light, { passive: true }); light();
 
   const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const R = gsap.utils.random;
 
-  // hero: muro curvo di progetti che gira da solo; si trascina col mouse o col dito, un clic apre il progetto
+  // hero: ventaglio di progetti che ruota piano attorno a un perno sotto lo schermo. Da desktop la cima passa dietro il titolo,
+  // da mobile sta sotto il testo; il fondo dell'hero taglia le card. Si trascina col mouse o col dito, un clic apre il progetto
   (() => {
-    const stage = $('#ringStage'), ring = $('#ring');
-    ring.innerHTML = works.map(w => `<a href="${workUrl(w)}" class="rc" draggable="false">${device(w, { still: true })}<span class="rn">${w.n}</span></a>`).join('');
-    const cards = [...ring.children], step = 360 / cards.length;
-    let rot = 0, v = -.05;
-    // raggio tale che le card si sfiorino; la camera sta sul bordo del cilindro, così le laterali vengono incontro
+    const hero = $('.hero'), stage = $('#ringStage'), h1 = $('.hero-grid h1'), side = $('.hero-grid .side');
+    stage.innerHTML = works.map(w => `<a href="${workUrl(w)}" class="rc" draggable="false" aria-label="${w.n}">${device(w)}</a>`).join('');
+    autoplay(stage); // i video girano solo nelle card a schermo
+    const cards = [...stage.children], n = cards.length;
+    let a = 0, v = -.6, R = 1, step = 0, top = 0, drag = null, moved = 0, vis = true;
     const size = () => {
-      const r = cards[0].offsetWidth * 1.08 / (2 * Math.sin(Math.PI / cards.length));
-      stage.style.perspective = r + 'px';
-      cards.forEach((c, k) => (c.style.transform = `rotateY(${k * step}deg) translateZ(${-r}px)`));
+      const desk = innerWidth > 900, H = innerHeight, y0 = hero.getBoundingClientRect().top, r = (desk ? h1 : side).getBoundingClientRect();
+      top = desk ? r.bottom - y0 - r.height * .45 : r.bottom - y0 + 28; // cima del ventaglio: a metà della seconda riga del titolo
+      const cw = Math.round(desk ? Math.min((H - top) / .9 / 1.4, innerWidth * .22, 380) : Math.min(innerWidth * .46, 190));
+      hero.style.setProperty('--cw', cw + 'px');
+      hero.style.minHeight = `max(100svh, ${Math.round(top + cw * 1.4 * .8)}px)`;
+      R = cw * 1.4 * 2.4; step = cw * .78 / R; // le card si sovrappongono un po', come un mazzo aperto
+      cards.forEach(c => (c.style.transformOrigin = `50% ${R}px`));
     };
-    // le card che girano oltre i 100° circa spariscono in dissolvenza: dietro passerebbero addosso alla camera
     const draw = () => {
-      ring.style.transform = `rotateY(${rot}deg)`;
-      cards.forEach((c, k) => {
-        const a = Math.abs(((k * step + rot) % 360 + 540) % 360 - 180), o = Math.min(Math.max((112 - a) / 12, 0), 1);
-        c.style.opacity = o; c.style.visibility = o ? '' : 'hidden';
+      const span = n * step, o = Math.floor(a / step + n / 2);
+      cards.forEach((c, i) => {
+        const t = ((i * step + a) % span + span * 1.5) % span - span / 2; // angolo in [-span/2, span/2)
+        c.style.transform = `translateY(${top}px) rotate(${t}rad)`;
+        c.style.zIndex = 1 + ((i + o) % n + n) % n; // ognuna sta sopra quella a sinistra: l'ordine non cambia mai a schermo
       });
     };
-    size(); draw(); addEventListener('resize', size);
+    size(); draw(); addEventListener('resize', () => { size(); draw(); });
     if (still) return;
-    let drag = null, moved = 0, vis = true;
+    // scorrendo l'hero resta fissata e sfuma mentre la sezione dopo le passa sopra
+    gsap.registerPlugin(ScrollTrigger);
+    gsap.to(hero, { opacity: 0, ease: 'none', scrollTrigger: { trigger: hero, start: 'bottom bottom', end: () => '+=' + innerHeight, scrub: true, pin: true, pinSpacing: false } });
     new IntersectionObserver(([e]) => (vis = e.isIntersecting)).observe(stage);
-    // giro lento costante; dopo un trascinamento la spinta si smorza e torna al giro lento
-    gsap.ticker.add((t, dt) => { if (!vis || drag) return; v += (-.05 - v) * .03; rot += v * dt / 16.7; draw(); });
+    // rotazione lenta costante; dopo un trascinamento la spinta si smorza e torna lenta
+    gsap.ticker.add((t, dt) => { if (!vis || drag !== null) return; v += (-.6 - v) * .04; a += v / R * dt / 16.7; draw(); });
     stage.addEventListener('pointerdown', e => { drag = e.clientX; moved = 0; });
-    addEventListener('pointermove', e => { if (drag === null) return; const dx = e.clientX - drag; drag = e.clientX; moved += Math.abs(dx); v = dx * .1; rot += v; draw(); });
+    addEventListener('pointermove', e => { if (drag === null) return; const dx = e.clientX - drag; drag = e.clientX; moved += Math.abs(dx); v = dx; a += dx / R; draw(); });
     addEventListener('pointerup', () => (drag = null));
     stage.addEventListener('click', e => { if (moved > 6) e.preventDefault(); }, true);
   })();
 
-  document.querySelectorAll('.flow .fig').forEach(f => motivo(f, f.dataset.fig));
+  document.querySelectorAll('#steps .fig').forEach(f => motivo(f, f.dataset.fig));
 
-  // metodo: ogni passo entra col numero che scorre, il filetto si riempie scorrendo, resta acceso il passo che stai leggendo
-  if (!still) {
-    gsap.registerPlugin(ScrollTrigger);
-    const flow = $('.flow'), steps = [...flow.children];
-    const on = i => steps.forEach((s, j) => s.classList.toggle('on', j === i));
-    flow.classList.add('live');
-    steps.forEach((li, i) => {
-      const b = li.querySelector('b'), n = b.textContent;
-      const roll = () => gsap.to({}, { duration: .5, onUpdate: () => b.textContent = pad(R(0, 99, 1)), onComplete: () => b.textContent = n });
-      gsap.from(li.children[1], { x: 48, opacity: 0, duration: .8, ease: 'power3.out', scrollTrigger: { trigger: li, start: 'top 88%', onEnter: roll } });
-      gsap.from(li.children[2], { y: 40, opacity: 0, duration: .9, ease: 'power3.out', scrollTrigger: { trigger: li, start: 'top 88%' } });
-      gsap.fromTo(li, { '--p': 0 }, { '--p': 1, ease: 'none', scrollTrigger: { trigger: li, start: 'top 85%', end: 'top 50%', scrub: .4 } });
-      ScrollTrigger.create({ trigger: li, start: 'top 60%', end: 'bottom 60%', onEnter: () => on(i), onEnterBack: () => on(i) });
-    });
-    // la pagina cambia altezza dopo il caricamento (immagini, font): le posizioni dei trigger vanno ricalcolate
-    let rt; new ResizeObserver(() => { clearTimeout(rt); rt = setTimeout(() => ScrollTrigger.refresh(), 200); }).observe(document.body);
-  }
+
+  // metodo: le frecce spostano di una card, col mouse si trascina; le frecce si spengono agli estremi
+  (() => {
+    const track = $('#steps'), prev = $('#stPrev'), next = $('#stNext');
+    const step = () => track.children[0].offsetWidth + 12;
+    const ends = () => { prev.disabled = track.scrollLeft < 4; next.disabled = track.scrollLeft > track.scrollWidth - track.clientWidth - 4; };
+    prev.onclick = () => track.scrollBy({ left: -step(), behavior: 'smooth' });
+    next.onclick = () => track.scrollBy({ left: step(), behavior: 'smooth' });
+    track.addEventListener('scroll', ends, { passive: true }); addEventListener('resize', ends); ends();
+    let x0 = null, s0 = 0;
+    track.addEventListener('pointerdown', e => { if (e.pointerType !== 'mouse') return; x0 = e.clientX; s0 = track.scrollLeft; track.classList.add('drag'); });
+    addEventListener('pointermove', e => { if (x0 !== null) track.scrollLeft = s0 - (e.clientX - x0); });
+    addEventListener('pointerup', () => { if (x0 === null) return; x0 = null; track.classList.remove('drag'); });
+  })();
 </script>
 </body>
 </html>
