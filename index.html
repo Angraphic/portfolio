@@ -10,6 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=VT323&display=swap" rel="stylesheet">
+<link href="device.css" rel="stylesheet">
 <style>
   :root {
     /* struttura e stile presi dallo shop Blackshape (home-2), contenuti del portfolio */
@@ -161,7 +162,8 @@
   .pcard { position: sticky; top: 108px; margin: 0 auto 64px; max-width: 1280px; padding: 0 var(--gutter); }
   .pcard:last-of-type { margin-bottom: 0; }
   .pin { display: grid; grid-template-columns: 1.2fr 1fr; gap: 12px; height: min(620px, calc(100vh - 140px)); padding: 12px; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; transform-origin: 50% 0; will-change: transform, filter; }
-  .pin .media { border-radius: 4px; }
+  .pin .media { position: relative; border-radius: 4px; overflow: hidden; }
+  .pin .media > .dev { position: absolute; inset: 0; }
   /* scheda a "strip di volo": numero grande, campi in griglia */
   .pin .info { display: flex; flex-direction: column; min-height: 0; padding: 8px 8px 4px; }
   .pin .code { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; padding-bottom: 16px; border-bottom: 1px solid var(--line); }
@@ -400,7 +402,7 @@
     <div class="bg" id="bg" aria-hidden="true"></div>
     <div class="intro wrap">
       <span class="px px-muted" id="workIntro">Selected work</span>
-      <h2>Products and sites I designed and built.</h2>
+      <h2>Selected projects</h2>
     </div>
     <div id="stack"></div>
     <div class="more-cta"><button class="blk blk-dark" id="allWorks">All projects in a list <span>→</span></button></div>
@@ -535,10 +537,10 @@
   const numbers = [['Years of work','10'],['Agencies','04'],['Projects here', pad(works.length)],['Live links', pad(works.filter(w => w.url).length)],['With AI inside', pad(works.filter(w => w.ai).length)]];
   const $ = s => document.querySelector(s);
   const total = pad(featured.length);
-  const shot = (w, extra = '') => `<div class="media ph${w.tall ? ' tall' : ''}${extra}" data-label="Recording coming soon">${workPic(w)}</div>`;
+  const shot = w => `<div class="media">${device(w)}</div>`;
 
   // vetrina: tutti i progetti, uno per card impilata
-  $('#workIntro').textContent = `Selected work · ${total} projects`;
+  $('#workIntro').textContent = `Portfolio · ${total} projects`;
   $('#workCount').textContent = `Portfolio · ${total} projects`;
   $('#stack').innerHTML = featured.map((w, i) => `
     <div class="anchor" id="p-${w.id}"></div>

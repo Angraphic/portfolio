@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=VT323&display=swap" rel="stylesheet">
+<link href="device.css" rel="stylesheet">
 <style>
   /* stessi token di index.html; struttura della scheda presa da prodotto.html dello shop Blackshape */
   :root {
@@ -143,14 +144,11 @@
   /* ---------- presentazione (galleria screenshot) ---------- */
   .present { position: relative; height: 100vh; min-height: 640px; background: var(--pbg); overflow: hidden; }
   .present .stage { position: absolute; inset: 0; display: grid; place-items: center; padding: 100px var(--gutter) 120px; }
-  /* registrazione dentro una cornice da browser; le app verticali in cornice 9:16 */
-  .frame { width: min(1100px, 100%); max-height: 100%; display: flex; flex-direction: column; border-radius: 10px; overflow: hidden; background: #0B0B0C; box-shadow: 0 30px 80px rgba(0,0,0,.22); }
-  .frame-bar { display: flex; align-items: center; gap: 6px; height: 34px; flex: none; padding: 0 12px; background: #1D1D1F; }
-  .frame-bar i { width: 10px; height: 10px; border-radius: 50%; background: #3A3A3C; }
-  .frame-bar span { margin-left: 10px; font-family: var(--pixel); font-size: 16px; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .frame .ph { width: 100%; aspect-ratio: 16 / 10; }
-  .frame.tall { height: 100%; width: auto; aspect-ratio: 450 / 834; }
-  .frame.tall .ph { flex: 1; aspect-ratio: auto; }
+  /* il prodotto nel suo riquadro colorato (device.css), grande */
+  .present .stage { padding-bottom: 130px; }
+  .present #stage { width: min(1100px, 100%, calc((100svh - 260px) * 1.6)); }
+  .present .dev { width: 100%; aspect-ratio: 16 / 10; border-radius: 24px; }
+  .present .dev .phone { width: clamp(150px, 34%, 340px); }
   .gallery-thumbs { position: absolute; z-index: 2; left: var(--gutter); top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 8px; }
   .gallery-thumbs button { width: 92px; height: 92px; border-radius: 4px; outline: 2px solid transparent; outline-offset: 2px; transition: outline-color .2s; font-family: var(--pixel); font-size: 20px; color: #6E6E73; }
   .gallery-thumbs button::after { content: none; }
@@ -334,10 +332,7 @@
   <section class="present" data-light="true">
     <div class="gallery-thumbs" id="thumbs"></div>
     <div class="stage">
-      <figure class="frame" id="frame">
-        <figcaption class="frame-bar"><i></i><i></i><i></i><span id="frameUrl"></span></figcaption>
-        <div class="ph" id="stage" data-label="Recording coming soon"></div>
-      </figure>
+      <div id="stage"></div>
     </div>
   </section>
 
@@ -438,16 +433,9 @@
   $('#statement').textContent = p.sum;
 
   // presentazione: la registrazione principale e, se c'è, la seconda (es. sito marketing)
-  const shots = [{ id: p.id, label: p.label || 'Recording', url: p.url }, ...(p.extra ? [{ id: p.extra.id, label: p.extra.label, url: p.url }] : [])];
-  if (p.extra) shots[0].url = null; // l'app principale vive dietro il login: la barra mostra solo il nome
-  const stage = $('#stage'), frame = $('#frame');
-  frame.classList.toggle('tall', !!p.tall);
-  const setStage = k => {
-    const s = shots[k];
-    stage.innerHTML = p.video === false ? '' : (p.tall ? tallPic(p, s.id) : workPic(p, `${p.n} · ${s.label}`, { id: s.id }));
-    $('#frameUrl').textContent = s.url ? host(s.url) : `${p.n} · ${s.label}`;
-    autoplay(stage);
-  };
+  const shots = [{ id: p.id, label: p.label || 'Recording' }, ...(p.extra ? [{ id: p.extra.id, label: p.extra.label }] : [])];
+  const stage = $('#stage');
+  const setStage = k => { stage.innerHTML = device(p, { id: shots[k].id }); autoplay(stage); };
   setStage(0);
   $('.present').hidden = p.video === false; // senza registrazione niente cornice vuota
   $('#thumbs').innerHTML = shots.length < 2 ? '' : shots.map((s, k) => `<button class="ph" aria-pressed="${k === 0}" aria-label="${s.label}"><img src="${media(s.id)}.jpg" alt=""><span>${s.label}</span></button>`).join('');

@@ -2,9 +2,10 @@
 // Anteprime: assets/lavori/<id>.webm (video in loop) + <id>.jpg (poster), registrate dai siti veri.
 // video: false = niente registrazione (resta il riquadro grigio). tall: true = video verticale (app 9:16).
 // extra: seconda registrazione mostrata nella scheda (es. sito marketing accanto all'app).
+// c: colore del riquadro in cui si mostra il prodotto (device.css).
 const works = [
   {
-    id: '01', n: 'LeadWin', t: ['SaaS', 'Lead management'], kind: 'Web app + marketing site', at: 'Never Before Italia', status: 'Live, used by client companies', ai: true,
+    id: '01', c: '#8CCFF8', n: 'LeadWin', t: ['SaaS', 'Lead management'], kind: 'Web app + marketing site', at: 'Never Before Italia', status: 'Live, used by client companies', ai: true,
     url: 'https://leadwin.it', extra: { id: '01-site', label: 'Marketing site' }, label: 'Product',
     sum: 'A lead management platform for companies that advertise on Meta and Google: leads land in real time, get routed into pipelines, scored and assigned to sales agents, who follow up on WhatsApp and book appointments in the same place.',
     role: ['Product and UI design', 'Front-end development', 'Integrations: Meta, Google Ads, WhatsApp, Google Calendar', 'Marketing site, design and build'],
@@ -16,7 +17,7 @@ const works = [
     ],
   },
   {
-    id: '02', n: 'Traccio', t: ['Mobile app', 'Logistics'], kind: 'iOS and Android app', at: 'Personal project', status: 'In development, tested on device',
+    id: '02', c: '#C6FF2D', n: 'Traccio', t: ['Mobile app', 'Logistics'], kind: 'iOS and Android app', at: 'Personal project', status: 'In development, tested on device',
     url: 'https://traccio-landing-six.vercel.app', label: 'Landing page',
     sum: 'My own product: an app that follows parcels across every carrier and only notifies you when you have to do something: held at a pickup point, failed delivery, handover to another carrier. Everything else stays quiet.',
     role: ['Product idea and written spec', 'UX and UI design', 'Mobile and back-end development', 'Landing page'],
@@ -28,7 +29,7 @@ const works = [
     ],
   },
   {
-    id: '03', n: 'InTessuto', t: ['Configurator', 'Interiors'], kind: 'Web app', at: 'Never Before Italia', status: 'Live demo', ai: true,
+    id: '03', c: '#E8C6A0', n: 'InTessuto', t: ['Configurator', 'Interiors'], kind: 'Web app', at: 'Never Before Italia', status: 'Live demo', ai: true,
     url: 'https://intessuto.vercel.app',
     sum: 'A guided fabric configurator for upholstery. Instead of a catalogue of 84 fabrics and 1,700 colours, a few questions and a visual path that turns instinctive choices into a style profile, then a render of your own sofa in the chosen fabric.',
     role: ['UX and UI design', 'Front-end and back-end development', 'Data pipeline for colours and datasheets'],
@@ -40,7 +41,7 @@ const works = [
     ],
   },
   {
-    id: '04', n: 'FinishDecor Discover', t: ['Kiosk app', 'Interiors'], kind: 'Showroom touch screen', at: 'Never Before Italia', status: 'Prototype, shown to the client', ai: true, tall: true,
+    id: '04', c: '#F5A623', n: 'FinishDecor Discover', t: ['Kiosk app', 'Interiors'], kind: 'Showroom touch screen', at: 'Never Before Italia', status: 'Prototype, shown to the client', ai: true, tall: true,
     sum: 'A guided experience on a vertical touch screen in a finishes showroom. Visitors pick a kind of space, react to images and compare pairs; the system proposes three colour palettes, hands them to the phone with a QR code while they touch the real samples, then shows them in AI-generated rooms.',
     role: ['UX flow and UI design', 'Development', 'AI integration'],
     stack: ['HTML, CSS, JavaScript', 'Vercel Functions', 'Gemini API'],
@@ -51,7 +52,7 @@ const works = [
     ],
   },
   {
-    id: '05', n: 'ManyTask', t: ['SaaS', 'Operations'], kind: 'Web app', at: 'Never Before Italia', status: 'Internal prototype', video: false,
+    id: '05', c: '#FF9C7A', n: 'ManyTask', t: ['SaaS', 'Operations'], kind: 'Web app', at: 'Never Before Italia', status: 'Internal prototype', video: false,
     sum: 'Operations software for an agency: tasks, clients and contracts in one place. Activating a contract generates its recurring tasks and payment schedule, and every client gets a read-only portal on their own work.',
     role: ['Product and UI design', 'Full-stack development', 'Database and permissions design'],
     stack: ['Next.js', 'Supabase (Postgres, row-level security)', 'shadcn/ui', 'Tailwind', 'Resend', 'Meta Graph API'],
@@ -62,7 +63,7 @@ const works = [
     ],
   },
   {
-    id: '06', n: 'FinishDecor Trend', t: ['Mobile web app', 'Interiors'], kind: 'Mobile web app', at: 'Never Before Italia', status: 'Live', ai: true, tall: true,
+    id: '06', c: '#9C98F2', n: 'FinishDecor Trend', t: ['Mobile web app', 'Interiors'], kind: 'Mobile web app', at: 'Never Before Italia', status: 'Live', ai: true, tall: true,
     url: 'https://finish-decor.vercel.app',
     sum: 'A globe of finishing and interior design trends, each pinned to the city it comes from. Tap a pin to read the story and jump to the original source. The content is refreshed by a script that queries an AI search API.',
     role: ['Concept and UI design', 'Development'],
@@ -74,7 +75,7 @@ const works = [
     ],
   },
   {
-    id: '07', n: 'Never Before', t: ['Website', 'Agency'], kind: 'Website', at: 'Never Before Italia', status: 'Live preview',
+    id: '07', c: '#EDE6DC', n: 'Never Before', t: ['Website', 'Agency'], kind: 'Website', at: 'Never Before Italia', status: 'Live preview',
     url: 'https://neverbefore-site.vercel.app',
     sum: 'The new website of the agency I work for, built around motion: a reel that opens full screen and settles into the headline, services as animated diagrams and a draggable wall of projects.',
     role: ['Art direction and UI design', 'Motion design', 'Development'],
@@ -86,7 +87,7 @@ const works = [
     ],
   },
   {
-    id: '08', n: 'Beeyond', t: ['Website', 'Industrial'], kind: 'Website', at: 'Never Before Italia', status: 'Live',
+    id: '08', c: '#9FE3EA', n: 'Beeyond', t: ['Website', 'Industrial'], kind: 'Website', at: 'Never Before Italia', status: 'Live',
     url: 'https://beeyond-eight.vercel.app/en/',
     sum: 'A bilingual website for a company that builds sludge dewatering machines. The job was to make industrial technology readable for plant managers and procurement, with numbers first.',
     role: ['UI design', 'Development', 'Copy edits with the client across three rounds of revisions'],
@@ -98,7 +99,7 @@ const works = [
     ],
   },
   {
-    id: '09', n: 'Blackshape Store', t: ['E-commerce', 'Aviation'], kind: 'E-commerce', at: 'Never Before Italia', status: 'Live prototype',
+    id: '09', c: '#D9D9DE', n: 'Blackshape Store', t: ['E-commerce', 'Aviation'], kind: 'E-commerce', at: 'Never Before Italia', status: 'Live prototype',
     url: 'https://antonionocellanb4.github.io/blackshape-shop/',
     sum: 'The official merchandise store of an Italian aircraft manufacturer: apparel and gear for pilots. Two design directions, then the chosen one rebuilt as a custom WooCommerce theme the client can edit without a page builder.',
     role: ['UX and UI design', 'Front-end development', 'WordPress and WooCommerce theme'],
@@ -110,7 +111,7 @@ const works = [
     ],
   },
   {
-    id: '10', n: 'Blackshape Aircraft', t: ['Website', 'Aviation'], kind: 'Website', at: 'Never Before Italia', status: 'Live',
+    id: '10', c: '#BFD4EA', n: 'Blackshape Aircraft', t: ['Website', 'Aviation'], kind: 'Website', at: 'Never Before Italia', status: 'Live',
     url: 'https://blackshapeaircraft.com',
     sum: 'The corporate website of Blackshape, an Italian manufacturer of ultralight and certified aircraft: models, operations, service and dealer network.',
     role: ['UI design', 'WordPress development'],
@@ -122,7 +123,7 @@ const works = [
     ],
   },
   {
-    id: '11', n: 'Punto Gold', t: ['Website', 'Manufacturing'], kind: 'Website', at: 'Never Before Italia', status: 'Live',
+    id: '11', c: '#FFD84D', n: 'Punto Gold', t: ['Website', 'Manufacturing'], kind: 'Website', at: 'Never Before Italia', status: 'Live',
     url: 'https://www.puntogold.it',
     sum: 'The website of a window contractor near Bari that manufactures, supplies and installs aluminium and PVC windows, following builders and homeowners from design to site.',
     role: ['UI design', 'WordPress development'],
@@ -156,4 +157,12 @@ const autoplay = (root = document) => {
     if (e.isIntersecting) { v.preload = 'auto'; v.play().catch(() => {}); } else v.pause();
   }), { rootMargin: '120px' }));
   root.querySelectorAll('video[data-auto]').forEach(v => io.observe(v));
+};
+
+// il prodotto nel suo riquadro colorato: telefono per le app verticali, finestra da browser per il resto
+const SB = '<div class="sb"><span>9:41</span><svg width="54" height="12" viewBox="0 0 54 12" fill="#fff" aria-hidden="true"><rect x="0" y="7" width="3" height="5" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="1" width="3" height="11" rx="1"/><path d="M28 3.5a8 8 0 0 1 9 0l-1.3 1.6a6 6 0 0 0-6.4 0zM30.3 6.3a4.3 4.3 0 0 1 4.4 0L32.5 9z"/><rect x="41" y="1.5" width="11" height="9" rx="2.5" fill="none" stroke="#fff"/><rect x="42.8" y="3.3" width="7.4" height="5.4" rx="1.2"/></svg></div>';
+const device = (w, { id = w.id, tall = w.tall } = {}) => {
+  const tag = w.at === 'Personal project' ? 'Personal project' : /prototype/i.test(w.status) ? 'Prototype' : '';
+  const scr = `<div class="scr">${w.video === false ? '<span class="soon">Recording coming soon</span>' : workPic(w, w.n, { id })}</div>`;
+  return `<div class="dev" style="--c:${w.c}">${tall ? `<div class="phone">${SB}${scr}</div>` : `<div class="win"><div class="bar"><i></i><i></i><i></i></div>${scr}</div>`}${tag ? `<span class="dtag">${tag}</span>` : ''}</div>`;
 };
