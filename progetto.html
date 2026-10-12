@@ -68,10 +68,8 @@
   .ph > .blur { filter: blur(28px) brightness(.45); transform: scale(1.15); }
   .ph.tall > video, .ph.tall > img:not(.blur) { object-fit: contain; object-position: 50% 50%; }
 
-  /* ---------- barra annunci + header (come index) ---------- */
-  .announce { position: relative; z-index: 60; background: var(--accent); text-align: center; padding: 9px var(--gutter); padding-top: calc(9px + env(safe-area-inset-top)); color: var(--black); }
-  .announce a { color: var(--black); text-decoration: underline; text-underline-offset: 3px; margin-left: 8px; }
-  .hdr { position: fixed; left: 0; right: 0; top: 0; z-index: 50; padding: 16px var(--gutter); display: flex; align-items: center; justify-content: space-between; gap: 16px; pointer-events: none; }
+  /* ---------- header (come index) ---------- */
+  .hdr { position: fixed; left: 0; right: 0; top: env(safe-area-inset-top, 0px); z-index: 50; padding: 16px var(--gutter); display: flex; align-items: center; justify-content: space-between; gap: 16px; pointer-events: none; }
   .hdr > * { pointer-events: auto; }
   .hdr::before { content: ""; position: absolute; inset: 0 0 -72px 0; z-index: -1; pointer-events: none; opacity: 0; transition: opacity .35s ease;
     background: linear-gradient(180deg, rgba(5,5,5,.92) 0%, rgba(5,5,5,.9) 30%, rgba(5,5,5,.84) 42%, rgba(5,5,5,.74) 52%, rgba(5,5,5,.6) 61%, rgba(5,5,5,.45) 70%, rgba(5,5,5,.3) 78%, rgba(5,5,5,.17) 86%, rgba(5,5,5,.07) 93%, rgba(5,5,5,0) 100%);
@@ -126,7 +124,7 @@
   .buy .num { color: var(--accent); font-size: 26px; font-weight: 500; letter-spacing: -0.03em; white-space: nowrap; font-variant-numeric: tabular-nums; }
 
   /* ---------- hero progetto ---------- */
-  .p-hero { position: relative; height: calc(100vh - var(--ann, 37px)); height: calc(100svh - var(--ann, 37px)); min-height: 600px; overflow: hidden; background: var(--black); }
+  .p-hero { position: relative; height: 100vh; height: 100svh; min-height: 600px; overflow: hidden; background: var(--black); }
   .p-hero > .ph { position: absolute; inset: 0; }
   .p-hero > .ph::after { position: absolute; right: var(--gutter); top: 50%; }
   /* il video sotto è pieno di dettagli: velo scuro forte a sinistra, dove sta il titolo */
@@ -278,7 +276,6 @@
     body { font-size: 16px; }
     .px { font-size: 17px; }
     .blk { font-size: 19px; }
-    .announce a { display: none; }
     .brand .word { font-size: 16px; letter-spacing: -0.03em; }
     .cluster .blk { padding: 0 12px; }
     .spec-card .top span:nth-child(2) { display: none; }
@@ -288,8 +285,6 @@
 </style>
 </head>
 <body>
-
-<div class="announce px">Open to new roles in web development and design<a href="#contact">Get in touch</a></div>
 
 <header class="hdr" id="hdr">
   <a href="index.html" class="brand" aria-label="Antonio Nocella, home">
@@ -559,13 +554,10 @@
   $('#footWorks').innerHTML = works.slice(0, 5).map(x => `<li><a href="${workUrl(x)}">${x.n}</a></li>`).join('');
   autoplay();
 
-  // header: segue la barra annunci; fascia scura dopo la hero, nome nero sul fondo chiaro
-  const hdr = $('#hdr'), announce = $('.announce');
-  const setAnn = () => document.documentElement.style.setProperty('--ann', announce.offsetHeight + 'px');
-  setAnn(); addEventListener('resize', setAnn);
+  // header: fascia scura dopo la hero, nome nero sul fondo chiaro
+  const hdr = $('#hdr');
   const sections = [...document.querySelectorAll('main section')]; // la galleria fissata finisce dentro il pin-spacer di GSAP
   const onScroll = () => {
-    hdr.style.top = Math.max(announce.getBoundingClientRect().bottom, 0) + 'px';
     const under = sections.find(s => { const r = s.getBoundingClientRect(); return r.top <= 60 && r.bottom > 60; });
     const light = under && under.dataset.light === 'true';
     hdr.classList.toggle('light', !!light);

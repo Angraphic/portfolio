@@ -415,10 +415,11 @@
         ['.hf', 'to', { attr: { fill: '#FFD6B0' }, duration: .2, yoyo: true, repeat: 1 }]]],
 
     // Beeyond: numeri prima, due lingue con gli stessi termini, un modulo che arriva alle persone
-    '08-0': () => { const N = [['DRY SOLIDS, MIN', 20, n => Math.round(n) + '%'], ['MG/L INLET, MAX', 50000, n => Math.round(n).toLocaleString('en-US')], ['KW INSTALLED, MAX', 5.15, n => n.toFixed(2)], ['START, RUN, WASH', 0, null]];
+    // i quattro numeri con cui apre la home del sito
+    '08-0': () => { const N = [['MIN. CAKE DRYNESS', 20, n => Math.round(n) + '%'], ['SLUDGE, G/L', 50, n => '2-' + Math.round(n)], ['KW INSTALLED', 8.2, n => '0.2-' + n.toFixed(1)], ['UNATTENDED', 24, n => Math.round(n) + '/7']];
       return [N.map(([l], k) => { const x = 20 + (k % 2) * 184, y = 40 + Math.floor(k / 2) * 116;
-        return `<g class="tile">${box(x, y, 176, 104)}${t(x + 14, y + 86, l, M)}</g>` + t(x + 14, y + 58, k === 3 ? 'AUTO' : '0', A, `class="n${k}"`, 42); }).join(''),
-        [['.tile', 'in', { stagger: .1 }], ...N.slice(0, 3).map(([, to, fmt], k) => ['.n' + k, 'count', { to, fmt, duration: 1.2 }, k ? '<.2' : undefined]), ['.n3', 'in']]]; },
+        return `<g class="tile">${box(x, y, 176, 104)}${t(x + 14, y + 86, l, M)}</g>` + t(x + 14, y + 58, '0', A, `class="n${k}"`, 42); }).join(''),
+        [['.tile', 'in', { stagger: .1 }], ...N.map(([, to, fmt], k) => ['.n' + k, 'count', { to, fmt, duration: 1.2 }, k ? '<.2' : undefined])]]; },
     '08-1': () => { const T = [['FANGO', 'SLUDGE'], ['PRESSA A COCLEA', 'SCREW PRESS'], ['DISIDRATAZIONE', 'DEWATERING']];
       return [t(16, 40, 'IT', M) + t(384, 40, 'EN', M, 'text-anchor="end"') + t(200, 40, 'BROCHURE', M, 'text-anchor="middle"') + box(170, 52, 60, 208) +
         T.map(([it, en], k) => { const y = 112 + k * 60;

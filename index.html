@@ -66,12 +66,9 @@
   .warm .overlay small, .warm .px-muted { color: var(--soft); }
   .blk-dark { background: var(--panel-2); color: var(--fg); }
 
-  /* ---------- barra annunci ---------- */
-  .announce { position: relative; z-index: 60; background: var(--accent); text-align: center; padding: 9px var(--gutter); padding-top: calc(9px + env(safe-area-inset-top)); color: var(--black); }
-  .announce a { color: var(--black); text-decoration: underline; text-underline-offset: 3px; margin-left: 8px; }
 
   /* ---------- header ---------- */
-  .hdr { position: fixed; left: 0; right: 0; top: 0; z-index: 50; padding: 16px var(--gutter); display: flex; align-items: center; justify-content: space-between; gap: 16px; pointer-events: none; transition: top .3s; }
+  .hdr { position: fixed; left: 0; right: 0; top: env(safe-area-inset-top, 0px); z-index: 50; padding: 16px var(--gutter); display: flex; align-items: center; justify-content: space-between; gap: 16px; pointer-events: none; transition: top .3s; }
   .hdr > * { pointer-events: auto; }
   .hdr::before { content: ""; position: absolute; inset: 0 0 -72px 0; z-index: -1; pointer-events: none; opacity: 0; transition: opacity .35s ease;
     background: linear-gradient(180deg, rgba(5,5,5,.92) 0%, rgba(5,5,5,.9) 30%, rgba(5,5,5,.84) 42%, rgba(5,5,5,.74) 52%, rgba(5,5,5,.6) 61%, rgba(5,5,5,.45) 70%, rgba(5,5,5,.3) 78%, rgba(5,5,5,.17) 86%, rgba(5,5,5,.07) 93%, rgba(5,5,5,0) 100%);
@@ -120,7 +117,7 @@
 
   /* ---------- hero ---------- */
   /* testo in alto, muro sotto che prende lo spazio rimasto; le card escono dalla fascia verso l alto ma si fermano al bordo dell hero */
-  .hero { --cw: clamp(220px, 24vw, 360px); position: relative; z-index: 2; display: flex; flex-direction: column; min-height: calc(100vh - var(--ann, 37px)); min-height: calc(100svh - var(--ann, 37px)); overflow: clip; background: var(--black); }
+  .hero { --cw: clamp(220px, 24vw, 360px); position: relative; z-index: 2; display: flex; flex-direction: column; min-height: 100vh; min-height: 100svh; overflow: clip; background: var(--black); }
   .shade::before { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: linear-gradient(180deg, rgba(0,0,0,.62) 0%, rgba(0,0,0,.2) 40%, rgba(0,0,0,.25) 70%, rgba(0,0,0,.7) 100%); }
   /* muro di progetti: card su un cilindro visto da dentro (piccole al centro, grandi ai lati) che gira; script "hero" */
   .ring-stage { position: relative; z-index: 1; flex: 1 0 auto; min-height: calc(var(--cw) * 1.1); overflow-x: clip; touch-action: pan-y; cursor: grab; user-select: none; }
@@ -328,7 +325,6 @@
     body { font-size: 16px; }
     .px { font-size: 17px; }
     .blk { font-size: 19px; }
-    .announce a { display: none; }
     .brand .word { font-size: 16px; letter-spacing: -0.03em; }
     .cluster .blk { padding: 0 12px; }
     .manifesto .foot { flex-direction: column; align-items: flex-start; }
@@ -338,8 +334,6 @@
 </style>
 </head>
 <body>
-
-<div class="announce px">Open to new roles in web development and design<a href="#contact">Get in touch</a></div>
 
 <header class="hdr" id="hdr">
   <a href="#" class="brand" aria-label="Antonio Nocella, home">
@@ -571,14 +565,10 @@
   $('#jobs').innerHTML = jobs.map(([a, r, y]) => `<li><div><strong>${a}</strong>${r}</div><span class="px px-muted">${y}</span></li>`).join('');
   autoplay();
 
-  // header: segue la barra annunci finché è visibile, poi resta in alto
+  // header: fascia scura appena si scorre
   const hdr = $('#hdr');
-  const announce = $('.announce');
-  const setAnn = () => document.documentElement.style.setProperty('--ann', announce.offsetHeight + 'px');
-  setAnn(); addEventListener('resize', setAnn);
   const blocks = [...document.querySelectorAll('main > section, footer.site')];
   const onScroll = () => {
-    hdr.style.top = Math.max(announce.getBoundingClientRect().bottom, 0) + 'px';
     hdr.classList.toggle('solid', scrollY > 80);
     const under = blocks.find(b => { const r = b.getBoundingClientRect(); return r.top <= 60 && r.bottom > 60; });
     hdr.classList.toggle('on-warm', !!under && under.classList.contains('warm'));
