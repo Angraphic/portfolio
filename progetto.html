@@ -29,7 +29,6 @@
     --blk: 52px;
     --sans: Geist, Inter, system-ui, sans-serif;
     --pixel: VT323, ui-monospace, monospace;
-    --pbg: #C7C9CA;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
@@ -67,7 +66,7 @@
   .ph > video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 0; }
   .ph:has(> video)::after { content: none; }
   .ph > .blur { filter: blur(28px) brightness(.45); transform: scale(1.15); }
-  .ph.tall > video { object-fit: contain; object-position: 50% 50%; }
+  .ph.tall > video, .ph.tall > img:not(.blur) { object-fit: contain; object-position: 50% 50%; }
 
   /* ---------- barra annunci + header (come index) ---------- */
   .announce { position: relative; z-index: 60; background: var(--accent); text-align: center; padding: 9px var(--gutter); padding-top: calc(9px + env(safe-area-inset-top)); color: var(--black); }
@@ -141,19 +140,23 @@
   .w { color: #3A3A3C; transition: color .25s; }
   .w.on { color: var(--fg); }
 
-  /* ---------- presentazione (galleria screenshot) ---------- */
-  .present { position: relative; height: 100vh; min-height: 640px; background: var(--pbg); overflow: hidden; }
-  .present .stage { position: absolute; inset: 0; display: grid; place-items: center; padding: 100px var(--gutter) 120px; }
-  /* il prodotto nel suo riquadro colorato (device.css), grande */
-  .present .stage { padding-bottom: 130px; }
-  .present #stage { width: min(1100px, 100%, calc((100svh - 260px) * 1.6)); }
-  .present .dev { width: 100%; aspect-ratio: 16 / 10; border-radius: 24px; }
-  .present .dev .phone { width: clamp(150px, 34%, 340px); }
-  .gallery-thumbs { position: absolute; z-index: 2; left: var(--gutter); top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 8px; }
-  .gallery-thumbs button { width: 92px; height: 92px; border-radius: 4px; outline: 2px solid transparent; outline-offset: 2px; transition: outline-color .2s; font-family: var(--pixel); font-size: 20px; color: #6E6E73; }
-  .gallery-thumbs button::after { content: none; }
-  .gallery-thumbs button span { position: absolute; left: 0; right: 0; bottom: 0; padding: 3px 4px 2px; font-size: 14px; line-height: 1; text-transform: uppercase; color: #fff; background: rgba(5,5,5,.7); }
-  .gallery-thumbs button[aria-pressed="true"] { outline-color: var(--accent); }
+  /* ---------- video del progetto: a tutta larghezza; le app verticali al centro, sul colore del progetto ---------- */
+  .reel { position: relative; overflow: hidden; background: var(--bg); }
+  .reel-in { position: relative; overflow: hidden; transform-origin: 50% 0; }
+  .reel-in video { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
+  .reel.tall { display: grid; place-items: center; padding: clamp(80px, 10vw, 120px) var(--gutter); background: var(--c); }
+  .reel.tall .reel-in { width: min(100%, calc(min(84svh, 860px) * 9 / 16)); border-radius: 36px; box-shadow: 0 40px 80px rgba(0,0,0,.25); }
+  .reel.tall video { width: min(100%, calc(min(84svh, 860px) * 9 / 16)); height: auto; aspect-ratio: 9 / 16; }
+
+  /* ---------- dettagli: ritagli delle schermate, a griglia ---------- */
+  .crops { padding: clamp(100px, 12vw, 160px) 0 0; }
+  .crops h2 { font-size: clamp(40px, 5vw, 76px); letter-spacing: -0.06em; margin: 14px 0 40px; }
+  .crop-grid { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: clamp(170px, 19vw, 290px); gap: 12px; }
+  .crop { position: relative; overflow: hidden; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); }
+  .crop:first-child { grid-column: span 2; grid-row: span 2; }
+  .crop:nth-child(2), .crop:nth-child(3):last-child { grid-column: span 2; }
+  .crop img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .crop figcaption { position: absolute; left: 10px; bottom: 10px; padding: 6px 8px 5px; border-radius: 4px; background: var(--black); }
 
   /* ---------- scheda progetto ---------- */
   .specs { position: relative; padding: clamp(120px, 14vw, 200px) 0 clamp(120px, 12vw, 180px); overflow: hidden; }
@@ -167,20 +170,21 @@
 
   /* ---------- dettagli ---------- */
   .details { position: relative; padding: clamp(100px, 12vw, 160px) 0; overflow: hidden; }
-  .details h2 { position: relative; font-size: clamp(40px, 5vw, 76px); letter-spacing: -0.06em; max-width: 18ch; }
-  /* mappa del sito accanto al titolo, come una rotta tra le pagine */
-  .det-head { position: relative; display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 24px; margin-bottom: 56px; }
-  .sitemap { width: 100%; height: auto; }
-  .sitemap a rect { transition: stroke .2s, stroke-opacity .2s; }
-  .sitemap a:hover rect, .sitemap a:focus-visible rect { stroke: var(--accent); stroke-opacity: 1; }
-  .sitemap a:focus { outline: none; }
-  .det-grid { position: relative; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
-  .det { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 12px; display: flex; flex-direction: column; }
-  .det-n { color: var(--accent); font-size: clamp(56px, 6vw, 88px); font-weight: 500; letter-spacing: -0.06em; line-height: .85; padding: 8px 4px 48px; font-variant-numeric: tabular-nums; }
-  .det h3 { padding: 12px 4px 0; }
-  .det h3 { font-size: clamp(24px, 2.2vw, 32px); letter-spacing: -0.045em; line-height: 1.02; }
-  .det .tag { padding: 4px 4px 0; }
-  .det p { color: var(--soft); font-size: 16px; padding: 12px 4px 4px; }
+  .details h2 { position: relative; font-size: clamp(40px, 5vw, 76px); letter-spacing: -0.06em; max-width: 14ch; margin-top: 14px; }
+  /* struttura del progetto (pagine o schermate) stampata come l'albero di un terminale */
+  .det-head { position: relative; display: grid; grid-template-columns: 1fr 1fr; align-items: start; gap: 24px; margin-bottom: 56px; }
+  .tree { background: #000; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+  .tree .top { display: flex; justify-content: space-between; gap: 16px; padding: 12px 16px; border-bottom: 1px solid var(--line); }
+  .tree ol { list-style: none; padding: 14px 16px 18px; font: 15px/1.45 ui-monospace, Consolas, Menlo, monospace; color: var(--soft); overflow-x: auto; white-space: pre; }
+  .tree li:first-child { color: var(--accent); }
+  .tree li span { color: #48484A; }
+  /* highlight: figura animata sopra (motivi.js), numero e testo sotto */
+  .det-grid { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .det { display: flex; flex-direction: column; padding: 12px; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; }
+  .det .txt { padding: 20px 6px 6px; }
+  .det-n { color: var(--accent); font-size: clamp(40px, 4vw, 56px); font-weight: 500; letter-spacing: -0.06em; line-height: .85; font-variant-numeric: tabular-nums; }
+  .det h3 { font-size: clamp(24px, 2.2vw, 32px); letter-spacing: -0.045em; line-height: 1.02; margin-top: 16px; }
+  .det p { color: var(--soft); font-size: 16px; margin-top: 12px; }
 
   /* ---------- prossimo progetto (era le recensioni) ---------- */
   .reviews { position: relative; padding: clamp(100px, 12vw, 160px) 0; border-top: 1px solid var(--line); overflow: hidden; }
@@ -198,15 +202,23 @@
   .reviews p { color: var(--soft); margin: 20px auto 32px; max-width: 48ch; }
 
   /* ---------- altri lavori ---------- */
-  .more { padding: clamp(100px, 12vw, 160px) 0; }
-  .more .head { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; margin-bottom: 32px; }
+  /* carosello ad arco come labs.google: la card al centro è dritta, le altre ruotano e scendono lungo un cerchio */
+  .more { position: relative; padding: clamp(100px, 12vw, 160px) 0 clamp(72px, 8vw, 110px); overflow: hidden; }
+  .more .head { position: relative; z-index: 1; display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; }
   .more h2 { font-size: clamp(36px, 4vw, 60px); margin-top: 12px; }
-  .more-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
-  .mcard { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 12px; display: flex; flex-direction: column; gap: 14px; }
-  .mcard .ph { aspect-ratio: 4 / 5; border-radius: 4px; }
+  .carousel { --w: min(400px, 76vw); position: relative; height: calc(var(--w) * 1.42); margin-top: 48px; touch-action: pan-y; user-select: none; }
+  .carousel:focus-visible { outline: none; }
+  .mcard { position: absolute; left: 50%; top: 0; width: var(--w); margin-left: calc(var(--w) / -2); display: flex; flex-direction: column; gap: 14px; padding: 12px; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; box-shadow: 0 30px 60px rgba(0,0,0,.55); transform-origin: 50% 100%; -webkit-user-drag: none; }
+  .mcard img { -webkit-user-drag: none; }
+  .m-media { aspect-ratio: 4 / 3; border-radius: 4px; }
+  .m-media > img { object-position: 50% 0; }
   .mcard h3 { font-size: 22px; letter-spacing: -0.035em; line-height: 1.1; padding: 0 4px; }
-  .mcard .row { display: flex; justify-content: space-between; align-items: center; padding: 14px 4px 4px; border-top: 1px solid var(--line); margin-top: auto; }
-  .mcard:hover h3 { text-decoration: underline; text-underline-offset: 4px; }
+  .mcard p { color: var(--soft); font-size: 15px; line-height: 1.45; padding: 0 4px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .mcard .row { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: auto; padding: 14px 4px 4px; border-top: 1px solid var(--line); }
+  .mcard.on:hover h3 { text-decoration: underline; text-underline-offset: 4px; }
+  .c-nav { position: relative; z-index: 1; display: flex; justify-content: center; gap: 12px; margin-top: 28px; }
+  .c-btn { display: grid; place-items: center; width: 64px; height: 64px; border-radius: 50%; border: 1px solid rgba(255,255,255,.4); background: rgba(5,5,5,.5); transition: background .2s, color .2s, border-color .2s; }
+  .c-btn:hover { background: var(--white); color: var(--black); border-color: var(--white); }
 
   /* ---------- chiusura + footer (come index) ---------- */
   .closing { position: relative; height: 100vh; min-height: 640px; overflow: hidden; }
@@ -231,7 +243,6 @@
   @media (max-width: 1100px) {
     .buy { grid-template-columns: 1fr auto auto; }
     .buy .chips-cell { display: none; }
-    .more-grid { grid-template-columns: repeat(2, 1fr); }
     .foot-grid { grid-template-columns: 1fr 1fr; }
   }
   @media (max-width: 900px) {
@@ -250,11 +261,12 @@
     .buy .num { font-size: 20px; }
     .p-hero .label { top: auto; bottom: 250px; }
     .p-hero .kicker { display: none; }
-    .gallery-thumbs { top: auto; bottom: 220px; transform: none; flex-direction: row; left: 50%; translate: -50% 0; }
-    .gallery-thumbs button { width: 56px; height: 56px; }
-    .present .stage { padding: 90px var(--gutter) 300px; }
     .spec-group { grid-template-columns: 1fr; gap: 10px; }
     .det-grid { grid-template-columns: 1fr; }
+    .crop-grid { grid-template-columns: 1fr 1fr; grid-auto-rows: 40vw; gap: 8px; }
+    .crop:first-child { grid-row: span 1; }
+    .crop:nth-child(2), .crop:nth-child(3):last-child { grid-column: span 1; }
+    .crop:nth-child(4) { grid-column: span 2; }
     .det-head { grid-template-columns: 1fr; }
     .overlay .wrap { flex-direction: column; align-items: stretch; gap: 20px; }
     .overlay .ctas .blk, .overlay .aside .blk { flex: 1; width: 100%; }
@@ -269,9 +281,6 @@
     .announce a { display: none; }
     .brand .word { font-size: 16px; letter-spacing: -0.03em; }
     .cluster .blk { padding: 0 12px; }
-    .more-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
-    .mcard h3 { font-size: 17px; }
-    .mcard .row { flex-direction: column; align-items: flex-start; gap: 4px; }
     .spec-card .top span:nth-child(2) { display: none; }
     .foot-grid > div:first-child { grid-column: 1 / -1; }
   }
@@ -329,10 +338,13 @@
     <p class="text wrap" id="statement"></p>
   </section>
 
-  <section class="present" data-light="true">
-    <div class="gallery-thumbs" id="thumbs"></div>
-    <div class="stage">
-      <div id="stage"></div>
+  <section class="reel" id="reel"><div class="reel-in" id="reelIn"></div></section>
+
+  <section class="crops" id="crops">
+    <div class="wrap">
+      <span class="px px-muted" id="cropKick"></span>
+      <h2>Up close.</h2>
+      <div class="crop-grid" id="cropGrid"></div>
     </div>
   </section>
 
@@ -347,7 +359,7 @@
 
   <section class="details">
     <div class="wrap">
-      <div class="det-head"><h2 id="detTitle">Worth a closer look.</h2><svg class="sitemap" viewBox="0 0 780 370" role="navigation" aria-label="Site map"><path d="M380 57V95H110V133" fill="none" stroke="#FF9030" stroke-opacity="0.7"/><path d="M380 57V95H290V133" fill="none" stroke="#fff" stroke-opacity="0.22"/><path d="M380 57V95H470V133" fill="none" stroke="#fff" stroke-opacity="0.22"/><path d="M380 57V95H650V133" fill="none" stroke="#fff" stroke-opacity="0.22"/><path d="M110 167V205H75V243" fill="none" stroke="#FF9030" stroke-opacity="0.7"/><path d="M110 167V205H215V243" fill="none" stroke="#fff" stroke-opacity="0.22"/><path d="M290 167V205H350V243" fill="none" stroke="#fff" stroke-opacity="0.22"/><path d="M650 167V205H650V243" fill="none" stroke="#fff" stroke-opacity="0.22"/><path d="M75 277V340H560" fill="none" stroke="#FF9030" stroke-opacity=".6" stroke-dasharray="5 5"/><text x="570" y="345" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="15" fill="#fff" fill-opacity="0.45" text-anchor="start" id="smCount">sitemap.xml</text><a href="index.html" aria-label="/"><rect x="361.4" y="23" width="37.2" height="34" rx="5" fill="#121214" stroke="#FF9030" stroke-opacity="0.9"/><text x="380" y="45" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="15" fill="#fff" fill-opacity="0.95" text-anchor="middle">/</text></a><a href="index.html#work" aria-label="/work"><rect x="73.0" y="133" width="74.0" height="34" rx="5" fill="#121214" stroke="#FF9030" stroke-opacity="0.9"/><text x="110" y="155" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="15" fill="#fff" fill-opacity="0.95" text-anchor="middle">/work</text></a><a href="index.html#ai" aria-label="/ai"><rect x="262.2" y="133" width="55.6" height="34" rx="5" fill="#121214" stroke="#fff" stroke-opacity="0.28"/><text x="290" y="155" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="15" fill="#fff" fill-opacity="0.62" text-anchor="middle">/ai</text></a><a href="index.html#skills-section" aria-label="/skills"><rect x="423.8" y="133" width="92.4" height="34" rx="5" fill="#121214" stroke="#fff" stroke-opacity="0.28"/><text x="470" y="155" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="15" fill="#fff" fill-opacity="0.62" text-anchor="middle">/skills</text></a><a href="index.html#experience" aria-label="/experience"><rect x="585.4" y="133" width="129.2" height="34" rx="5" fill="#121214" stroke="#fff" stroke-opacity="0.28"/><text x="650" y="155" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="15" fill="#fff" fill-opacity="0.62" text-anchor="middle">/experience</text></a><a href="#" aria-label="/work/:id"><rect x="19.6" y="243" width="110.8" height="34" rx="5" fill="#121214" stroke="#FF9030" stroke-opacity="0.9"/><text x="75" y="265" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="15" fill="#fff" fill-opacity="0.95" text-anchor="middle">/work/:id</text></a><a href="#" data-open="work" aria-label="/work/…"><rect x="168.8" y="243" width="92.4" height="34" rx="5" fill="#121214" stroke="#fff" stroke-opacity="0.28"/><text x="215" y="265" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="15" fill="#fff" fill-opacity="0.62" text-anchor="middle">/work/…</text></a><a href="index.html#ai" aria-label="/ai/inside"><rect x="290.0" y="243" width="120.0" height="34" rx="5" fill="#121214" stroke="#fff" stroke-opacity="0.28"/><text x="350" y="265" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="15" fill="#fff" fill-opacity="0.62" text-anchor="middle">/ai/inside</text></a><a href="#contact" aria-label="/contact"><rect x="599.2" y="243" width="101.6" height="34" rx="5" fill="#121214" stroke="#fff" stroke-opacity="0.28"/><text x="650" y="265" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="15" fill="#fff" fill-opacity="0.62" text-anchor="middle">/contact</text></a></svg></div>
+      <div class="det-head"><div><span class="px px-muted" id="detKick"></span><h2 id="detTitle"></h2></div><div class="tree"><div class="top px"><span id="treeFile"></span><span class="px-muted" id="treeCount"></span></div><ol id="tree"></ol></div></div>
       <div class="det-grid" id="details"></div>
     </div>
   </section>
@@ -366,14 +378,15 @@
     </div>
   </section>
 
-  <section class="more">
+  <section class="more" id="more">
     <div class="wrap">
       <div class="head">
         <div><span class="px px-muted">Portfolio</span><h2>More work.</h2></div>
         <button class="blk blk-dark" data-open="work">All projects <span>→</span></button>
       </div>
-      <div class="more-grid" id="moreGrid"></div>
     </div>
+    <div class="carousel" id="carousel" tabindex="0" role="region" aria-roledescription="carousel" aria-label="More work"></div>
+    <div class="c-nav"><button class="c-btn" id="cPrev" aria-label="Previous project"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button><button class="c-btn" id="cNext" aria-label="Next project"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></div>
   </section>
 
   <section class="closing shade warm" id="contact">
@@ -411,7 +424,10 @@
   </div>
 </footer>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="dati.js"></script>
+<script src="motivi.js"></script>
 <script src="ascii.js" defer></script>
 <script src="editor.js" defer></script>
 <script>
@@ -422,26 +438,39 @@
   const prev = works[(i - 1 + works.length) % works.length], next = works[(i + 1) % works.length];
   const host = u => u.replace(/^https?:\/\//, '').replace(/\/$/, '');
   document.title = p.n + ' | Antonio Nocella';
-  // video verticali (app 9:16): intere, con il poster sfocato a riempire i lati
-  const tallPic = (w, id = w.id) => w.video === false ? '' : `<img class="blur" src="${media(id)}.jpg" alt="" aria-hidden="true">${workPic(w, w.n, { id })}`;
 
   // hero + testo
   $('#heroKicker').textContent = `Portfolio · ${num(p)} · ${p.t.join(' · ')}`;
   $('#heroTitle').textContent = p.n;
   $('#heroPic').classList.toggle('tall', !!p.tall);
-  $('#heroPic').innerHTML = p.tall ? tallPic(p) : workPic(p);
+  // fondo statico (il video è più sotto): schermata a 2x del sito vero (assets/lavori/h), se manca il fotogramma del video;
+  // le app verticali intere, con la stessa immagine sfocata a riempire i lati
+  const heroImg = a => `<img src="${media('h/' + p.id)}.jpg" ${a} onerror="this.onerror=null;this.src='${media(p.id)}.jpg'">`;
+  $('#heroPic').innerHTML = p.video === false ? '' : (p.tall ? heroImg('class="blur" alt="" aria-hidden="true"') : '') + heroImg(`alt="${p.n}"`);
   $('#statement').textContent = p.sum;
 
-  // presentazione: la registrazione principale e, se c'è, la seconda (es. sito marketing)
-  const shots = [{ id: p.id, label: p.label || 'Recording' }, ...(p.extra ? [{ id: p.extra.id, label: p.extra.label }] : [])];
-  const stage = $('#stage');
-  const setStage = k => { stage.innerHTML = device(p, { id: shots[k].id }); autoplay(stage); };
-  setStage(0);
-  $('.present').hidden = p.video === false; // senza registrazione niente cornice vuota
-  $('#thumbs').innerHTML = shots.length < 2 ? '' : shots.map((s, k) => `<button class="ph" aria-pressed="${k === 0}" aria-label="${s.label}"><img src="${media(s.id)}.jpg" alt=""><span>${s.label}</span></button>`).join('');
-  document.querySelectorAll('#thumbs button').forEach((b, k) => b.onclick = () => {
-    document.querySelectorAll('#thumbs button').forEach(x => x.setAttribute('aria-pressed', x === b));
-    setStage(k);
+  const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  gsap.registerPlugin(ScrollTrigger);
+  // la pagina cambia altezza dopo il caricamento (immagini, font): le posizioni dei trigger vanno ricalcolate
+  let rt; new ResizeObserver(() => { clearTimeout(rt); rt = setTimeout(() => ScrollTrigger.refresh(), 200); }).observe(document.body);
+
+  // video: a tutta larghezza, entra crescendo dai bordi; le app verticali al centro sul colore del progetto
+  const reel = $('#reel'), reelIn = $('#reelIn');
+  reel.hidden = p.video === false;
+  reel.classList.toggle('tall', !!p.tall);
+  reel.dataset.light = !!p.tall;
+  reel.style.setProperty('--c', p.c);
+  reelIn.innerHTML = workPic(p);
+  if (!still && !p.tall) gsap.fromTo(reelIn, { scale: .84, borderRadius: 24 }, { scale: 1, borderRadius: 0, ease: 'none', scrollTrigger: { trigger: reel, start: 'top 95%', end: 'top 15%', scrub: true } });
+
+  // dettagli: ritagli delle schermate (assets/lavori/d) che si aprono dal basso
+  $('#crops').hidden = !p.g.length;
+  $('#cropKick').textContent = `Details · ${p.n}`;
+  $('#cropGrid').innerHTML = p.g.map((label, k) => `<figure class="crop"><img src="${media('d/' + p.id)}-${k + 1}.jpg" alt="${p.n}: ${label}, detail" loading="lazy"><figcaption class="px">${pad(k + 1)} · ${label}</figcaption></figure>`).join('');
+  if (!still) document.querySelectorAll('.crop').forEach((c, k) => {
+    const st = { trigger: c, start: 'top 88%' };
+    gsap.from(c, { clipPath: 'inset(100% 0% 0% 0%)', duration: 1.1, ease: 'power3.inOut', delay: k % 2 * .12, scrollTrigger: st });
+    gsap.from(c.firstElementChild, { scale: 1.3, duration: 1.6, ease: 'power3.out', delay: k % 2 * .12, scrollTrigger: st });
   });
 
   // barra del progetto
@@ -468,14 +497,63 @@
   };
   $('#specGroups').innerHTML = Object.entries(specs).map(([k, list]) => `<div class="spec-group"><span class="px">${k}</span><ul>${list.join('')}</ul></div>`).join('');
 
-  // tre punti del progetto
-  $('#details').innerHTML = p.points.map(([t, d], k) => `<article class="det"><b class="det-n">${pad(k + 1)}</b><span class="px px-muted tag">Highlight</span><h3>${t}</h3><p>${d}</p></article>`).join('');
-  $('#nfTag').textContent = `Frame · project-${pad(works.length + 1)}`;
-  $('#smCount').textContent = `sitemap.xml · ${works.length} projects`;
+  // struttura del progetto: pagine del sito o schermate dell'app, stampate come l'albero di un terminale
+  const web = p.map[0].startsWith('/');
+  const rows = p.map.map(s => [s.length - s.trimStart().length, s.trim()]);
+  const more = (j, d) => { for (let k = j + 1; k < rows.length; k++) { if (rows[k][0] < d) return false; if (rows[k][0] === d) return true; } return false; };
+  const parent = (j, d) => { for (let k = j; k >= 0; k--) if (rows[k][0] === d) return k; };
+  $('#tree').innerHTML = rows.map(([d, t], j) => {
+    let pre = '';
+    for (let l = 1; l < d; l++) pre += more(parent(j, l), l) ? '│   ' : '    ';
+    if (d) pre += more(j, d) ? '├── ' : '└── ';
+    return `<li><span>${pre}</span>${j || !web ? t : host(p.url)}</li>`;
+  }).join('');
+  $('#detKick').textContent = 'Worth a closer look';
+  $('#detTitle').textContent = web ? `${p.n}, page by page.` : `${p.n}, screen by screen.`;
+  $('#treeFile').textContent = web ? 'sitemap.xml' : 'screens';
+  $('#treeCount').textContent = `${num(p)} / ${pad(works.length)}`;
+  if (!still) gsap.from('#tree li', { opacity: 0, x: -14, duration: .4, stagger: .06, ease: 'power2.out', scrollTrigger: { trigger: '#tree', start: 'top 80%' } });
 
-  // altri lavori, liste
-  const others = [1, 2, 3, 4].map(k => works[(i + k) % works.length]);
-  $('#moreGrid').innerHTML = others.map(x => `<a href="${workUrl(x)}" class="mcard"><div class="ph" data-label="${x.n}">${workPic(x, x.n, { still: true })}</div><h3>${x.n}</h3><div class="row"><span class="px px-muted">${x.t.join(' · ')}</span><span class="px">${num(x)} ↗</span></div></a>`).join('');
+  // tre punti del progetto, ognuno con la sua scena animata su misura (motivi.js); senza scena, una figura a rotazione
+  $('#details').innerHTML = p.points.map(([t, d], k) => `<article class="det"><div class="fig"></div><div class="txt"><b class="det-n">${pad(k + 1)}</b><h3>${t}</h3><p>${d}</p></div></article>`).join('');
+  document.querySelectorAll('.det .fig').forEach((f, k) => motivo(f, motivo.has(`${p.id}-${k}`) ? `${p.id}-${k}` : i + k * 3));
+  $('#nfTag').textContent = `Frame · project-${pad(works.length + 1)}`;
+
+  // altri lavori: carosello ad arco; frecce, trascinamento e tasti; un clic su una card laterale la porta al centro
+  const others = works.slice(1).map((_, k) => works[(i + 1 + k) % works.length]);
+  const car = $('#carousel');
+  car.innerHTML = others.map(x => `<a href="${workUrl(x)}" class="mcard" draggable="false"><div class="ph m-media" data-label="${x.n}">${workPic(x, x.n, { still: true })}</div><h3>${x.n}</h3><p>${x.sum}</p><div class="row"><span class="px px-muted">${x.t.join(' · ')}</span><span class="px">${num(x)} ↗</span></div></a>`).join('');
+  const cards = [...car.children], half = Math.floor(cards.length / 2);
+  let cur = 0;
+  const place = (dur = .8) => {
+    // card su un cerchio con il centro molto in basso: di lato scendono e ruotano come la tangente
+    const step = 5 * Math.PI / 180, R = cards[0].offsetWidth * (innerWidth < 700 ? .94 : 1.06) / Math.sin(step); // su telefono le laterali si vedono di più
+    cards.forEach((c, k) => {
+      const d = ((k - cur) % cards.length + cards.length + half) % cards.length - half, a = d * step;
+      gsap.to(c, { x: R * Math.sin(a), y: R * (1 - Math.cos(a)), rotation: d * 5, opacity: Math.abs(d) > 2 ? 0 : 1, zIndex: 10 - Math.abs(d), duration: still ? 0 : dur, ease: 'power3.out' });
+      c.classList.toggle('on', !d);
+      c.tabIndex = d ? -1 : 0;
+    });
+  };
+  const go = k => { cur = (k + cards.length) % cards.length; place(); };
+  $('#cPrev').onclick = () => go(cur - 1);
+  $('#cNext').onclick = () => go(cur + 1);
+  car.onkeydown = e => { if (e.key === 'ArrowLeft') go(cur - 1); if (e.key === 'ArrowRight') go(cur + 1); };
+  let x0 = null, dragged = false;
+  car.addEventListener('pointerdown', e => { x0 = e.clientX; dragged = false; });
+  car.addEventListener('pointerup', e => {
+    if (x0 === null) return;
+    const dx = e.clientX - x0; x0 = null;
+    if (Math.abs(dx) > 40) { dragged = true; go(cur + (dx < 0 ? 1 : -1)); }
+  });
+  car.addEventListener('click', e => {
+    const c = e.target.closest('.mcard');
+    if (!c || (!dragged && c.classList.contains('on'))) return;
+    e.preventDefault();
+    if (!dragged) go(cards.indexOf(c));
+  });
+  addEventListener('resize', () => place(0));
+  place(0);
   $('#workCount').textContent = `Portfolio · ${pad(works.length)} projects`;
   $('#workList').innerHTML = works.map(x => `<a href="${workUrl(x)}" class="line-item${x === p ? ' current' : ''}"><span class="ph">${workPic(x, x.n, { still: true })}</span><div><strong>${x.n}</strong><span class="px px-muted">${x.t.join(' · ')} · ${x.at}</span></div><span class="px">${num(x)}</span></a>`).join('');
   $('#footWorks').innerHTML = works.slice(0, 5).map(x => `<li><a href="${workUrl(x)}">${x.n}</a></li>`).join('');
@@ -485,7 +563,7 @@
   const hdr = $('#hdr'), announce = $('.announce');
   const setAnn = () => document.documentElement.style.setProperty('--ann', announce.offsetHeight + 'px');
   setAnn(); addEventListener('resize', setAnn);
-  const sections = [...document.querySelectorAll('main > section')];
+  const sections = [...document.querySelectorAll('main section')]; // la galleria fissata finisce dentro il pin-spacer di GSAP
   const onScroll = () => {
     hdr.style.top = Math.max(announce.getBoundingClientRect().bottom, 0) + 'px';
     const under = sections.find(s => { const r = s.getBoundingClientRect(); return r.top <= 60 && r.bottom > 60; });

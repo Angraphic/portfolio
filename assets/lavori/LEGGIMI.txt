@@ -7,3 +7,8 @@ Per ogni lavoro (numero = id in dati.js):
 
 Le registrazioni si rifanno con tools/registra/rec.mjs (node rec.mjs 02 07 ...; per LeadWin servono LW_USER e LW_PASS dell'account demo) (Chrome + playwright-core + ffmpeg di Playwright, solo VP8).
 Video verticali (app 9:16): tall: true in dati.js. Senza registrazione: video: false (resta il riquadro grigio).
+
+h/<id>.jpg      sfondo dell'hero nella scheda: prima schermata del sito vero catturata a 2x (3x per le app verticali).
+                Dove manca (LeadWin app, Discover: niente accesso pubblico) si usa il poster <id>.jpg.
+d/<id>-<n>.jpg  ritagli 4:3 mostrati in "Up close", catturati dal vivo a 2x con le didascalie in g: di dati.js.
+                LeadWin app e Discover: ritagli dai fotogrammi dei video, quindi meno nitidi.

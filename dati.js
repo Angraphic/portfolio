@@ -1,11 +1,13 @@
 // dati condivisi tra home (index.html) e scheda (progetto.html). Testi in inglese.
 // Anteprime: assets/lavori/<id>.webm (video in loop) + <id>.jpg (poster), registrate dai siti veri.
 // video: false = niente registrazione (resta il riquadro grigio). tall: true = video verticale (app 9:16).
-// extra: seconda registrazione mostrata nella scheda (es. sito marketing accanto all'app).
+// g: didascalie degli screenshot della galleria (assets/lavori/g/<id>-<n>.jpg). map: pagine o schermate del progetto, uno spazio di rientro per livello.
 // c: colore del riquadro in cui si mostra il prodotto (device.css).
 const works = [
   {
     id: '01', c: '#8CCFF8', n: 'LeadWin', t: ['SaaS', 'Lead management'], kind: 'Web app', at: 'Never Before Italia', status: 'Live, used by client companies', ai: true,
+    g: ['Dashboard', 'Pipeline', 'Leads', 'Calendar'],
+    map: ['login.leadwin.it', ' Dashboard', ' Pipeline', '  Lead scoring', ' Leads', '  Ask Leady', ' Calendar', ' Agents', ' WhatsApp inbox', ' Integrations', '  Meta', '  Google Ads'],
     url: 'https://login.leadwin.it',
     sum: 'A lead management platform for companies that advertise on Meta and Google: leads land in real time, get routed into pipelines, scored and assigned to sales agents, who follow up on WhatsApp and book appointments in the same place.',
     role: ['Product and UI design', 'Front-end development', 'Meta developer: the LeadWin Meta app (official Tech Provider)', 'Integrations: Google Ads, Google Calendar, Make.com'],
@@ -18,6 +20,8 @@ const works = [
   },
   {
     id: '01-site', c: '#B9C6FF', n: 'LeadWin website', t: ['Website', 'SaaS marketing'], kind: 'Marketing website', at: 'Never Before Italia', status: 'Live',
+    g: ['Home', 'Features', 'Leady AI', 'WhatsApp agent'],
+    map: ['/', ' /features', '  /pipeline-lead-scoring', '  /assegnazione-lead-agenti', '  /agente-ai-whatsapp', '  /appuntamenti-google-calendar', '  /gestione-lead-meta-lead-ads', ' /leady', ' /about', ' /faq'],
     url: 'https://leadwin.it',
     sum: 'The marketing site of LeadWin. It has to explain a lead management platform to small business owners in one scroll and turn the interested ones into demo requests.',
     role: ['Web design', 'Front-end development', 'SEO and performance'],
@@ -30,7 +34,9 @@ const works = [
   },
   {
     id: '02', c: '#C6FF2D', n: 'Traccio', t: ['Mobile app', 'Logistics'], kind: 'iOS and Android app', at: 'Personal project', status: 'In development, tested on device',
-    url: 'https://traccio-landing-six.vercel.app', label: 'Landing page',
+    g: ['Home', 'How it works', 'Parcel states', 'Carriers'],
+    map: ['Traccio', ' Onboarding', ' Parcels', '  Add a parcel', '  Parcel page', '   Route map', '   Pickup deadline', ' Notifications', ' Settings', '  Face ID lock'],
+    url: 'https://traccio-landing.vercel.app',
     sum: 'My own product: an app that follows parcels across every carrier and only notifies you when you have to do something: held at a pickup point, failed delivery, handover to another carrier. Everything else stays quiet.',
     role: ['Product idea and written spec', 'Interface design', 'Mobile and back-end development', 'Landing page'],
     stack: ['Expo (React Native)', 'TypeScript', 'Supabase (Edge Functions, pg_cron, Realtime)', 'AfterShip and 17TRACK APIs', 'OpenFreeMap'],
@@ -42,6 +48,8 @@ const works = [
   },
   {
     id: '03', c: '#E8C6A0', n: 'InTessuto', t: ['Configurator', 'Interiors'], kind: 'Web app', at: 'Never Before Italia', status: 'Live demo', ai: true,
+    g: ['Pick the piece', 'Choose a mood', 'React to images'],
+    map: ['/', ' /configuratore', '  Piece', '  Mood', '  Images', '  Style profile', '  Fabrics', '  Render'],
     url: 'https://intessuto.vercel.app',
     sum: 'A guided fabric configurator for upholstery. Instead of a catalogue of 84 fabrics and 1,700 colours, a few questions and a visual path that turns instinctive choices into a style profile, then a render of your own sofa in the chosen fabric.',
     role: ['Interface design', 'Front-end and back-end development', 'Data pipeline for colours and datasheets'],
@@ -54,6 +62,8 @@ const works = [
   },
   {
     id: '04', c: '#F5A623', n: 'FinishDecor Discover', t: ['Kiosk app', 'Interiors'], kind: 'Showroom touch screen', at: 'Never Before Italia', status: 'Presented to the client', ai: true, tall: true,
+    g: ['Choose a space', 'Wood and gold', 'Velvet and plants', 'Bold colour'],
+    map: ['Attract screen', ' Space', ' Images', ' Pairs', ' Palettes', '  QR to phone', '  AI rooms'],
     sum: 'A guided experience on a vertical touch screen in a finishes showroom. Visitors pick a kind of space, react to images and compare pairs; the system proposes three colour palettes, hands them to the phone with a QR code while they touch the real samples, then shows them in AI-generated rooms.',
     role: ['Flow and interface design', 'Development', 'AI integration'],
     stack: ['HTML, CSS, JavaScript', 'Vercel Functions', 'Gemini API'],
@@ -64,7 +74,10 @@ const works = [
     ],
   },
   {
-    id: '05', c: '#FF9C7A', n: 'ManyTask', t: ['SaaS', 'Operations'], kind: 'Web app', at: 'Never Before Italia', status: 'Internal prototype', video: false,
+    id: '05', c: '#FF9C7A', n: 'ManyTask', t: ['SaaS', 'Operations'], kind: 'Web app', at: 'Never Before Italia', status: 'Live prototype',
+    url: 'https://manytask.vercel.app',
+    g: ['Dashboard', 'Task board', 'Payment schedule', 'Service catalogue'],
+    map: ['/', ' /tasks', '  ?view=board', '  /tasks/:id', ' /clients', ' /calendar', ' /contracts', ' /payments', ' /services', ' /integrations', ' /team', ' /settings'],
     sum: 'Operations software for an agency: tasks, clients and contracts in one place. Activating a contract generates its recurring tasks and payment schedule, and every client gets a read-only portal on their own work.',
     role: ['Product and UI design', 'Full-stack development', 'Database and permissions design'],
     stack: ['Next.js', 'Supabase (Postgres, row-level security)', 'shadcn/ui', 'Tailwind', 'Resend', 'Meta Graph API'],
@@ -76,6 +89,8 @@ const works = [
   },
   {
     id: '06', c: '#9C98F2', n: 'FinishDecor Trend', t: ['Mobile web app', 'Interiors'], kind: 'Mobile web app', at: 'Never Before Italia', status: 'Live', ai: true, tall: true,
+    g: ['Globe', 'Trend: hidden doors', 'Categories', 'Trend: zellige'],
+    map: ['Globe', ' City pin', '  Trend story', '   Original source', ' List view'],
     url: 'https://finish-decor.vercel.app',
     sum: 'A globe of finishing and interior design trends, each pinned to the city it comes from. Tap a pin to read the story and jump to the original source. The content is refreshed by a script that queries an AI search API.',
     role: ['Concept and UI design', 'Development'],
@@ -88,6 +103,8 @@ const works = [
   },
   {
     id: '07', c: '#EDE6DC', n: 'Never Before', t: ['Website', 'Agency'], kind: 'Website', at: 'Never Before Italia', status: 'Live preview',
+    g: ['Services', 'Projects', 'About', 'Case study'],
+    map: ['/', ' /servizi.html', ' /progetti.html', '  /progetto-marinobus.html', ' /chi-siamo.html', ' /#contatti'],
     url: 'https://neverbefore-site.vercel.app',
     sum: 'The new website of the agency I work for, built around motion: a reel that opens full screen and settles into the headline, services as animated diagrams and a draggable wall of projects.',
     role: ['Art direction and UI design', 'Motion design', 'Development'],
@@ -100,6 +117,8 @@ const works = [
   },
   {
     id: '08', c: '#9FE3EA', n: 'Beeyond', t: ['Website', 'Industrial'], kind: 'Website', at: 'Never Before Italia', status: 'Live',
+    g: ['Technology', 'BTECH press', 'Applications', 'Contact'],
+    map: ['/en/', ' /technology', ' /btech-screw-press', ' /bw-wave-separator', ' /applications', ' /about', ' /contact'],
     url: 'https://beeyond-eight.vercel.app/en/',
     sum: 'A bilingual website for a company that builds sludge dewatering machines. The job was to make industrial technology readable for plant managers and procurement, with numbers first.',
     role: ['UI design', 'Development', 'Copy edits with the client across three rounds of revisions'],
@@ -112,6 +131,8 @@ const works = [
   },
   {
     id: '09', c: '#D9D9DE', n: 'Blackshape Store', t: ['E-commerce', 'Aviation'], kind: 'E-commerce', at: 'Never Before Italia', status: 'Live prototype',
+    g: ['All products', 'Product', 'Categories', 'New in'],
+    map: ['/', ' /#categorie', ' /shop-1.html', '  /prodotto-1.html', ' Cart'],
     url: 'https://antonionocellanb4.github.io/blackshape-shop/',
     sum: 'The official merchandise store of an Italian aircraft manufacturer: apparel and gear for pilots. Two design directions, then the chosen one rebuilt as a custom WooCommerce theme the client can edit without a page builder.',
     role: ['Interface design', 'Front-end development', 'WordPress and WooCommerce theme'],
@@ -124,6 +145,8 @@ const works = [
   },
   {
     id: '10', c: '#BFD4EA', n: 'Blackshape Aircraft', t: ['Website', 'Aviation'], kind: 'Website', at: 'Never Before Italia', status: 'Live',
+    g: ['Prime Veloce', 'Flight school', 'Dealers', 'About'],
+    map: ['/', ' /aircraft', '  /prime/', '  /gabriel/', ' /flight-school/', ' /special-missions/', ' /dealers/', ' /news/', ' /media/', ' /contact/'],
     url: 'https://blackshapeaircraft.com',
     sum: 'The corporate website of Blackshape, an Italian manufacturer of ultralight and certified aircraft: models, operations, service and dealer network.',
     role: ['UI design', 'WordPress development'],
@@ -136,6 +159,8 @@ const works = [
   },
   {
     id: '11', c: '#FFD84D', n: 'Punto Gold', t: ['Website', 'Manufacturing'], kind: 'Website', at: 'Never Before Italia', status: 'Live',
+    g: ['Production', 'Schüco LivIngSlide', 'Windows', 'Contact'],
+    map: ['/', ' /produzione-infissi-e-serramenti/', ' /catalogo-prodotti/', '  /finestre/', '  /scorrevoli/', '  /porte-dingresso/', ' /prodotti/', '  /schuco-livingslide/', '  … 17 more', ' /posa-in-opera/', ' /contatti/'],
     url: 'https://www.puntogold.it',
     sum: 'The website of a window contractor near Bari that manufactures, supplies and installs aluminium and PVC windows, following builders and homeowners from design to site.',
     role: ['UI design', 'WordPress development'],
@@ -146,11 +171,6 @@ const works = [
       ['Quote in one step', 'A request button that stays in reach on every page.'],
     ],
   },
-];
-const services = [
-  ['Product design', 'From a fuzzy brief to flows people finish: research, specs, prototypes, and the small decisions that make an app feel obvious.', ['User flows', 'Specs', 'Prototyping', 'Usability']],
-  ['UI and motion',         'Grids, type, colour and motion that explain something, from design systems to a single screen.',                                  ['UI design', 'Design systems', 'Material 3', 'Motion', 'SVG']],
-  ['Building in code',      'I build what I design, so the prototype is the product: web apps, mobile apps, sites and the integrations behind them.',           ['React', 'Next.js', 'Expo', 'Supabase', 'WordPress']],
 ];
 const workType = w => w.kind;
 const workUrl = w => `progetto.html?id=${w.id}`;
@@ -174,8 +194,8 @@ const autoplay = (root = document) => {
 
 // il prodotto nel suo riquadro colorato: telefono per le app verticali, finestra da browser per il resto
 const SB = '<div class="sb"><span>9:41</span><svg width="54" height="12" viewBox="0 0 54 12" fill="#fff" aria-hidden="true"><rect x="0" y="7" width="3" height="5" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="1" width="3" height="11" rx="1"/><path d="M28 3.5a8 8 0 0 1 9 0l-1.3 1.6a6 6 0 0 0-6.4 0zM30.3 6.3a4.3 4.3 0 0 1 4.4 0L32.5 9z"/><rect x="41" y="1.5" width="11" height="9" rx="2.5" fill="none" stroke="#fff"/><rect x="42.8" y="3.3" width="7.4" height="5.4" rx="1.2"/></svg></div>';
-const device = (w, { id = w.id, tall = w.tall } = {}) => {
+const device = (w, { id = w.id, tall = w.tall, still = false } = {}) => {
   const tag = w.at === 'Personal project' ? 'Personal project' : /prototype/i.test(w.status) ? 'Prototype' : '';
-  const scr = `<div class="scr">${w.video === false ? '<span class="soon">Recording coming soon</span>' : workPic(w, w.n, { id })}</div>`;
+  const scr = `<div class="scr">${w.video === false ? '<span class="soon">Recording coming soon</span>' : workPic(w, w.n, { id, still })}</div>`;
   return `<div class="dev" style="--c:${w.c}">${tall ? `<div class="phone">${SB}${scr}</div>` : `<div class="win"><div class="bar"><i></i><i></i><i></i></div>${scr}</div>`}${tag ? `<span class="dtag">${tag}</span>` : ''}</div>`;
 };

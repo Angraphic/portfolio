@@ -85,4 +85,19 @@ export default ({ J, desk, glide, sleep }) => {
       await tap(page, '#spotlight-close', 1200);
     },
   });
+
+  // prototipo condiviso: solo navigazione, niente trascinamenti o salvataggi che cambierebbero i dati
+  J('05', {
+    url: 'https://manytask.vercel.app', before: before(),
+    run: async (page, poster) => {
+      await sleep(2500); await page.mouse.move(900, 450); await sleep(500); await poster();
+      await glide(page, 420, 1400); await sleep(700);
+      await tap(page, page.getByRole('link', { name: /^Task/ }), 1500);
+      await tap(page, '[aria-label="Vista board"]', 1800);
+      await page.mouse.move(380, 520, { steps: 18 }); await sleep(900);
+      await tap(page, page.getByRole('link', { name: 'Contratti' }), 1800);
+      await tap(page, page.getByRole('link', { name: 'Scadenze' }), 2000);
+      await tap(page, page.getByRole('link', { name: 'Catalogo servizi' }), 2000);
+    },
+  });
 };

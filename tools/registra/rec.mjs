@@ -4,9 +4,10 @@ import { createRequire } from 'module';
 import { spawn } from 'child_process';
 import { writeFileSync, unlinkSync } from 'fs';
 const require = createRequire(import.meta.url);
-const { chromium } = require('C:/Users/Utente/Downloads/inpelle-configuratore/node_modules/playwright-core');
-const FF = 'C:/Users/Utente/AppData/Local/ms-playwright/ffmpeg-1011/ffmpeg-win64.exe';
-const OUT = 'C:/Users/Utente/Downloads/antonio-portfolio/assets/lavori';
+// percorsi del PC dove è nato lo script; su un altro PC si passano con PW, FF e OUT
+const { chromium } = require(process.env.PW || 'C:/Users/Utente/Downloads/inpelle-configuratore/node_modules/playwright-core');
+const FF = process.env.FF || 'C:/Users/Utente/AppData/Local/ms-playwright/ffmpeg-1011/ffmpeg-win64.exe';
+const OUT = process.env.OUT || 'C:/Users/Utente/Downloads/antonio-portfolio/assets/lavori';
 const CHROME = 'C:/Program Files/Google/Chrome/Application/chrome.exe';
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
