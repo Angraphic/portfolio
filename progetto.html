@@ -426,7 +426,7 @@
   const tallPic = (w, id = w.id) => w.video === false ? '' : `<img class="blur" src="${media(id)}.jpg" alt="" aria-hidden="true">${workPic(w, w.n, { id })}`;
 
   // hero + testo
-  $('#heroKicker').textContent = `Portfolio · ${p.id} · ${p.t.join(' · ')}`;
+  $('#heroKicker').textContent = `Portfolio · ${num(p)} · ${p.t.join(' · ')}`;
   $('#heroTitle').textContent = p.n;
   $('#heroPic').classList.toggle('tall', !!p.tall);
   $('#heroPic').innerHTML = p.tall ? tallPic(p) : workPic(p);
@@ -450,13 +450,13 @@
   $('#chips').innerHTML = p.t.map(t => `<span>${t}</span>`).join('');
   $('#prevLink').href = workUrl(prev); $('#prevLink').title = prev.n;
   $('#nextLink').href = workUrl(next); $('#nextLink').title = next.n;
-  $('#buyNum').textContent = `${p.id} / ${pad(works.length)}`;
+  $('#buyNum').textContent = `${num(p)} / ${pad(works.length)}`;
   const act = $('#actionBtn');
   if (p.url) { act.href = p.url; act.target = '_blank'; act.rel = 'noopener'; act.innerHTML = 'Open live <span>↗</span>'; }
   else { act.href = 'mailto:antonio.nocella3@gmail.com'; act.innerHTML = 'Ask for a demo <span>↗</span>'; }
 
   // scheda progetto
-  $('#specCode').textContent = `.project-${p.id} · Portfolio`;
+  $('#specCode').textContent = `.project-${num(p)} · Portfolio`;
   const t0 = p.t[0] === 'SaaS' ? 'SaaS' : p.t[0].toLowerCase();
   $('#specTitle').textContent = `${p.n}: ${/^[aeiou]/i.test(t0) ? 'an' : 'a'} ${t0} for ${p.t[1].toLowerCase()}.`;
   const li = a => a.map(x => `<li>${x}</li>`);
@@ -475,9 +475,9 @@
 
   // altri lavori, liste
   const others = [1, 2, 3, 4].map(k => works[(i + k) % works.length]);
-  $('#moreGrid').innerHTML = others.map(x => `<a href="${workUrl(x)}" class="mcard"><div class="ph" data-label="${x.n}">${workPic(x, x.n, { still: true })}</div><h3>${x.n}</h3><div class="row"><span class="px px-muted">${x.t.join(' · ')}</span><span class="px">${x.id} ↗</span></div></a>`).join('');
+  $('#moreGrid').innerHTML = others.map(x => `<a href="${workUrl(x)}" class="mcard"><div class="ph" data-label="${x.n}">${workPic(x, x.n, { still: true })}</div><h3>${x.n}</h3><div class="row"><span class="px px-muted">${x.t.join(' · ')}</span><span class="px">${num(x)} ↗</span></div></a>`).join('');
   $('#workCount').textContent = `Portfolio · ${pad(works.length)} projects`;
-  $('#workList').innerHTML = works.map(x => `<a href="${workUrl(x)}" class="line-item${x === p ? ' current' : ''}"><span class="ph">${workPic(x, x.n, { still: true })}</span><div><strong>${x.n}</strong><span class="px px-muted">${x.t.join(' · ')} · ${x.at}</span></div><span class="px">${x.id}</span></a>`).join('');
+  $('#workList').innerHTML = works.map(x => `<a href="${workUrl(x)}" class="line-item${x === p ? ' current' : ''}"><span class="ph">${workPic(x, x.n, { still: true })}</span><div><strong>${x.n}</strong><span class="px px-muted">${x.t.join(' · ')} · ${x.at}</span></div><span class="px">${num(x)}</span></a>`).join('');
   $('#footWorks').innerHTML = works.slice(0, 5).map(x => `<li><a href="${workUrl(x)}">${x.n}</a></li>`).join('');
   autoplay();
 

@@ -5,16 +5,27 @@
 // c: colore del riquadro in cui si mostra il prodotto (device.css).
 const works = [
   {
-    id: '01', c: '#8CCFF8', n: 'LeadWin', t: ['SaaS', 'Lead management'], kind: 'Web app + marketing site', at: 'Never Before Italia', status: 'Live, used by client companies', ai: true,
-    url: 'https://leadwin.it', extra: { id: '01-site', label: 'Marketing site' }, label: 'Product',
+    id: '01', c: '#8CCFF8', n: 'LeadWin', t: ['SaaS', 'Lead management'], kind: 'Web app', at: 'Never Before Italia', status: 'Live, used by client companies', ai: true,
+    url: 'https://login.leadwin.it',
     sum: 'A lead management platform for companies that advertise on Meta and Google: leads land in real time, get routed into pipelines, scored and assigned to sales agents, who follow up on WhatsApp and book appointments in the same place.',
-    role: ['Product and UI design', 'Front-end development', 'Meta developer: the LeadWin Meta app (official Tech Provider)', 'Integrations: Google Ads, Google Calendar, Make.com', 'Marketing site, design and build'],
+    role: ['Product and UI design', 'Front-end development', 'Meta developer: the LeadWin Meta app (official Tech Provider)', 'Integrations: Google Ads, Google Calendar, Make.com'],
     stack: ['React', 'TypeScript', 'Vite', 'Tailwind', 'Supabase (Postgres, Edge Functions)', 'Make.com', 'Meta Graph API', 'Meta Lead Ads', 'WhatsApp Business Platform', 'Google Ads API', 'MCP'],
     points: [
       ['AI where the work happens', '"Ask Leady" answers questions about your own leads with your permissions, a WhatsApp agent qualifies contacts and books visits, and a read-only MCP server lets clients query their data from Claude or ChatGPT.'],
       ['Meta developer', 'I built and maintain the LeadWin Meta app: Facebook Login, Lead Ads webhooks routed to the right client by Page, ad insights and the WhatsApp Business Platform with Embedded Signup, so a client connects everything in a few clicks. LeadWin is an official Meta Tech Provider.'],
       ['Built for the sales floor', 'Pipelines, lead scoring (hot / warm / cold), a team calendar with conflict-free booking and an inbox for WhatsApp, so agents never leave the app.'],
-      ['A marketing site that loads fast', 'Static site, 95–100 on mobile Lighthouse, structured data and an llms.txt, so both search engines and AI assistants can read it.'],
+    ],
+  },
+  {
+    id: '01-site', c: '#B9C6FF', n: 'LeadWin website', t: ['Website', 'SaaS marketing'], kind: 'Marketing website', at: 'Never Before Italia', status: 'Live',
+    url: 'https://leadwin.it',
+    sum: 'The marketing site of LeadWin. It has to explain a lead management platform to small business owners in one scroll and turn the interested ones into demo requests.',
+    role: ['Web design', 'Front-end development', 'SEO and performance'],
+    stack: ['HTML, CSS, JavaScript', 'GSAP', 'Lenis', 'Matter.js', 'Vercel'],
+    points: [
+      ['The product, drawn in HTML', 'No screenshots: dashboards and WhatsApp chats are HTML and CSS mock screens, sharp at any size and light to load.'],
+      ['Fast on real phones', '95–100 on mobile Lighthouse. Canvas effects are off on touch devices and nothing redraws while you scroll.'],
+      ['Readable by search and AI', 'Structured data, clean URLs, a sitemap and an llms.txt that only states facts from the site.'],
     ],
   },
   {
@@ -144,6 +155,7 @@ const services = [
 const workType = w => w.kind;
 const workUrl = w => `progetto.html?id=${w.id}`;
 const media = id => `assets/lavori/${id}`;
+const num = w => String(works.indexOf(w) + 1).padStart(2, '0'); // numero mostrato = posizione in elenco, l'id resta il nome dei file
 
 // anteprima del lavoro: video in loop (parte solo quando è a schermo) col poster jpg; still = solo l'immagine
 const workPic = (w, alt = w.n, { still = false, id = w.id } = {}) => w.video === false ? ''

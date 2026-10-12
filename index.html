@@ -549,7 +549,7 @@
       <div class="pin">
         ${shot(w)}
         <div class="info">
-          <div class="code"><b>${w.id}</b><span class="px px-muted">${w.t.join(' · ')}</span></div>
+          <div class="code"><b>${num(w)}</b><span class="px px-muted">${w.t.join(' · ')}</span></div>
           <h3>${w.n}</h3>
           <p class="sum">${w.sum}</p>
           <dl class="strip">
@@ -563,12 +563,12 @@
       </div>
     </article>`).join('');
   $('#bg').innerHTML = featured.map((w, i) => `<div class="bgi${i ? '' : ' on'}">${w.video === false ? '' : workPic(w, '', { still: true })}</div>`).join('');
-  $('#thumbs').innerHTML = featured.map(w => `<button class="ph" data-go="${w.id}" aria-label="${w.n}">${w.id}${workPic(w, w.n, { still: true })}</button>`).join('');
-  $('#workList').innerHTML = works.map(w => `<a href="${workUrl(w)}" class="line-item"><span class="ph">${workPic(w, w.n, { still: true })}</span><div><strong>${w.n}</strong><span class="px px-muted">${w.t.join(' · ')} · ${w.at}</span></div><span class="px">${w.id}</span></a>`).join('');
+  $('#thumbs').innerHTML = featured.map(w => `<button class="ph" data-go="${w.id}" aria-label="${w.n}">${num(w)}${workPic(w, w.n, { still: true })}</button>`).join('');
+  $('#workList').innerHTML = works.map(w => `<a href="${workUrl(w)}" class="line-item"><span class="ph">${workPic(w, w.n, { still: true })}</span><div><strong>${w.n}</strong><span class="px px-muted">${w.t.join(' · ')} · ${w.at}</span></div><span class="px">${num(w)}</span></a>`).join('');
   // riquadro in evidenza nell'hero: il primo dell'elenco
   const last = featured[0];
   $('#fbPic').innerHTML = workPic(last);
-  $('#fbKicker').textContent = `Featured · ${last.id}`;
+  $('#fbKicker').textContent = `Featured · ${num(last)}`;
   $('#fbName').textContent = last.n;
   $('#fbTags').textContent = last.t.join(' · ');
   $('#fbLink').href = workUrl(last);
