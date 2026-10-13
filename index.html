@@ -213,7 +213,11 @@
   .numbers { position: relative; max-width: 920px; margin: 88px auto 0; display: grid; grid-template-columns: repeat(5, 1fr); border: 1px solid var(--line); border-radius: 4px; background: var(--bg); }
   .numbers > div { padding: 14px 16px; }
   .numbers > div + div { border-left: 1px solid var(--line); }
-  .numbers dd { color: var(--accent); font-size: clamp(32px, 3.4vw, 48px); font-weight: 500; letter-spacing: -0.05em; line-height: 1; margin-top: 10px; font-variant-numeric: tabular-nums; }
+  .numbers dd { display: flex; color: var(--accent); font-size: clamp(56px, 6vw, 92px); font-weight: 500; letter-spacing: -0.05em; line-height: 1; margin-top: 14px; font-variant-numeric: tabular-nums; }
+  /* contatore a rulli: ogni cifra è una colonna 0-9 ripetuta due volte che gira fino al valore (script "numeri") */
+  .odo { display: block; height: 1em; overflow-x: visible; overflow-y: clip; } /* taglia solo sopra e sotto: ai lati la cifra non si mangia */
+  .odo > span { display: block; }
+  .odo i { display: block; height: 1em; font-style: normal; }
   .manifesto .foot { position: relative; max-width: 920px; margin: 48px auto 0; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding-top: 16px; border-top: 1px solid var(--line); }
 
   /* ---------- metodo + servizi ---------- */
@@ -328,9 +332,10 @@
     .hero-grid .side .blk { width: 100%; }
     /* una sotto l'altra: etichetta a sinistra, numero a destra */
     .numbers { grid-template-columns: 1fr; }
-    .numbers > div { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; }
+    .numbers > div { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
     .numbers > div + div { border-left: 0; border-top: 1px solid var(--line); }
-    .numbers dd { margin-top: 0; }
+    .numbers > div { padding: 18px 20px; }
+    .numbers dd { margin-top: 0; font-size: 72px; }
     .method-grid, .faq-grid { grid-template-columns: 1fr; }
     .steps li { flex-basis: 100%; }
     .method .copy { grid-template-columns: 1fr; }
@@ -585,7 +590,17 @@
   $('#thumbs').innerHTML = featured.map(w => `<button class="ph" data-go="${w.id}" aria-label="${w.n}">${num(w)}${workPic(w, w.n, { still: true })}</button>`).join('');
   $('#workList').innerHTML = works.map(w => `<a href="${workUrl(w)}" class="line-item"><span class="ph">${workPic(w, w.n, { still: true })}</span><div><strong>${w.n}</strong><span class="px px-muted">${w.t.join(' · ')} · ${w.at}</span></div><span class="px">${num(w)}</span></a>`).join('');
   $('#footWorks').innerHTML = featured.slice(0, 5).map(w => `<li><a href="${workUrl(w)}">${w.n}</a></li>`).join('');
-  $('#numbers').innerHTML = numbers.map(([k, v]) => `<div><dt class="px px-muted">${k}</dt><dd>${v}</dd></div>`).join('');
+  // numeri: quando entrano a schermo i rulli di ogni cifra girano un giro e si fermano sul valore, uno dopo l'altro
+  const roll = '0123456789'.repeat(2).split('').map(d => `<i>${d}</i>`).join('');
+  $('#numbers').innerHTML = numbers.map(([k, v]) => `<div><dt class="px px-muted">${k}</dt><dd aria-label="${v}">${[...v].map(d => `<span class="odo" aria-hidden="true" data-d="${d}"><span>${roll}</span></span>`).join('')}</dd></div>`).join('');
+  {
+    const odos = [...document.querySelectorAll('.odo')], set = p => odos.forEach(o => gsap.set(o.firstChild, { yPercent: -(10 + +o.dataset.d) * 5 * p }));
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) set(1);
+    else new IntersectionObserver(([e], io) => {
+      if (!e.isIntersecting) return; io.disconnect();
+      odos.forEach((o, i) => gsap.fromTo(o.firstChild, { yPercent: 0 }, { yPercent: -(10 + +o.dataset.d) * 5, duration: 1.8, ease: 'power4.out', delay: i * .08 }));
+    }, { threshold: .6 }).observe($('#numbers'));
+  }
   $('#aiIn').innerHTML = works.filter(w => w.ai).map(w => `<a href="${workUrl(w)}">${w.n} ↗</a>`).join('');
   $('#skillCount').textContent = `Stack · ${Object.values(skills).flat().length}`;
   $('#skills').innerHTML = Object.entries(skills).map(([g, list], i) => `<details${i < 2 ? ' open' : ''}><summary>${g} <span class="px">+</span></summary><ul>${list.map(([s, c]) => `<li>${s}<span class="px px-muted">${c}</span></li>`).join('')}</ul></details>`).join('');
