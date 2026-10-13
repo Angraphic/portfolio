@@ -122,8 +122,26 @@
   /* card su un arco con il perno molto sotto l hero (script "hero"); quelle al centro stanno sopra */
   .ring-stage { position: absolute; inset: 0; z-index: 1; touch-action: pan-y; cursor: grab; user-select: none; }
   .ring-stage:active { cursor: grabbing; }
-  .rc { position: absolute; left: 50%; top: 0; width: var(--cw, 300px); height: calc(var(--cw, 300px) * 1.4); margin-left: calc(var(--cw, 300px) / -2); border-radius: 14px; overflow: hidden; box-shadow: 0 -10px 40px rgba(0,0,0,.6); will-change: transform; -webkit-user-drag: none; }
-  .rc .dev { position: absolute; inset: 0; }
+  .rc { position: absolute; left: 50%; top: 0; width: var(--cw, 300px); height: calc(var(--cw, 300px) * 1.4); margin-left: calc(var(--cw, 300px) / -2); will-change: transform; }
+  .rc-in { position: absolute; inset: 0; border-radius: 14px; overflow: hidden; box-shadow: 0 -10px 40px rgba(0,0,0,.6); transition: transform .5s cubic-bezier(.2,.8,.2,1), filter .35s; }
+  .rc-link, .rc .dev { position: absolute; inset: 0; -webkit-user-drag: none; }
+  /* card sotto il mouse (o toccata): la rotazione si ferma, lei cresce, le altre si scuriscono, compare il play */
+  .ring-stage.focus .rc-in { filter: brightness(.35); }
+  .rc.on .rc-in { filter: none; transform: translateY(-6%) scale(1.12); }
+  .rc-play { position: absolute; left: 50%; top: 45%; display: grid; place-items: center; width: 76px; height: 76px; border-radius: 50%; background: var(--fg); color: var(--black); translate: -50% -50%; scale: .6; opacity: 0; pointer-events: none; transition: opacity .25s, scale .35s cubic-bezier(.2,.8,.2,1), background .2s; }
+  .rc.on .rc-play { opacity: 1; scale: 1; pointer-events: auto; }
+  .rc-play:hover { background: var(--accent); }
+  /* video del progetto a schermo */
+  .vmodal { margin: auto; padding: 0; border: 0; background: none; color: var(--fg); width: min(1100px, calc(100% - 32px)); max-width: none; max-height: calc(100svh - 32px); overflow: visible; }
+  .vmodal.tall { width: min(440px, calc(100% - 32px)); }
+  .vmodal::backdrop { background: rgba(17,17,19,.72); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+  html:has(.vmodal[open]) { overflow: hidden; }
+  .vm-box { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+  .vm-box video { display: block; width: 100%; max-height: calc(100svh - 150px); object-fit: contain; background: #0B0B0C; }
+  .vm-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; padding: 16px 20px; }
+  .vm-bar > div { flex: 1 1 240px; }
+  .vm-bar .c-btn { flex: none; }
+  .vm-bar h3 { font-size: clamp(22px, 2vw, 30px); margin-top: 4px; }
   .rc img { -webkit-user-drag: none; }
   .rc .dtag { display: none; }
   .hero-grid { position: relative; z-index: 2; pointer-events: none; display: grid; grid-template-columns: 1.3fr 1fr; column-gap: 48px; padding: 120px var(--gutter) 40px; }
@@ -381,6 +399,16 @@
     </div>
     <nav class="ring-stage" id="ringStage" aria-label="Projects"></nav>
   </section>
+  <dialog class="vmodal" id="vmodal" aria-labelledby="vmTitle">
+    <div class="vm-box">
+      <video id="vmVideo" controls playsinline loop muted></video>
+      <div class="vm-bar">
+        <div><span class="px px-muted" id="vmKick"></span><h3 id="vmTitle"></h3></div>
+        <a class="blk blk-accent" id="vmCase">Case study <span>↗</span></a>
+        <button class="c-btn" id="vmClose" aria-label="Close video"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+      </div>
+    </div>
+  </dialog>
 
 
   <!-- LAVORI -->
@@ -651,10 +679,11 @@
   // da mobile sta sotto il testo; il fondo dell'hero taglia le card. Si trascina col mouse o col dito, un clic apre il progetto
   (() => {
     const hero = $('.hero'), stage = $('#ringStage'), h1 = $('.hero-grid h1'), side = $('.hero-grid .side');
-    stage.innerHTML = works.map(w => `<a href="${workUrl(w)}" class="rc" draggable="false" aria-label="${w.n}">${device(w)}</a>`).join('');
+    const play = '<svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>';
+    stage.innerHTML = works.map((w, i) => `<div class="rc"><div class="rc-in"><a href="${workUrl(w)}" class="rc-link" draggable="false" aria-label="${w.n}">${device(w)}</a>${w.video === false ? '' : `<button class="rc-play" type="button" data-i="${i}" aria-label="Play the ${w.n} video">${play}</button>`}</div></div>`).join('');
     autoplay(stage); // i video girano solo nelle card a schermo
     const cards = [...stage.children], n = cards.length;
-    let a = 0, v = -.6, R = 1, step = 0, top = 0, drag = null, moved = 0, vis = true;
+    let a = 0, v = -.6, R = 1, step = 0, top = 0, drag = null, moved = 0, vis = true, on = null;
     const size = () => {
       const desk = innerWidth > 900, H = innerHeight, y0 = hero.getBoundingClientRect().top, r = (desk ? h1 : side).getBoundingClientRect();
       top = desk ? r.bottom - y0 - r.height * .45 : r.bottom - y0 + 28; // cima del ventaglio: a metà della seconda riga del titolo
@@ -669,19 +698,58 @@
       cards.forEach((c, i) => {
         const t = ((i * step + a) % span + span * 1.5) % span - span / 2; // angolo in [-span/2, span/2)
         c.style.transform = `translateY(${top}px) rotate(${t}rad)`;
-        c.style.zIndex = 1 + ((i + o) % n + n) % n; // ognuna sta sopra quella a sinistra: l'ordine non cambia mai a schermo
+        c.style.zIndex = c === on ? 99 : 1 + ((i + o) % n + n) % n; // ognuna sta sopra quella a sinistra: l'ordine non cambia mai a schermo
       });
     };
-    size(); draw(); addEventListener('resize', () => { size(); draw(); });
+    // finestra ridotta a icona o scheda in background: il browser può dare per un attimo 0 x 0, e con card larghe 0 il ventaglio sparirebbe
+    let rt;
+    size(); draw(); addEventListener('resize', () => {
+      if (!innerWidth || !innerHeight) return;
+      size(); draw(); clearTimeout(rt); rt = setTimeout(() => window.ScrollTrigger?.refresh(), 200);
+    });
+
+    // una card in primo piano: col mouse sopra, oppure al primo tocco da telefono (il secondo tocco apre)
+    const focus = c => {
+      if (c === on) return;
+      on?.classList.remove('on'); on = c; c?.classList.add('on');
+      stage.classList.toggle('focus', !!c); draw();
+    };
+    cards.forEach(c => {
+      c.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse' && drag === null) focus(c); });
+      c.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse' && !modal.open) focus(null); });
+    });
+    let touch = false;
+    stage.addEventListener('pointerdown', e => (touch = e.pointerType !== 'mouse'));
+    document.addEventListener('pointerdown', e => { if (e.pointerType !== 'mouse' && on && !on.contains(e.target)) focus(null); });
+    stage.addEventListener('click', e => {
+      const c = e.target.closest('.rc');
+      if (touch && c && c !== on && moved <= 6) { e.preventDefault(); focus(c); }
+    });
+
+    // play: il video del progetto in un modal (Esc, clic fuori o X per chiudere)
+    const modal = $('#vmodal'), vid = $('#vmVideo');
+    stage.addEventListener('click', e => {
+      const b = e.target.closest('.rc-play'); if (!b || moved > 6) return;
+      const w = works[b.dataset.i];
+      vid.poster = media(w.id) + '.jpg'; vid.src = media(w.id) + '.webm';
+      $('#vmTitle').textContent = w.n; $('#vmKick').textContent = w.t.join(' · '); $('#vmCase').href = workUrl(w);
+      modal.classList.toggle('tall', !!w.tall);
+      modal.showModal(); vid.play().catch(() => {});
+      if (!still) gsap.from('.vm-box', { y: 40, scale: .96, opacity: 0, duration: .5, ease: 'expo.out' });
+    });
+    $('#vmClose').onclick = () => modal.close();
+    modal.addEventListener('click', e => { if (e.target === modal) modal.close(); });
+    modal.addEventListener('close', () => { vid.pause(); vid.removeAttribute('src'); vid.load(); focus(null); });
     if (still) return;
     // scorrendo l'hero resta fissata e sfuma mentre la sezione dopo le passa sopra
     gsap.registerPlugin(ScrollTrigger);
+    ScrollTrigger.config({ autoRefreshEvents: 'DOMContentLoaded,load' }); // il ricalcolo al resize lo fa il gestore sopra, saltando le misure a 0
     gsap.to(hero, { opacity: 0, ease: 'none', scrollTrigger: { trigger: hero, start: 'bottom bottom', end: () => '+=' + innerHeight, scrub: true, pin: true, pinSpacing: false } });
     new IntersectionObserver(([e]) => (vis = e.isIntersecting)).observe(stage);
     // rotazione lenta costante; dopo un trascinamento la spinta si smorza e torna lenta
-    gsap.ticker.add((t, dt) => { if (!vis || drag !== null) return; v += (-.6 - v) * .04; a += v / R * dt / 16.7; draw(); });
+    gsap.ticker.add((t, dt) => { if (!vis || drag !== null || on || modal.open) return; v += (-.6 - v) * .04; a += v / R * dt / 16.7; draw(); });
     stage.addEventListener('pointerdown', e => { drag = e.clientX; moved = 0; });
-    addEventListener('pointermove', e => { if (drag === null) return; const dx = e.clientX - drag; drag = e.clientX; moved += Math.abs(dx); v = dx; a += dx / R; draw(); });
+    addEventListener('pointermove', e => { if (drag === null) return; const dx = e.clientX - drag; drag = e.clientX; moved += Math.abs(dx); if (moved > 6) focus(null); v = dx; a += dx / R; draw(); });
     addEventListener('pointerup', () => (drag = null));
     stage.addEventListener('click', e => { if (moved > 6) e.preventDefault(); }, true);
   })();
