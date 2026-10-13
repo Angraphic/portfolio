@@ -326,10 +326,11 @@
     .hero-grid .side { grid-column: 1; justify-self: stretch; width: 100%; padding-top: 0; }
     .sel { margin-bottom: 26px; } /* la misura sotto il titolo non tocca il paragrafo */
     .hero-grid .side .blk { width: 100%; }
-    .numbers { grid-template-columns: repeat(2, 1fr); }
-    .numbers > div + div { border-left: 0; }
-    .numbers > div:nth-child(even) { border-left: 1px solid var(--line); }
-    .numbers > div:nth-child(n+3) { border-top: 1px solid var(--line); }
+    /* una sotto l'altra: etichetta a sinistra, numero a destra */
+    .numbers { grid-template-columns: 1fr; }
+    .numbers > div { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; }
+    .numbers > div + div { border-left: 0; border-top: 1px solid var(--line); }
+    .numbers dd { margin-top: 0; }
     .method-grid, .faq-grid { grid-template-columns: 1fr; }
     .steps li { flex-basis: 100%; }
     .method .copy { grid-template-columns: 1fr; }
