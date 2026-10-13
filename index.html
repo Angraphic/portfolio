@@ -306,7 +306,7 @@
   @media (max-width: 900px) {
     :root { --blk: 46px; }
     .hdr { padding: 12px var(--gutter); }
-    .brand .word { font-size: 18px; }
+    .brand .word { font-size: 24px; }
     .cluster .blk { min-width: 0; padding: 0 14px; }
     /* anche su telefono le card si impilano: card compatta che sta tutta sotto l'header */
     .pcard { top: 72px; margin-bottom: 24px; }
@@ -341,7 +341,6 @@
     body { font-size: 16px; }
     .px { font-size: 17px; }
     .blk { font-size: 19px; }
-    .brand .word { font-size: 16px; }
     .cluster .blk { padding: 0 12px; }
     .manifesto .foot { flex-direction: column; align-items: flex-start; }
     .foot-grid > div:first-child { grid-column: 1 / -1; }
@@ -702,10 +701,11 @@
       });
     };
     // finestra ridotta a icona o scheda in background: il browser può dare per un attimo 0 x 0, e con card larghe 0 il ventaglio sparirebbe
-    let rt;
+    // da telefono la barra degli indirizzi che compare e sparisce cambia solo l'altezza: ricalcolare lì fermerebbe lo scroll a metà
+    let rt, lw = innerWidth;
     size(); draw(); addEventListener('resize', () => {
-      if (!innerWidth || !innerHeight) return;
-      size(); draw(); clearTimeout(rt); rt = setTimeout(() => window.ScrollTrigger?.refresh(), 200);
+      if (!innerWidth || !innerHeight || (innerWidth === lw && matchMedia('(pointer: coarse)').matches)) return;
+      lw = innerWidth; size(); draw(); clearTimeout(rt); rt = setTimeout(() => window.ScrollTrigger?.refresh(), 200);
     });
 
     // una card in primo piano: col mouse sopra, oppure al primo tocco da telefono (il secondo tocco apre)
@@ -750,7 +750,9 @@
     gsap.ticker.add((t, dt) => { if (!vis || drag !== null || on || modal.open) return; v += (-.6 - v) * .04; a += v / R * dt / 16.7; draw(); });
     stage.addEventListener('pointerdown', e => { drag = e.clientX; moved = 0; });
     addEventListener('pointermove', e => { if (drag === null) return; const dx = e.clientX - drag; drag = e.clientX; moved += Math.abs(dx); if (moved > 6) focus(null); v = dx; a += dx / R; draw(); });
+    // da telefono uno scroll verticale partito sulle card chiude il tocco con pointercancel, non pointerup
     addEventListener('pointerup', () => (drag = null));
+    addEventListener('pointercancel', () => (drag = null));
     stage.addEventListener('click', e => { if (moved > 6) e.preventDefault(); }, true);
   })();
 
