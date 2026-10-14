@@ -124,13 +124,19 @@
   .buy .num { color: var(--accent); font-size: 26px; font-weight: 500; letter-spacing: -0.03em; white-space: nowrap; font-variant-numeric: tabular-nums; }
 
   /* ---------- hero progetto ---------- */
-  .p-hero { position: relative; height: 100vh; height: 100svh; min-height: 600px; overflow: hidden; background: var(--black); }
+  .p-hero { position: relative; height: 100vh; height: 100svh; min-height: 560px; overflow: hidden; background: var(--black); }
+  /* anteprima del progetto a tutta sezione, con i margini ai lati: appoggiata sul fondo dell hero, angoli tondi solo in alto */
+  .p-card { position: absolute; z-index: 2; left: 50%; top: 92px; bottom: 0; width: min(1280px, calc(100% - 2 * var(--gutter))); translate: -50% 0; }
+  /* niente fondo colorato: solo la finestra del browser (o il telefono per le app) */
+  .p-card .dev { position: absolute; inset: 0; background: none; overflow: visible; }
+  .p-card .dev::before { display: none; }
+  .p-card .dev .win, .p-card .dev:hover .win { inset: 0; border-radius: 14px 14px 0 0; overflow: hidden; translate: none; }
+  .p-card .dev .phone { top: 4%; --pw: min(360px, 62cqw, calc((100svh - 92px) * .4)); }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
   .p-hero > .ph { position: absolute; inset: 0; }
   .p-hero > .ph::after { position: absolute; right: var(--gutter); top: 50%; }
-  /* il video sotto è pieno di dettagli: velo scuro forte a sinistra, dove sta il titolo */
-  .p-hero::before { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: linear-gradient(90deg, rgba(17,17,19,.88) 0%, rgba(17,17,19,.62) 38%, rgba(17,17,19,.2) 70%, rgba(17,17,19,.1) 100%), linear-gradient(180deg, rgba(0,0,0,.45) 0%, rgba(0,0,0,0) 25%, rgba(0,0,0,0) 60%, rgba(0,0,0,.6) 100%); }
-  .p-hero .label { position: absolute; z-index: 2; left: var(--gutter); top: calc(50% - 20px); max-width: 12ch; font-size: clamp(48px, 7vw, 110px); line-height: .9; }
-  .p-hero .kicker { position: absolute; z-index: 2; left: var(--gutter); top: calc(50% - 60px); }
+  /* velo scuro che sale verso il basso: la card ci si appoggia sopra */
+  .p-hero::before { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: linear-gradient(180deg, rgba(17,17,19,.45) 0%, rgba(17,17,19,.25) 35%, rgba(17,17,19,.9) 100%); }
 
   /* ---------- testo che si accende ---------- */
   .statement { position: relative; padding: clamp(110px, 14vw, 200px) 0; overflow: hidden; }
@@ -246,6 +252,14 @@
     :root { --blk: 46px; }
     .hdr { padding: 12px var(--gutter); }
     .brand .word { font-size: 24px; }
+    .p-hero { height: 82svh; min-height: 460px; }
+    .p-card { top: 76px; }
+    /* il disegno del box model è orizzontale e in una sezione alta verrebbe tagliato: qui solo il margine sopra e sotto,
+       una linea tratteggiata a tutta larghezza e la quota arancione che arriva fino alla card */
+    .chart.box { display: none; }
+    .specs::before, .specs::after { content: "64"; position: absolute; left: 0; right: 0; display: flex; justify-content: center; align-items: center; padding-left: 44px; font-family: var(--pixel); font-size: 16px; color: var(--muted); background: repeating-linear-gradient(180deg, rgba(255,144,48,.55) 0 6px, transparent 6px 12px) 50% 0 / 1px 100% no-repeat; }
+    .specs::before { top: 40px; height: calc(clamp(120px, 14vw, 200px) - 40px); border-top: 1px dashed rgba(255,255,255,.14); }
+    .specs::after { bottom: 40px; height: calc(clamp(120px, 12vw, 180px) - 40px); border-bottom: 1px dashed rgba(255,255,255,.14); }
     .cluster .blk { min-width: 0; padding: 0 14px; }
     .buy { left: 0; right: 0; bottom: 0; transform: none; width: 100%; border-radius: 8px 8px 0 0; border-bottom: 0; grid-template-columns: 1fr; padding-bottom: env(safe-area-inset-bottom); }
     .buy > div { border-left: 0; padding: 8px 12px; }
@@ -256,8 +270,6 @@
     .buy .action-cell { gap: 8px; padding-bottom: 12px; }
     .buy .action-cell .blk { flex: 1; }
     .buy .num { font-size: 20px; }
-    .p-hero .label { top: auto; bottom: 250px; }
-    .p-hero .kicker { display: none; }
     .spec-group { grid-template-columns: 1fr; gap: 10px; }
     .det-grid { grid-template-columns: 1fr; }
     .crop-grid { grid-template-columns: 1fr 1fr; grid-auto-rows: 40vw; gap: 8px; }
@@ -322,8 +334,8 @@
 <main>
   <section class="p-hero" data-light="false">
     <div class="ph" data-label="Recording coming soon" id="heroPic"></div>
-    <span class="px px-muted kicker" id="heroKicker"></span>
-    <h1 class="label" id="heroTitle"></h1>
+    <h1 class="sr-only" id="heroTitle"></h1>
+    <div class="p-card" id="heroCard"></div>
   </section>
 
   <section class="statement">
@@ -433,13 +445,11 @@
   document.title = p.n + ' | Antonio Nocella';
 
   // hero + testo
-  $('#heroKicker').textContent = `Portfolio · ${num(p)} · ${p.t.join(' · ')}`;
   $('#heroTitle').textContent = p.n;
-  $('#heroPic').classList.toggle('tall', !!p.tall);
-  // fondo statico (il video è più sotto): schermata a 2x del sito vero (assets/lavori/h), se manca il fotogramma del video;
-  // le app verticali intere, con la stessa immagine sfocata a riempire i lati
+  $('#heroCard').innerHTML = device(p);
+  // fondo: la schermata del progetto sfocata e scura, la card sopra mostra il prodotto
   const heroImg = a => `<img src="${media('h/' + p.id)}.jpg" ${a} onerror="this.onerror=null;this.src='${media(p.id)}.jpg'">`;
-  $('#heroPic').innerHTML = p.video === false ? '' : (p.tall ? heroImg('class="blur" alt="" aria-hidden="true"') : '') + heroImg(`alt="${p.n}"`);
+  $('#heroPic').innerHTML = p.video === false ? '' : heroImg('class="blur" alt="" aria-hidden="true"');
   $('#statement').textContent = p.sum;
 
   const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
