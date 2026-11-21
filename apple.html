@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <!-- su Apple si usa SF Pro di sistema; altrove Inter, la sorella più vicina -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=VT323&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=VT323&family=Sora:wght@200&display=swap" rel="stylesheet">
 <link href="device.css" rel="stylesheet">
 <style>
   /* copia della home in stile apple.com: stessi contenuti e dati (dati.js), tipografia SF, fondi bianchi e grigio chiaro, tile, link blu */
@@ -36,6 +36,7 @@
     --gutter: max(22px, env(safe-area-inset-left));
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
+  [hidden] { display: none !important; }
   html { scroll-behavior: smooth; scroll-padding-top: 64px; }
   body { font-family: var(--sans); background: var(--bg); color: var(--fg); font-size: 17px; line-height: 1.47059; font-weight: 400; letter-spacing: -0.022em; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; overflow-x: hidden; }
   img, video { display: block; max-width: 100%; }
@@ -84,22 +85,62 @@
   .ribbon a { color: var(--link); }
   .ribbon a:hover { text-decoration: underline; }
 
-  /* ---------- nav globale ---------- */
-  .gnav { position: relative; z-index: 60; height: 44px; background: rgba(250,250,252,.8); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px); }
-  .gnav .in { max-width: 1024px; height: 100%; margin: 0 auto; padding: 0 var(--gutter); display: flex; align-items: center; justify-content: space-between; }
-  .gnav a { font-size: 12px; line-height: 1; letter-spacing: -0.01em; color: rgba(0,0,0,.8); transition: color .2s; }
-  .gnav a:hover { color: #000; }
-  .gnav .logo { font-size: 17px; font-weight: 600; letter-spacing: -0.02em; color: #000; display: flex; align-items: center; gap: 6px; }
-  .gnav .logo svg { width: 16px; height: 16px; }
-  .gnav ul { list-style: none; display: flex; flex: 1; justify-content: space-between; margin-left: 40px; max-width: 760px; }
+  /* ---------- logo: il wordmark del portfolio (Sora 200), che si scrive all'apertura (motivi.js) ---------- */
+  .brand { --accent: #FF9030; display: flex; align-items: center; height: 44px; color: #1D1D1F; }
+  .brand .word, .mm-word, .foot-word { font-family: Sora, var(--sans); font-weight: 200; letter-spacing: -0.02em; line-height: 1; }
+  .brand .word, .mm-word { font-size: 22px; }
+  .foot-word { font-size: 15px; color: var(--fg); }
+
+  /* ---------- nav globale con megamenu, come apple.com ---------- */
+  /* passando sopra una voce il fondo sfocato si allunga (--gh), compaiono le colonne e la pagina sotto si sfoca */
+  .gnav { --gh: 44px; position: relative; z-index: 60; height: 44px; }
+  .gnav .gbg { position: absolute; left: 0; right: 0; top: 0; height: var(--gh); background: rgba(250,250,252,.8); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px); transition: height .32s cubic-bezier(.4,0,.6,1), background .32s; }
+  .gnav.fly .gbg { background: rgba(250,250,252,.98); }
+  .gnav .in { position: relative; max-width: 1024px; height: 44px; margin: 0 auto; padding: 0 var(--gutter); display: flex; align-items: center; justify-content: space-between; }
+  .gnav .links { list-style: none; display: flex; flex: 1; justify-content: space-between; height: 44px; margin-left: 32px; max-width: 760px; }
+  .gnav .links a { display: flex; align-items: center; height: 44px; padding: 0 8px; font-size: 12px; line-height: 1; letter-spacing: -0.01em; color: rgba(0,0,0,.8); transition: color .2s; }
+  .gnav .links a:hover, .gnav .links a.on { color: #000; }
+  .flyout { position: absolute; left: 0; right: 0; top: 44px; visibility: hidden; pointer-events: none; transition: visibility 0s .2s; }
+  .gnav.fly .flyout { visibility: visible; pointer-events: auto; transition-delay: 0s; }
+  .fly-in { max-width: 1024px; margin: 0 auto; padding: 40px var(--gutter) 84px; display: flex; gap: 44px; }
+  .fly-g h4 { font-size: 12px; font-weight: 400; color: #6E6E73; margin-bottom: 14px; letter-spacing: -0.01em; }
+  .fly-g ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .fly-g a { font-size: 12px; line-height: 1.33; font-weight: 600; letter-spacing: -0.01em; color: #333336; transition: color .2s; }
+  .fly-g.big ul { gap: 10px; }
+  .fly-g.big a { font-size: 24px; line-height: 1.17; letter-spacing: .009em; }
+  .fly-g a:hover { color: #000; }
+  .fly-g h4, .fly-g li { opacity: 0; transform: translateY(-4px); transition: opacity .2s, transform .2s; }
+  .gnav.show .fly-g h4, .gnav.show .fly-g li { opacity: 1; transform: none; transition: opacity .32s var(--ease) calc(var(--i) * 22ms + 60ms), transform .32s var(--ease) calc(var(--i) * 22ms + 60ms); }
+  .curtain { position: fixed; inset: 0; z-index: 55; pointer-events: none; opacity: 0; visibility: hidden; background: rgba(232,232,237,.4); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); transition: opacity .32s, visibility .32s; }
+  .curtain.on { opacity: 1; visibility: visible; }
   .gnav .burger { display: none; width: 44px; height: 44px; margin-right: -14px; place-items: center; }
-  .gnav .burger span { position: relative; display: block; width: 17px; height: 1px; background: #000; transition: transform .3s var(--ease), background .2s; }
-  .gnav .burger span::before, .gnav .burger span::after { content: ""; position: absolute; left: 0; width: 17px; height: 1px; background: #000; transition: transform .3s var(--ease); }
+  .gnav .burger span { position: relative; display: block; width: 17px; height: 1px; background: #1D1D1F; }
+  .gnav .burger span::before, .gnav .burger span::after { content: ""; position: absolute; left: 0; width: 17px; height: 1px; background: #1D1D1F; }
   .gnav .burger span::before { transform: translateY(-4px); }
   .gnav .burger span::after { transform: translateY(4px); }
-  .gnav.open .burger span { background: transparent; }
-  .gnav.open .burger span::before { transform: rotate(45deg); }
-  .gnav.open .burger span::after { transform: rotate(-45deg); }
+
+  /* ---------- menu da telefono: schermo intero, le voci con sottomenu scorrono a un secondo livello ---------- */
+  .mmenu { position: fixed; inset: 0; z-index: 80; display: flex; flex-direction: column; background: #fff; padding-top: env(safe-area-inset-top, 0px); opacity: 0; transition: opacity .3s var(--ease); }
+  .mmenu.on { opacity: 1; }
+  .mm-top { flex: none; display: flex; justify-content: space-between; align-items: center; height: 48px; padding: 0 max(10px, env(safe-area-inset-right, 0px)) 0 max(22px, env(safe-area-inset-left, 0px)); }
+  .mm-top button { width: 44px; height: 44px; display: grid; place-items: center; color: #1D1D1F; }
+  .mm-views { position: relative; flex: 1; overflow: hidden; }
+  .mm-view { position: absolute; inset: 0; overflow-y: auto; padding: 12px max(48px, env(safe-area-inset-right, 0px)) 48px max(48px, env(safe-area-inset-left, 0px)); transition: transform .45s var(--ease), opacity .3s, visibility 0s; }
+  .mm-sub { transform: translateX(40%); opacity: 0; visibility: hidden; }
+  .mmenu.sub .mm-main { transform: translateX(-30%); opacity: 0; visibility: hidden; }
+  .mmenu.sub .mm-sub { transform: none; opacity: 1; visibility: visible; }
+  .mm-main ul { list-style: none; }
+  .mm-item { display: flex; justify-content: space-between; align-items: center; width: 100%; padding: 7px 0; text-align: left; font-size: 28px; line-height: 1.14; font-weight: 600; letter-spacing: .007em; color: #333336; }
+  .mm-item .chev { color: #86868B; flex: none; }
+  .mm-back { display: flex; align-items: center; gap: 2px; margin: 0 0 18px -6px; padding: 6px 0; font-size: 17px; color: #6E6E73; }
+  .mm-sub .fly-g + .fly-g { margin-top: 32px; }
+  .mm-sub .fly-g h4 { font-size: 17px; margin-bottom: 10px; }
+  .mm-sub .fly-g ul { gap: 4px; }
+  .mm-sub .fly-g a { display: block; padding: 4px 0; font-size: 17px; line-height: 1.24; letter-spacing: -0.022em; }
+  .mm-sub .fly-g.big a { font-size: 28px; line-height: 1.14; letter-spacing: .007em; }
+  .mm-view li, .mm-view h4 { opacity: 0; transform: translateY(-8px); transition: opacity .3s var(--ease), transform .3s var(--ease); }
+  .mm-view.show li, .mm-view.show h4 { opacity: 1; transform: none; transition-delay: calc(var(--i) * 28ms + 80ms); }
+  html.lock { overflow: hidden; }
 
   /* ---------- nav locale (resta in cima) ---------- */
   .lnav { position: sticky; top: 0; z-index: 50; height: 52px; background: rgba(255,255,255,.72); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px); border-bottom: 1px solid rgba(0,0,0,.16); transition: background .3s; }
@@ -263,12 +304,8 @@
     .tile.full { min-height: 620px; }
   }
   @media (max-width: 833px) {
-    .gnav ul { display: none; }
+    .gnav .links { display: none; }
     .gnav .burger { display: grid; }
-    .gnav.open { background: #fff; }
-    .gnav.open ul { display: flex; flex-direction: column; justify-content: flex-start; gap: 4px; position: fixed; left: 0; right: 0; top: 44px; bottom: 0; margin: 0; max-width: none; padding: 20px 48px; background: #fff; }
-    .gnav.open ul a { display: block; font-size: 28px; line-height: 1.14; font-weight: 600; color: #333336; padding: 6px 0; letter-spacing: .007em; }
-    html:has(.gnav.open) { overflow: hidden; }
     .lnav nav a:not(.btn) { display: none; }
     .grid { grid-template-columns: 1fr; }
     .tile, .tile.full { min-height: 560px; }
@@ -304,10 +341,11 @@
 
 <div class="ribbon">Antonio is open to a new team, in Bari or remotely. <a href="#contact">Get in touch ›</a></div>
 
-<header class="gnav" id="gnav">
-  <div class="in">
-    <a href="#" class="logo" aria-label="Nocella, home">Nocella</a>
-    <ul id="gnavList">
+<header class="gnav hdr" id="gnav">
+  <div class="gbg" aria-hidden="true"></div>
+  <nav class="in" aria-label="Global">
+    <a href="#" class="brand" aria-label="Nocella, home"><span class="word">Nocella</span></a>
+    <ul class="links" id="gLinks">
       <li><a href="#work">Work</a></li>
       <li><a href="#ai">How I work</a></li>
       <li><a href="#highlights">Highlights</a></li>
@@ -317,9 +355,18 @@
       <li><a href="#contact">Contact</a></li>
       <li><a href="index.html">Classic site</a></li>
     </ul>
-    <button class="burger" id="burger" aria-label="Menu" aria-expanded="false" aria-controls="gnavList"><span></span></button>
-  </div>
+    <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="mmenu"><span></span></button>
+  </nav>
+  <div class="flyout" id="flyout"><div class="fly-in" id="flyIn"></div></div>
 </header>
+<div class="curtain" id="curtain" aria-hidden="true"></div>
+<div class="mmenu" id="mmenu" role="dialog" aria-modal="true" aria-label="Menu" hidden>
+  <div class="mm-top">
+    <a href="#" class="brand" aria-label="Nocella, home"><span class="mm-word">Nocella</span></a>
+    <button id="mmClose" aria-label="Close menu"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg></button>
+  </div>
+  <div class="mm-views"><nav class="mm-view mm-main" id="mmMain" aria-label="Menu"></nav><nav class="mm-view mm-sub" id="mmSub" aria-label="Submenu"></nav></div>
+</div>
 
 <div class="lnav" id="lnav">
   <div class="in">
@@ -449,7 +496,7 @@
       </ol>
       <p>Videos are screen recordings of the live products. Some projects are prototypes or demos and are marked as such.</p>
     </div>
-    <div class="crumbs"><a href="#">Nocella</a><span>›</span>Portfolio</div>
+    <div class="crumbs"><a href="#" class="foot-word" aria-label="Nocella, home">Nocella</a><span>›</span>Portfolio</div>
     <div class="cols">
       <div><h4>Latest work</h4><ul id="footWorks"></ul></div>
       <div><h4>Sections</h4><ul><li><a href="#work">Work</a></li><li><a href="#ai">How I work</a></li><li><a href="#stack">Skills</a></li><li><a href="#experience">Experience</a></li></ul></div>
@@ -509,7 +556,7 @@
   const fullAt = new Set([0, 5, 10]);
   $('#workSub').textContent = `${works.length} projects, designed and built end to end. Most of them are live.`;
   $('#grid').innerHTML = works.map((w, i) => `
-    <article class="tile rv${fullAt.has(i) ? ' full' : ''}" style="--c:${w.c}">
+    <article class="tile rv${fullAt.has(i) ? ' full' : ''}" id="p-${w.id}" style="--c:${w.c}">
       <span class="kick">${w.kind}${w.ai ? ' · AI inside' : ''}</span>
       <h3>${w.n}</h3>
       <p class="tag">${tagline[w.id] || w.t.join(' · ')}</p>
@@ -567,11 +614,110 @@
   addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
   addEventListener('resize', onScroll); onScroll();
 
-  // nav globale da telefono
-  const gnav = $('#gnav'), burger = $('#burger');
-  const menu = open => { gnav.classList.toggle('open', open); burger.setAttribute('aria-expanded', open); };
-  burger.onclick = () => menu(!gnav.classList.contains('open'));
-  $('#gnavList').addEventListener('click', e => { if (e.target.closest('a')) menu(false); });
+  // nav globale: megamenu da desktop (si apre passandoci sopra), menu a schermo intero da telefono. Stessi dati per i due.
+  const mail = 'mailto:antonio.nocella3@gmail.com';
+  const stepNames = [...document.querySelectorAll('#hlTrack .hl-card b')].map(b => b.textContent.replace(/\.$/, ''));
+  const menu = [
+    { k: 'work', label: 'Work', href: '#work', groups: [
+      { t: 'Explore work', big: true, links: [['All projects', '#work'], ...works.slice(0, 4).map(w => [w.n, '#p-' + w.id])] },
+      { t: 'More projects', links: works.slice(4).map(w => [w.n, '#p-' + w.id]) },
+      { t: 'Quick links', links: [['Case study: ' + works[0].n, workUrl(works[0])], ['AI inside', '#ai'], ['The classic site', 'index.html']] } ] },
+    { k: 'method', label: 'How I work', href: '#ai', groups: [
+      { t: 'Explore the method', big: true, links: [['Designing with AI', '#ai'], ['Get the highlights', '#highlights'], ['By the numbers', '#numbers']] },
+      { t: 'The five steps', links: stepNames.map((s, i) => [s, '#highlights', i]) },
+      { t: 'AI inside', links: works.filter(w => w.ai).map(w => [w.n, '#p-' + w.id]) } ] },
+    { k: 'skills', label: 'Skills', href: '#stack', groups: [
+      { t: 'Explore the stack', big: true, links: Object.keys(skills).map(g => [g, '#stack']) },
+      { t: 'Every day', links: ['Claude Code', 'React and Next.js', 'Supabase', 'Expo (React Native)', 'WhatsApp Business Platform'].map(s => [s, '#stack']) } ] },
+    { k: 'exp', label: 'Experience', href: '#experience', groups: [
+      { t: 'Ten years, four agencies', big: true, links: jobs.map(([a]) => [a, '#experience']) },
+      { t: 'Roles', links: jobs.map(([, r, y]) => [`${r} · ${y}`, '#experience']) } ] },
+    { k: 'contact', label: 'Contact', href: '#contact', groups: [
+      { t: 'Get in touch', big: true, links: [['Write to me', mail], ['Ready for a new team', '#contact']] },
+      { t: 'Details', links: [['antonio.nocella3@gmail.com', mail], ['Adelfia, Bari, Italy', '#contact'], ['Also available remotely', '#contact']] } ] },
+    { k: 'classic', label: 'Classic site', href: 'index.html' },
+  ];
+  const groupsHTML = m => { let i = 0;
+    return m.groups.map(g => `<div class="fly-g${g.big ? ' big' : ''}"><h4 style="--i:${i++}">${g.t}</h4><ul>${g.links.map(([t, h, s]) =>
+      `<li style="--i:${i++}"><a href="${h}"${s != null ? ` data-step="${s}"` : ''}>${t}</a></li>`).join('')}</ul></div>`).join(''); };
+  const gnav = $('#gnav'), gLinks = $('#gLinks'), flyIn = $('#flyIn'), curtain = $('#curtain');
+  gLinks.innerHTML = menu.map(m => `<li><a href="${m.href}" data-k="${m.k}"${m.groups ? ' aria-haspopup="true" aria-expanded="false"' : ''}>${m.label}</a></li>`).join('');
+  const topLinks = [...gLinks.querySelectorAll('a')];
+  let flyKey = null, tIn, tOut, lastPointer = 'mouse';
+  addEventListener('pointerdown', e => (lastPointer = e.pointerType), true);
+  const mark = k => topLinks.forEach(a => { a.classList.toggle('on', a.dataset.k === k); if (a.hasAttribute('aria-expanded')) a.setAttribute('aria-expanded', a.dataset.k === k); });
+  const closeFly = () => {
+    clearTimeout(tIn); clearTimeout(tOut); if (!flyKey) return;
+    flyKey = null; gnav.classList.remove('fly', 'show'); gnav.style.setProperty('--gh', '44px'); curtain.classList.remove('on'); mark(null);
+  };
+  const openFly = k => {
+    clearTimeout(tIn); clearTimeout(tOut);
+    const m = menu.find(x => x.k === k);
+    if (!m || !m.groups || innerWidth <= 833) return closeFly();
+    if (flyKey === k) return;
+    flyKey = k; gnav.classList.remove('show');
+    flyIn.innerHTML = groupsHTML(m);
+    flyIn.style.paddingLeft = gLinks.offsetLeft + 8 + 'px'; // colonne allineate alla prima voce, come su apple.com
+    gnav.classList.add('fly'); gnav.style.setProperty('--gh', 44 + flyIn.offsetHeight + 'px'); curtain.classList.add('on'); mark(k);
+    requestAnimationFrame(() => requestAnimationFrame(() => flyKey === k && gnav.classList.add('show')));
+  };
+  topLinks.forEach(a => {
+    a.addEventListener('pointerenter', e => { if (e.pointerType !== 'mouse') return; clearTimeout(tIn); clearTimeout(tOut); tIn = setTimeout(() => openFly(a.dataset.k), flyKey ? 60 : 160); });
+    a.addEventListener('pointerleave', () => clearTimeout(tIn));
+    // da tablet il primo tocco apre il menu, il secondo va alla sezione
+    a.addEventListener('click', e => {
+      const m = menu.find(x => x.k === a.dataset.k);
+      if (m.groups && e.detail && lastPointer !== 'mouse' && flyKey !== m.k) { e.preventDefault(); openFly(m.k); } else closeFly();
+    });
+    // da tastiera: freccia giù entra nelle colonne
+    a.addEventListener('keydown', e => { if (e.key !== 'ArrowDown') return; e.preventDefault(); openFly(a.dataset.k); flyIn.querySelector('a')?.focus(); });
+  });
+  gnav.querySelector('.brand').addEventListener('pointerenter', () => { tOut = setTimeout(closeFly, 120); });
+  gnav.addEventListener('pointerenter', () => clearTimeout(tOut));
+  gnav.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse') tOut = setTimeout(closeFly, 180); });
+  gnav.addEventListener('focusout', e => { if (!gnav.contains(e.relatedTarget)) closeFly(); });
+  addEventListener('scroll', () => { if (flyKey && gnav.getBoundingClientRect().bottom < 0) closeFly(); }, { passive: true });
+
+  // menu da telefono
+  const mm = $('#mmenu'), mmMain = $('#mmMain'), mmSub = $('#mmSub'), burger = $('#burger');
+  const chev = d => `<svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${d}"/></svg>`;
+  mmMain.innerHTML = `<ul>${menu.map((m, i) => `<li style="--i:${i}">${m.groups ? `<button class="mm-item" data-k="${m.k}">${m.label}${chev('M9 6l6 6-6 6')}</button>` : `<a class="mm-item" href="${m.href}">${m.label}</a>`}</li>`).join('')}</ul>`;
+  const showView = v => { v.classList.remove('show'); void v.offsetWidth; v.classList.add('show'); };
+  const openMob = () => {
+    mm.hidden = false; mm.classList.remove('sub'); document.documentElement.classList.add('lock'); burger.setAttribute('aria-expanded', true);
+    requestAnimationFrame(() => { mm.classList.add('on'); showView(mmMain); }); $('#mmClose').focus();
+  };
+  const closeMob = () => {
+    if (mm.hidden) return;
+    mm.classList.remove('on'); document.documentElement.classList.remove('lock'); burger.setAttribute('aria-expanded', false);
+    setTimeout(() => { if (!mm.classList.contains('on')) { mm.hidden = true; mmMain.classList.remove('show'); mmSub.classList.remove('show'); } }, 320);
+  };
+  burger.onclick = openMob;
+  $('#mmClose').onclick = closeMob;
+  mm.querySelector('.brand').addEventListener('click', closeMob);
+  // un link del menu: chiude e va; i passi portano anche la galleria al passo giusto
+  const followLink = e => {
+    const a = e.target.closest('a'); if (!a) return;
+    closeFly(); closeMob();
+    if (a.dataset.step != null) window.hlGo?.(+a.dataset.step);
+  };
+  flyIn.addEventListener('click', followLink);
+  mmMain.addEventListener('click', e => {
+    const b = e.target.closest('button[data-k]');
+    if (!b) return followLink(e);
+    mmSub.innerHTML = `<button class="mm-back">${chev('M15 6l-6 6 6 6')}${b.textContent}</button>` + groupsHTML(menu.find(x => x.k === b.dataset.k));
+    mmSub.scrollTop = 0; mm.classList.add('sub'); showView(mmSub); mmSub.querySelector('.mm-back').focus();
+  });
+  mmSub.addEventListener('click', e => {
+    if (e.target.closest('.mm-back')) { mm.classList.remove('sub'); showView(mmMain); mmMain.querySelector('button, a')?.focus(); return; }
+    followLink(e);
+  });
+  addEventListener('keydown', e => {
+    if (e.key !== 'Escape') return;
+    if (!mm.hidden) { closeMob(); burger.focus(); }
+    else if (flyKey) { const a = topLinks.find(x => x.dataset.k === flyKey); closeFly(); a?.focus(); }
+  });
+  addEventListener('resize', () => { closeFly(); if (innerWidth > 833) closeMob(); });
 
   // nav locale: evidenzia la sezione in vista
   const navLinks = [...document.querySelectorAll('.lnav nav a:not(.btn)')];
@@ -595,6 +741,7 @@
       prev.disabled = track.scrollLeft < 4; next.disabled = end;
     };
     ds.forEach((d, i) => d.onclick = () => go(i));
+    window.hlGo = go; // i passi del megamenu
     prev.onclick = () => go(cur() - 1); next.onclick = () => go(cur() + 1);
     track.addEventListener('scroll', sync, { passive: true }); addEventListener('resize', sync); sync();
   })();
