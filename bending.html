@@ -60,10 +60,6 @@
   /* ---------- metodo: card nere su fascia grigia ---------- */
   .method { background: var(--band); padding: clamp(96px, 11vw, 150px) 0; }
   .mgrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(16px, 2.4vw, 32px); max-width: 1440px; margin: clamp(48px, 5vw, 72px) auto 0; padding-left: var(--gl); padding-right: var(--gr); }
-  .ai-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 18px; }
-  .ai-links a { display: inline-flex; align-items: center; gap: 8px; height: 32px; padding: 0 12px 0 8px; border-radius: 999px; background: #1C1C1E; font-size: 14px; }
-  .ai-links a i { width: 14px; height: 14px; border-radius: 4px; }
-  .ai-links a:hover { background: #2C2C2E; }
 
   /* ---------- esperienza: card a poster, una al centro, frecce sotto ---------- */
   .exp { padding: clamp(96px, 11vw, 150px) 0 clamp(88px, 10vw, 130px); overflow: hidden; }
@@ -113,7 +109,7 @@
 
 <header class="nav hdr">
   <div class="wrap in">
-    <a href="#" class="brand" aria-label="Nocella, home"><span class="word">Nocella</span></a>
+    <a href="#" class="brand" aria-label="Nocella, home"></a>
     <nav class="links" aria-label="Main"><a href="#projects">Projects</a><a href="#method">How I work</a><a href="#experience">Experience</a></nav>
     <a href="mailto:antonio.nocella3@gmail.com" class="pill">Get in touch</a>
     <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="menu">Menu <i></i></button>
@@ -215,7 +211,7 @@
   $('#pgrid').addEventListener('click', e => { const b = e.target.closest('.film'); if (b) film(works[b.dataset.i]); });
 
   // metodo
-  $('#mgrid').innerHTML = steps.map(([fig, t, sub, p], i) => `<article class="mcard rv" style="--d:${(i % 2) * .08}s"><div class="body"><h3>${t}</h3><p class="sub">${sub}</p><p>${p}</p>${fig === 'rank' ? `<div class="ai-links">${works.filter(w => w.ai).map(w => `<a href="${caseUrl(w)}"><i style="background:${w.c}"></i>${w.n}</a>`).join('')}</div>` : ''}</div><div class="fig" data-fig="${fig}"></div></article>`).join('');
+  $('#mgrid').innerHTML = steps.map(([fig, t, sub, p], i) => `<article class="mcard rv" style="--d:${(i % 2) * .08}s"><div class="body"><h3>${t}</h3><p class="sub">${sub}</p><p>${p}</p></div><div class="fig" data-fig="${fig}"></div></article>`).join('');
   $$('#mgrid .fig').forEach(f => motivo(f, f.dataset.fig));
 
   // esperienza

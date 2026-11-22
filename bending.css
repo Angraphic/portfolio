@@ -64,7 +64,7 @@ em, .it { font-family: var(--serif); font-style: italic; font-weight: 400; lette
 .nav { position: sticky; top: 0; z-index: 50; background: rgba(0,0,0,.86); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid rgba(255,255,255,.06); }
 .nav .in { display: flex; align-items: center; gap: 12px; height: 72px; }
 .brand { --accent: #FF9030; display: flex; align-items: center; height: 72px; margin-right: auto; color: var(--white); }
-.brand .word, .mm-word { font-family: Sora, var(--sans); font-weight: 200; font-size: 26px; letter-spacing: -0.02em; line-height: 1; }
+.brand .logo { display: block; height: 24px; width: auto; }
 .nav .links { display: flex; gap: 28px; margin-right: 16px; font-size: 15px; }
 .nav .links a { color: rgba(255,255,255,.75); transition: color .2s; }
 .nav .links a:hover, .nav .links a[aria-current] { color: var(--white); }
@@ -83,13 +83,12 @@ em, .it { font-family: var(--serif); font-style: italic; font-weight: 400; lette
 .menu-main a { display: inline-block; padding: 2px 0; font-weight: 400; font-size: clamp(44px, 6vw, 88px); line-height: 1.04; letter-spacing: -0.04em; }
 .menu-main a:hover, .menu-main a:focus-visible { font-family: var(--serif); font-style: italic; letter-spacing: -0.01em; color: var(--accent); }
 .menu-side .mono-l { margin-bottom: 12px; }
-.menu-projects { list-style: none; display: grid; grid-template-columns: 1fr 1fr; column-gap: 24px; }
-.menu-projects a { display: flex; align-items: center; gap: 12px; padding: 11px 0; border-bottom: 1px solid rgba(255,255,255,.08); font-size: 16px; font-weight: 500; transition: color .2s; }
-.menu-projects a:hover { color: var(--accent); }
-.menu-projects a[aria-current] { color: var(--accent); }
-.menu-projects i { flex: none; width: 18px; height: 18px; border-radius: 5px; }
+.menu-contact { list-style: none; display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
+.menu-contact li:first-child a { font-size: clamp(24px, 2.6vw, 36px); letter-spacing: -0.03em; }
+.menu-contact li:first-child a:hover { font-family: var(--serif); font-style: italic; color: var(--accent); }
+.menu-contact li:nth-child(2) { color: var(--mute); }
+.menu-contact .pill { margin-top: 18px; }
 .menu-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 32px; padding-top: 22px; padding-bottom: calc(28px + env(safe-area-inset-bottom, 0px)); border-top: 1px solid rgba(255,255,255,.08); font-size: 15px; }
-.menu-foot div { display: flex; flex-wrap: wrap; gap: 8px 28px; }
 .menu-foot a { text-decoration: underline; text-underline-offset: 3px; }
 .menu li, .menu .mono-l { opacity: 0; transform: translateY(14px); transition: opacity .5s var(--ease), transform .5s var(--ease); }
 .menu.on li, .menu.on .mono-l { opacity: 1; transform: none; transition-delay: calc(var(--i, 0) * 30ms + 80ms); }
@@ -122,7 +121,9 @@ html:has(.vmodal[open]) { overflow: hidden; }
 .fcols ul { list-style: none; display: flex; flex-direction: column; gap: 8px; font-size: 16px; }
 .fcols ul a:hover { text-decoration: underline; text-underline-offset: 3px; }
 .fcols .legal { font-size: 13px; line-height: 1.55; color: var(--mute); }
-.fbig { height: .5em; margin-top: 48px; overflow: hidden; font-family: Sora, var(--sans); font-weight: 200; font-size: clamp(110px, 25vw, 380px); line-height: .8; letter-spacing: -0.04em; text-align: center; white-space: nowrap; user-select: none; }
+.foot .wrap { container-type: inline-size; }
+.fbig { height: 13.5cqw; margin-top: 56px; overflow: hidden; user-select: none; }
+.fbig .logo { display: block; width: 100%; height: auto; }
 .tagline { padding: 40px 0 calc(48px + env(safe-area-inset-bottom, 0px)); font-size: clamp(32px, 3.4vw, 48px); line-height: 1.1; letter-spacing: -0.035em; }
 
 @media (max-width: 900px) {
@@ -133,7 +134,6 @@ html:has(.vmodal[open]) { overflow: hidden; }
 }
 @media (max-width: 560px) {
   .nav .in > .pill { display: none; }
-  .menu-projects { grid-template-columns: 1fr; }
   .menu-main a { font-size: 48px; }
 }
 @media (prefers-reduced-motion: reduce) {

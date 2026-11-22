@@ -56,36 +56,40 @@
   .gal img { width: 100%; height: 100%; object-fit: contain; border-radius: 12px; filter: drop-shadow(0 20px 40px rgba(0,0,0,.18)); }
   .gal figcaption { margin-top: 14px; }
 
-  /* ---------- struttura: le pagine o le schermate, come un albero ---------- */
-  .ph-map { padding: clamp(96px, 11vw, 150px) 0; }
-  .tree-card { max-width: 760px; margin: clamp(40px, 5vw, 64px) auto 0; padding: 24px clamp(20px, 3vw, 36px) 28px; border-radius: 32px; background: #0B0B0C; border: 1px solid rgba(255,255,255,.08); }
-  .tree-card header { display: flex; justify-content: space-between; gap: 12px; padding-bottom: 14px; border-bottom: 1px solid rgba(255,255,255,.08); }
-  .tree { list-style: none; margin-top: 14px; overflow-x: auto; font: 400 15px/1.9 var(--mono); white-space: pre; }
-  .tree span { color: var(--mute-2); }
+  /* ---------- dentro il progetto: le pagine o le schermate scorrono in grande, su due righe ---------- */
+  .ph-inside { padding: clamp(96px, 11vw, 150px) 0; overflow: hidden; }
+  .ph-inside .mono-l { margin-top: 18px; }
+  .ticker { display: flex; flex-direction: column; gap: 4px; margin-top: clamp(40px, 5vw, 64px); -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+  .tk-row { display: flex; width: max-content; animation: tk 64s linear infinite; }
+  .tk-row + .tk-row { animation-direction: reverse; animation-duration: 76s; }
+  .tk-row span { flex: none; padding-right: .3em; font-size: clamp(44px, 6.4vw, 104px); line-height: 1.12; letter-spacing: -0.04em; white-space: nowrap; }
+  .tk-row span:nth-child(even) { font-family: var(--serif); font-style: italic; letter-spacing: -0.01em; color: var(--accent); }
+  .tk-row span::after { content: "·"; margin-left: .3em; color: #3A3A3E; font-family: var(--sans); font-style: normal; }
+  @keyframes tk { to { transform: translateX(-50%); } }
 
-  /* ---------- progetto precedente e successivo ---------- */
-  .ph-next { padding: clamp(80px, 9vw, 130px) 0 clamp(96px, 11vw, 150px); }
-  .np { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 36px; }
-  .np a { position: relative; display: flex; flex-direction: column; justify-content: space-between; gap: 40px; min-height: 260px; padding: clamp(24px, 3vw, 36px); border-radius: clamp(28px, 3vw, 40px); background: var(--c); color: var(--ink); overflow: hidden; transition: transform .4s var(--ease); }
-  .np a:hover { transform: translateY(-4px); }
-  .np .mono-l { color: rgba(20,20,21,.62); }
-  .np b { display: block; font-weight: 400; font-size: clamp(36px, 4vw, 60px); line-height: 1; letter-spacing: -0.04em; }
-  .np em { display: block; margin-top: 8px; font-size: clamp(20px, 1.8vw, 26px); color: rgba(20,20,21,.78); }
-  .np .go { position: absolute; top: clamp(22px, 2.6vw, 32px); right: clamp(24px, 3vw, 36px); font-size: 28px; line-height: 1; }
+  /* ---------- il video del progetto, intero, nella card del suo colore ---------- */
+  .ph-show { padding: clamp(96px, 11vw, 150px) 0; }
+  .sc-card { max-width: 1240px; margin: clamp(40px, 5vw, 64px) auto 0; padding: clamp(16px, 4.5vw, 64px); border-radius: clamp(28px, 3.4vw, 52px); background: var(--c); box-shadow: 0 80px 120px -80px var(--c); }
+  .sc-win { overflow: hidden; border-radius: clamp(10px, 1.2vw, 16px); background: #0B0B0C; box-shadow: 0 30px 60px rgba(0,0,0,.25); }
+  .sc-win .bar { display: flex; align-items: center; gap: 6px; height: 30px; padding: 0 12px; background: #1D1D1F; }
+  .sc-win .bar i { width: 9px; height: 9px; border-radius: 50%; background: #48484A; }
+  .sc-win video { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: 50% 0; background: #0B0B0C; }
+  .sc-phone { width: min(360px, 76%); margin: 0 auto; padding: 10px; border-radius: 44px; background: #111; box-shadow: 0 30px 60px rgba(0,0,0,.3); }
+  .sc-phone video { display: block; width: 100%; aspect-ratio: 9 / 16; object-fit: cover; border-radius: 34px; background: #0B0B0C; }
   .all { display: flex; justify-content: center; margin-top: 48px; }
   .all a { font-size: 18px; text-decoration: underline; text-underline-offset: 4px; }
 
   @media (max-width: 1068px) { .pgrid3 { grid-template-columns: 1fr 1fr; } }
   @media (max-width: 900px) {
-    .sum-grid, .rs-grid, .gal, .np { grid-template-columns: 1fr; }
+    .sum-grid, .rs-grid, .gal { grid-template-columns: 1fr; }
     .pgrid3 { grid-template-columns: 1fr; }
     .ph-card { aspect-ratio: 4 / 3; }
   }
   @media (max-width: 560px) {
     .ph-card { aspect-ratio: 3 / 4; }
     .ph-card .dev .win { left: 9%; top: 10%; }
-    .tree { font-size: 13px; }
   }
+  @media (prefers-reduced-motion: reduce) { .tk-row { animation: none; } }
 </style>
 <script>document.documentElement.classList.add('js')</script>
 </head>
@@ -93,7 +97,7 @@
 
 <header class="nav hdr">
   <div class="wrap in">
-    <a href="bending.html" class="brand" aria-label="Nocella, home"><span class="word">Nocella</span></a>
+    <a href="bending.html" class="brand" aria-label="Nocella, home"></a>
     <nav class="links" aria-label="Main"><a href="bending.html#projects" aria-current="true">Projects</a><a href="bending.html#method">How I work</a><a href="bending.html#experience">Experience</a></nav>
     <a href="mailto:antonio.nocella3@gmail.com" class="pill">Get in touch</a>
     <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="menu">Menu <i></i></button>
@@ -138,19 +142,17 @@
     <div class="gal" id="gal"></div>
   </section>
 
-  <!-- STRUTTURA -->
-  <section class="ph-map">
-    <div class="wrap center"><h2 class="h-sec rv" id="mapTitle"></h2></div>
-    <div class="wrap"><div class="tree-card rv"><header><span class="mono-l" id="treeFile"></span><span class="mono-l" id="treeCount"></span></header><ul class="tree" id="tree"></ul></div></div>
+  <!-- DENTRO IL PROGETTO -->
+  <section class="ph-inside">
+    <div class="wrap center"><h2 class="h-sec rv" id="inTitle"></h2><p class="mono-l rv" id="inCount"></p></div>
+    <div class="ticker" id="ticker" aria-hidden="true"></div>
   </section>
 
-  <!-- ALTRI PROGETTI -->
-  <section class="ph-next light">
-    <div class="wrap">
-      <p class="mono-l center">Keep exploring</p>
-      <div class="np" id="np"></div>
-      <p class="all"><a href="bending.html#projects">All projects</a></p>
-    </div>
+  <!-- IL VIDEO -->
+  <section class="ph-show light" id="showcase">
+    <div class="wrap center"><h2 class="h-sec rv">See it <em>in action</em></h2></div>
+    <div class="wrap"><div class="sc-card rv" id="scCard"></div></div>
+    <p class="all"><a href="bending.html#projects">All projects</a></p>
   </section>
 </main>
 
@@ -163,7 +165,6 @@
 <script>
   // il progetto arriva da ?id=… (o da #… come riserva); se manca o non esiste, il primo
   const i = Math.max(0, works.findIndex(x => x.id === current)), p = works[i];
-  const prev = works[(i - 1 + works.length) % works.length], next = works[(i + 1) % works.length];
   const host = u => u.replace(/^https?:\/\//, '').replace(/\/$/, '');
   document.title = `${p.n} | Antonio Nocella`;
   document.querySelector('meta[name="description"]').content = p.sum;
@@ -173,8 +174,7 @@
   $('#phTitle').textContent = p.n;
   $('#phTag').textContent = tagline[p.id] || p.t.join(' · ');
   $('#phCtas').innerHTML = (p.url ? `<a class="pill pill-lg" href="${p.url}" target="_blank" rel="noopener">Visit live ↗</a>` : `<a class="pill pill-lg" href="${mail}">Ask for a demo ↗</a>`) +
-    (p.video === false ? '' : `<button class="pill pill-lg pill-line" id="watch">Watch the video ▸</button>`);
-  $('#watch')?.addEventListener('click', () => film(p));
+    (p.video === false ? '' : `<a class="pill pill-lg pill-line" href="#showcase">Watch the video ↓</a>`);
   $('#phCard').style.setProperty('--c', p.c);
   $('#phCard').innerHTML = device(p);
 
@@ -193,23 +193,28 @@
   $('#galSec').hidden = !p.g?.length;
   $('#gal').innerHTML = (p.g || []).map((label, k) => `<figure class="rv" style="--d:${(k % 2) * .08}s"><div class="frame" style="--c:${p.c}"><img src="${media('d/' + p.id)}-${k + 1}.jpg" alt="${p.n}: ${label}" loading="lazy"></div><figcaption class="mono-l">${pad(k + 1)} · ${label}</figcaption></figure>`).join('');
 
-  // struttura: pagine del sito o schermate dell'app, stampate come l'albero di un terminale
+  // dentro il progetto: le pagine del sito o le schermate dell'app, in grande, su due righe che scorrono in versi opposti
   const web = p.map[0].startsWith('/');
-  const rows = p.map.map(s => [s.length - s.trimStart().length, s.trim()]);
-  const more = (j, d) => { for (let k = j + 1; k < rows.length; k++) { if (rows[k][0] < d) return false; if (rows[k][0] === d) return true; } return false; };
-  const parent = (j, d) => { for (let k = j; k >= 0; k--) if (rows[k][0] === d) return k; };
-  $('#tree').innerHTML = rows.map(([d, t], j) => {
-    let pre = '';
-    for (let l = 1; l < d; l++) pre += more(parent(j, l), l) ? '│   ' : '    ';
-    if (d) pre += more(j, d) ? '├── ' : '└── ';
-    return `<li><span>${pre}</span>${j || !web || !p.url ? t : host(p.url)}</li>`;
-  }).join('');
-  $('#mapTitle').innerHTML = web ? 'Page by <em>page</em>' : 'Screen by <em>screen</em>';
-  $('#treeFile').textContent = web ? 'sitemap.xml' : 'screens';
-  $('#treeCount').textContent = `${rows.length} ${web ? 'pages' : 'screens'}`;
+  const nice = (t, j) => {
+    t = t.trim();
+    if (!web) return t;
+    if (j === 0) return 'Home';
+    const seg = t.replace(/[?#]/g, '/').split('/').filter(x => x && !x.startsWith(':')).pop() || t;
+    const w = seg.replace(/\.html$/, '').replace(/[-_=]+/g, ' ').trim();
+    return w.charAt(0).toUpperCase() + w.slice(1);
+  };
+  const names = [...new Set(p.map.map(nice))];
+  const fill = r => { const out = []; while (out.length < 10 || out.length % 2) out.push(r[out.length % r.length]); return out; };
+  $('#ticker').innerHTML = [names.filter((_, k) => k % 2 === 0), names.filter((_, k) => k % 2)].map(r => r.length ? r : names)
+    .map(r => { const half = fill(r).map(t => `<span>${t}</span>`).join(''); return `<div class="tk-row">${half}${half}</div>`; }).join('');
+  $('#inTitle').innerHTML = `Inside <em>${p.n}</em>`;
+  $('#inCount').textContent = `${p.map.length} ${web ? 'pages' : 'screens'}`;
 
-  // precedente e successivo
-  $('#np').innerHTML = [['Previous', prev, '←'], ['Next', next, '→']].map(([k, w, a]) => `<a href="${caseUrl(w)}" style="--c:${w.c}"><span class="mono-l">${k} · ${w.kind}</span><span class="go" aria-hidden="true">${a}</span><span><b>${w.n}</b><em>${tagline[w.id] || ''}</em></span></a>`).join('');
+  // il video del progetto, intero: finestra da browser per i siti e le web app, telefono per le app verticali
+  $('#showcase').hidden = p.video === false;
+  $('#scCard').style.setProperty('--c', p.c);
+  const vid = `<video src="${media(p.id)}.webm" poster="${media(p.id)}.jpg" muted loop playsinline controls preload="none" data-auto aria-label="${p.n}, video"></video>`;
+  $('#scCard').innerHTML = p.tall ? `<div class="sc-phone">${vid}</div>` : `<div class="sc-win"><div class="bar"><i></i><i></i><i></i></div>${vid}</div>`;
 
   autoplay();
   reveal();
