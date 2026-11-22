@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Project | Antonio Nocella</title>
+<meta name="description" content="A project by Antonio Nocella, web developer and designer.">
+<meta name="author" content="Antonio Nocella">
+<meta name="theme-color" content="#000000">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Fragment+Mono&family=Anton&family=Sora:wght@200&family=VT323&display=swap" rel="stylesheet">
+<link href="device.css" rel="stylesheet">
+<link href="bending.css" rel="stylesheet">
+<style>
+  /* scheda di un progetto nella versione ispirata a bendingspoons.com: stessi colori, font e card della home (bending.css) */
+
+  /* ---------- apertura: nome, frase in corsivo, il prodotto in una card nel suo colore ---------- */
+  .ph-hero { padding-top: clamp(40px, 5vw, 72px); overflow: hidden; }
+  .crumbs { display: flex; justify-content: center; flex-wrap: wrap; gap: 6px 10px; margin-bottom: 24px; }
+  .crumbs a:hover { color: var(--white); }
+  .ph-tag { margin-top: 14px; font-family: var(--serif); font-style: italic; font-size: clamp(26px, 3.2vw, 46px); line-height: 1.1; color: var(--accent); }
+  .ph-ctas { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-top: 32px; }
+  .ph-stage { padding-top: clamp(48px, 6vw, 80px); padding-bottom: clamp(96px, 11vw, 150px); }
+  .ph-card { position: relative; max-width: 1240px; margin: 0 auto; aspect-ratio: 16 / 9; border-radius: clamp(28px, 3.4vw, 52px); overflow: hidden; background: var(--c); box-shadow: 0 80px 120px -80px var(--c); }
+  .ph-card .dev { position: absolute; inset: 0; background: transparent; }
+  .ph-card .dev::before { display: none; }
+  .ph-card .dev .win { left: 7%; top: 8%; }
+  .ph-card .dev .phone { --pw: clamp(170px, 30cqw, 340px); top: 7%; }
+  .ph-card .dev .dtag { top: 20px; right: 20px; }
+
+  /* ---------- il progetto: testo grande e scheda ---------- */
+  .ph-sum { padding: clamp(96px, 11vw, 150px) 0; }
+  .sum-grid { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr); gap: clamp(40px, 6vw, 96px); align-items: start; }
+  .sum-text { font-size: clamp(24px, 2.4vw, 36px); line-height: 1.25; letter-spacing: -0.025em; }
+  .facts { border-top: 1px solid #E5E5E5; }
+  .facts > div { display: grid; grid-template-columns: 110px minmax(0, 1fr); gap: 16px; align-items: baseline; padding: 14px 0; border-bottom: 1px solid #E5E5E5; }
+  .facts dd { font-size: 16px; font-weight: 500; }
+  .facts a { text-decoration: underline; text-underline-offset: 3px; }
+  .rs-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: clamp(56px, 6vw, 88px); }
+  .rs-card { padding: clamp(28px, 3vw, 40px); border-radius: clamp(24px, 2.6vw, 36px); background: #F5F5F5; }
+  .rs-card h3 { font-family: var(--serif); font-weight: 400; font-size: clamp(34px, 3vw, 44px); line-height: 1; }
+  .rs-card ul { list-style: none; margin-top: 20px; }
+  .rs-card .role li { padding: 12px 0; border-top: 1px solid #E5E5E5; font-size: 16px; }
+  .rs-card .stack { display: flex; flex-wrap: wrap; gap: 8px; }
+  .rs-card .stack li { padding: 7px 13px; border-radius: 999px; background: var(--white); font-size: 14px; }
+
+  /* ---------- tre punti: card nere su fascia grigia (stile .mcard) ---------- */
+  .ph-points { background: var(--band); padding: clamp(96px, 11vw, 150px) 0; }
+  .pgrid3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(16px, 2vw, 24px); max-width: 1440px; margin: clamp(48px, 5vw, 72px) auto 0; padding-left: var(--gl); padding-right: var(--gr); }
+
+  /* ---------- dettagli: le schermate su un pannello del colore del progetto ---------- */
+  .ph-gal { padding: clamp(96px, 11vw, 150px) 0; }
+  .gal { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(20px, 2.6vw, 36px) clamp(16px, 2.4vw, 32px); max-width: 1440px; margin: clamp(48px, 5vw, 72px) auto 0; padding-left: var(--gl); padding-right: var(--gr); }
+  .gal .frame { display: grid; place-items: center; aspect-ratio: 4 / 3; padding: clamp(18px, 3vw, 44px); border-radius: clamp(24px, 2.8vw, 40px); background: var(--c); overflow: hidden; }
+  .gal img { width: 100%; height: 100%; object-fit: contain; border-radius: 12px; filter: drop-shadow(0 20px 40px rgba(0,0,0,.18)); }
+  .gal figcaption { margin-top: 14px; }
+
+  /* ---------- struttura: le pagine o le schermate, come un albero ---------- */
+  .ph-map { padding: clamp(96px, 11vw, 150px) 0; }
+  .tree-card { max-width: 760px; margin: clamp(40px, 5vw, 64px) auto 0; padding: 24px clamp(20px, 3vw, 36px) 28px; border-radius: 32px; background: #0B0B0C; border: 1px solid rgba(255,255,255,.08); }
+  .tree-card header { display: flex; justify-content: space-between; gap: 12px; padding-bottom: 14px; border-bottom: 1px solid rgba(255,255,255,.08); }
+  .tree { list-style: none; margin-top: 14px; overflow-x: auto; font: 400 15px/1.9 var(--mono); white-space: pre; }
+  .tree span { color: var(--mute-2); }
+
+  /* ---------- progetto precedente e successivo ---------- */
+  .ph-next { padding: clamp(80px, 9vw, 130px) 0 clamp(96px, 11vw, 150px); }
+  .np { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 36px; }
+  .np a { position: relative; display: flex; flex-direction: column; justify-content: space-between; gap: 40px; min-height: 260px; padding: clamp(24px, 3vw, 36px); border-radius: clamp(28px, 3vw, 40px); background: var(--c); color: var(--ink); overflow: hidden; transition: transform .4s var(--ease); }
+  .np a:hover { transform: translateY(-4px); }
+  .np .mono-l { color: rgba(20,20,21,.62); }
+  .np b { display: block; font-weight: 400; font-size: clamp(36px, 4vw, 60px); line-height: 1; letter-spacing: -0.04em; }
+  .np em { display: block; margin-top: 8px; font-size: clamp(20px, 1.8vw, 26px); color: rgba(20,20,21,.78); }
+  .np .go { position: absolute; top: clamp(22px, 2.6vw, 32px); right: clamp(24px, 3vw, 36px); font-size: 28px; line-height: 1; }
+  .all { display: flex; justify-content: center; margin-top: 48px; }
+  .all a { font-size: 18px; text-decoration: underline; text-underline-offset: 4px; }
+
+  @media (max-width: 1068px) { .pgrid3 { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 900px) {
+    .sum-grid, .rs-grid, .gal, .np { grid-template-columns: 1fr; }
+    .pgrid3 { grid-template-columns: 1fr; }
+    .ph-card { aspect-ratio: 4 / 3; }
+  }
+  @media (max-width: 560px) {
+    .ph-card { aspect-ratio: 3 / 4; }
+    .ph-card .dev .win { left: 9%; top: 10%; }
+    .tree { font-size: 13px; }
+  }
+</style>
+<script>document.documentElement.classList.add('js')</script>
+</head>
+<body data-page="project">
+
+<header class="nav hdr">
+  <div class="wrap in">
+    <a href="bending.html" class="brand" aria-label="Nocella, home"><span class="word">Nocella</span></a>
+    <nav class="links" aria-label="Main"><a href="bending.html#projects" aria-current="true">Projects</a><a href="bending.html#method">How I work</a><a href="bending.html#experience">Experience</a></nav>
+    <a href="mailto:antonio.nocella3@gmail.com" class="pill">Get in touch</a>
+    <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="menu">Menu <i></i></button>
+  </div>
+</header>
+
+<main>
+  <!-- APERTURA -->
+  <section class="ph-hero">
+    <div class="wrap center">
+      <p class="crumbs mono-l rv"><a href="bending.html#projects">Projects</a><span>/</span><span id="phKick"></span></p>
+      <h1 class="h-hero rv" id="phTitle" style="--d:.06s"></h1>
+      <p class="ph-tag rv" id="phTag" style="--d:.12s"></p>
+      <div class="ph-ctas rv" id="phCtas" style="--d:.18s"></div>
+    </div>
+    <div class="wrap ph-stage"><div class="ph-card rv" id="phCard"></div></div>
+  </section>
+
+  <!-- IL PROGETTO -->
+  <section class="ph-sum light">
+    <div class="wrap">
+      <div class="sum-grid">
+        <div class="rv"><p class="mono-l" style="margin-bottom:20px">The project</p><p class="sum-text" id="sumText"></p></div>
+        <dl class="facts rv" id="facts" style="--d:.1s"></dl>
+      </div>
+      <div class="rs-grid">
+        <div class="rs-card rv"><h3>My <em>role</em></h3><ul class="role" id="role"></ul></div>
+        <div class="rs-card rv" style="--d:.08s"><h3>Built <em>with</em></h3><ul class="stack" id="stack"></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PUNTI -->
+  <section class="ph-points">
+    <div class="wrap center"><h2 class="h-sec rv">Worth a <em>closer</em> look</h2></div>
+    <div class="pgrid3" id="points"></div>
+  </section>
+
+  <!-- DETTAGLI -->
+  <section class="ph-gal light" id="galSec">
+    <div class="wrap center"><h2 class="h-sec rv">In <em>detail</em></h2></div>
+    <div class="gal" id="gal"></div>
+  </section>
+
+  <!-- STRUTTURA -->
+  <section class="ph-map">
+    <div class="wrap center"><h2 class="h-sec rv" id="mapTitle"></h2></div>
+    <div class="wrap"><div class="tree-card rv"><header><span class="mono-l" id="treeFile"></span><span class="mono-l" id="treeCount"></span></header><ul class="tree" id="tree"></ul></div></div>
+  </section>
+
+  <!-- ALTRI PROGETTI -->
+  <section class="ph-next light">
+    <div class="wrap">
+      <p class="mono-l center">Keep exploring</p>
+      <div class="np" id="np"></div>
+      <p class="all"><a href="bending.html#projects">All projects</a></p>
+    </div>
+  </section>
+</main>
+
+<footer class="foot" id="foot"></footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="dati.js"></script>
+<script src="motivi.js"></script>
+<script src="bending.js"></script>
+<script>
+  // il progetto arriva da ?id=… (o da #… come riserva); se manca o non esiste, il primo
+  const i = Math.max(0, works.findIndex(x => x.id === current)), p = works[i];
+  const prev = works[(i - 1 + works.length) % works.length], next = works[(i + 1) % works.length];
+  const host = u => u.replace(/^https?:\/\//, '').replace(/\/$/, '');
+  document.title = `${p.n} | Antonio Nocella`;
+  document.querySelector('meta[name="description"]').content = p.sum;
+
+  // apertura
+  $('#phKick').textContent = `${num(p)} / ${pad(works.length)} · ${p.kind}`;
+  $('#phTitle').textContent = p.n;
+  $('#phTag').textContent = tagline[p.id] || p.t.join(' · ');
+  $('#phCtas').innerHTML = (p.url ? `<a class="pill pill-lg" href="${p.url}" target="_blank" rel="noopener">Visit live ↗</a>` : `<a class="pill pill-lg" href="${mail}">Ask for a demo ↗</a>`) +
+    (p.video === false ? '' : `<button class="pill pill-lg pill-line" id="watch">Watch the video ▸</button>`);
+  $('#watch')?.addEventListener('click', () => film(p));
+  $('#phCard').style.setProperty('--c', p.c);
+  $('#phCard').innerHTML = device(p);
+
+  // il progetto
+  $('#sumText').textContent = p.sum;
+  const facts = [['Made at', p.at], ['Type', p.kind], ['Sector', p.t[1]], ['Status', p.status], ['Link', p.url ? `<a href="${p.url}" target="_blank" rel="noopener">${host(p.url)} ↗</a>` : 'Not public, demo on request']];
+  $('#facts').innerHTML = facts.map(([k, v]) => `<div><dt class="mono-l">${k}</dt><dd>${v}</dd></div>`).join('');
+  $('#role').innerHTML = p.role.map(r => `<li>${r}</li>`).join('');
+  $('#stack').innerHTML = p.stack.map(s => `<li>${s}</li>`).join('');
+
+  // tre punti, ognuno con la scena animata fatta per questo progetto (motivi.js); senza scena, una figura a rotazione
+  $('#points').innerHTML = p.points.map(([t, d], k) => `<article class="mcard rv" style="--d:${k * .08}s"><div class="body"><p class="mono-l" style="margin-bottom:14px">${pad(k + 1)} / ${pad(p.points.length)}</p><h3>${t}</h3><p>${d}</p></div><div class="fig"></div></article>`).join('');
+  $$('#points .fig').forEach((f, k) => motivo(f, motivo.has(`${p.id}-${k}`) ? `${p.id}-${k}` : i + k * 3));
+
+  // dettagli: le schermate in assets/lavori/d
+  $('#galSec').hidden = !p.g?.length;
+  $('#gal').innerHTML = (p.g || []).map((label, k) => `<figure class="rv" style="--d:${(k % 2) * .08}s"><div class="frame" style="--c:${p.c}"><img src="${media('d/' + p.id)}-${k + 1}.jpg" alt="${p.n}: ${label}" loading="lazy"></div><figcaption class="mono-l">${pad(k + 1)} · ${label}</figcaption></figure>`).join('');
+
+  // struttura: pagine del sito o schermate dell'app, stampate come l'albero di un terminale
+  const web = p.map[0].startsWith('/');
+  const rows = p.map.map(s => [s.length - s.trimStart().length, s.trim()]);
+  const more = (j, d) => { for (let k = j + 1; k < rows.length; k++) { if (rows[k][0] < d) return false; if (rows[k][0] === d) return true; } return false; };
+  const parent = (j, d) => { for (let k = j; k >= 0; k--) if (rows[k][0] === d) return k; };
+  $('#tree').innerHTML = rows.map(([d, t], j) => {
+    let pre = '';
+    for (let l = 1; l < d; l++) pre += more(parent(j, l), l) ? '│   ' : '    ';
+    if (d) pre += more(j, d) ? '├── ' : '└── ';
+    return `<li><span>${pre}</span>${j || !web || !p.url ? t : host(p.url)}</li>`;
+  }).join('');
+  $('#mapTitle').innerHTML = web ? 'Page by <em>page</em>' : 'Screen by <em>screen</em>';
+  $('#treeFile').textContent = web ? 'sitemap.xml' : 'screens';
+  $('#treeCount').textContent = `${rows.length} ${web ? 'pages' : 'screens'}`;
+
+  // precedente e successivo
+  $('#np').innerHTML = [['Previous', prev, '←'], ['Next', next, '→']].map(([k, w, a]) => `<a href="${caseUrl(w)}" style="--c:${w.c}"><span class="mono-l">${k} · ${w.kind}</span><span class="go" aria-hidden="true">${a}</span><span><b>${w.n}</b><em>${tagline[w.id] || ''}</em></span></a>`).join('');
+
+  autoplay();
+  reveal();
+</script>
+</body>
+</html>
