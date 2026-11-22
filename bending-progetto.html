@@ -83,11 +83,14 @@
   @media (max-width: 900px) {
     .sum-grid, .rs-grid, .gal { grid-template-columns: 1fr; }
     .pgrid3 { grid-template-columns: 1fr; }
-    .ph-card { aspect-ratio: 4 / 3; }
-  }
-  @media (max-width: 560px) {
-    .ph-card { aspect-ratio: 3 / 4; }
-    .ph-card .dev .win { left: 9%; top: 10%; }
+    /* siti e web app: la finestra prende tutta la card con un bordo uguale, il video 16:10 si vede intero */
+    .ph-card:not(.tall) { aspect-ratio: auto; padding: 14px; }
+    .ph-card:not(.tall) .dev { position: relative; inset: auto; }
+    .ph-card:not(.tall) .dev .win { position: relative; inset: auto; border-radius: 12px; overflow: hidden; translate: none; }
+    .ph-card:not(.tall) .dev .scr { flex: none; aspect-ratio: 16 / 10; }
+    .ph-card:not(.tall) .dev .dtag { top: 10px; right: 10px; }
+    .ph-card.tall { aspect-ratio: 4 / 5; }
+    .ph-stage { padding-bottom: 72px; }
   }
   @media (prefers-reduced-motion: reduce) { .tk-row { animation: none; } }
 </style>
@@ -176,6 +179,7 @@
   $('#phCtas').innerHTML = (p.url ? `<a class="pill pill-lg" href="${p.url}" target="_blank" rel="noopener">Visit live ↗</a>` : `<a class="pill pill-lg" href="${mail}">Ask for a demo ↗</a>`) +
     (p.video === false ? '' : `<a class="pill pill-lg pill-line" href="#showcase">Watch the video ↓</a>`);
   $('#phCard').style.setProperty('--c', p.c);
+  $('#phCard').classList.toggle('tall', !!p.tall);
   $('#phCard').innerHTML = device(p);
 
   // il progetto
