@@ -1,4 +1,4 @@
-// Interazioni "da editor" su index.html e progetto.html.
+// Interazioni "da editor" su classico.html e progetto-classico.html (il sito nello stile originale).
 // Per spegnerne una basta mettere false; per spegnerle tutte, togliere <script src="editor.js">.
 const EDITOR = {
   resize: true,       // maniglie: titolo della home e frame "lavoro-15" nella scheda
@@ -191,7 +191,7 @@ const EDITOR = {
     drag(now, {
       start: () => {
         clearTimeout(timer);
-        if (!frameEl.getAttribute('src')) frameEl.src = 'index.html';
+        if (!frameEl.getAttribute('src')) frameEl.src = 'classico.html';
         pv.classList.add('open');
         return { r: track.getBoundingClientRect() };
       },

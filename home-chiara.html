@@ -467,7 +467,7 @@
       </div>
       <div><h4 class="px">Latest work</h4><ul id="footWorks"></ul></div>
       <div><h4 class="px">Sections</h4><ul><li><a href="#work">Work</a></li><li><a href="#ai">How I work</a></li><li><a href="#stack">Skills</a></li><li><a href="#experience">Experience</a></li></ul></div>
-      <div><h4 class="px">Contact</h4><ul><li><a href="mailto:antonio.nocella3@gmail.com">Email</a></li><li>Adelfia, Bari</li><li><a href="index.html">The classic site</a></li></ul></div>
+      <div><h4 class="px">Contact</h4><ul><li><a href="mailto:antonio.nocella3@gmail.com">Email</a></li><li>Adelfia, Bari</li><li><a href="classico.html">The classic site</a></li></ul></div>
     </div>
     <div class="legal px">
       <span>© 2026 Antonio Nocella. All rights reserved. Design and code may not be copied or reused without permission.</span>
@@ -602,7 +602,7 @@
     { k: 'work', label: 'Work', href: '#work', groups: [
       { t: 'Explore work', big: true, links: [['All projects', '#work'], ...works.slice(0, 4).map(w => [w.n, '#p-' + w.id])] },
       { t: 'More projects', links: works.slice(4).map(w => [w.n, '#p-' + w.id]) },
-      { t: 'Quick links', links: [['Case study: ' + works[0].n, workUrl(works[0])], ['AI inside', '#ai'], ['The classic site', 'index.html']] } ] },
+      { t: 'Quick links', links: [['Case study: ' + works[0].n, workUrl(works[0])], ['AI inside', '#ai'], ['The classic site', 'classico.html']] } ] },
     { k: 'method', label: 'How I work', href: '#ai', groups: [
       { t: 'The method', big: true, links: [['Designing with AI', '#ai'], ['Five steps', '#highlights'], ['In numbers', '#numbers']] },
       { t: 'The five steps', links: stepNames.map((s, i) => [s, '#highlights', i]) },
@@ -616,7 +616,7 @@
     { k: 'contact', label: 'Contact', href: '#contact', groups: [
       { t: 'Get in touch', big: true, links: [['Write to me', mail], ['Ready for a new team', '#contact']] },
       { t: 'Details', links: [['antonio.nocella3@gmail.com', mail], ['Adelfia, Bari, Italy', '#contact'], ['Also available remotely', '#contact']] } ] },
-    { k: 'classic', label: 'Classic site', href: 'index.html' },
+    { k: 'classic', label: 'Classic site', href: 'classico.html' },
   ];
   const groupsHTML = mn => { let i = 0;
     return mn.groups.map(g => `<div class="fly-g${g.big ? ' big' : ''}"><h4 style="--i:${i++}">${g.t}</h4><ul>${g.links.map(([t, h, s]) =>
