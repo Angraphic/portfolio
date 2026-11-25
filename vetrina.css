@@ -1,6 +1,6 @@
-/* Stili condivisi della versione ispirata a bendingspoons.com: home (bending.html) e scheda progetto (bending-progetto.html).
-   Fasce nere e bianche alternate, testo in Instrument Sans leggero, parole chiave in Instrument Serif corsivo colorato,
-   etichette in Fragment Mono. Del portfolio restano logo, contenuti, figure animate e l'arancione al posto del loro verde. */
+/* Stili condivisi della versione vetrina: home (home-vetrina.html) e scheda progetto (progetto-vetrina.html).
+   Fasce nere e bianche alternate, testo in Instrument Sans leggero, parole chiave in Instrument Serif corsivo arancione,
+   etichette in Fragment Mono, card dei progetti nel loro colore. */
 :root {
   --black: #000000;
   --ink: #141415;

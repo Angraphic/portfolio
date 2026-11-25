@@ -1,12 +1,12 @@
-// Parti condivise della versione ispirata a bendingspoons.com: menu a schermo intero, footer, comparse allo scroll, video.
+// Parti condivise della versione vetrina (home-vetrina.html, progetto-vetrina.html): menu a schermo intero, footer, comparse allo scroll, video.
 // Va caricato dopo dati.js e motivi.js. La pagina dichiara chi è con <body data-page="home|project">.
 const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
 const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const pad = n => String(n).padStart(2, '0');
 const mail = 'mailto:antonio.nocella3@gmail.com';
 const isHome = document.body.dataset.page === 'home';
-const home = isHome ? '' : 'bending.html'; // i link alle sezioni della home
-const caseUrl = w => `bending-progetto.html?id=${w.id}`;
+const home = isHome ? '' : 'home-vetrina.html'; // i link alle sezioni della home
+const caseUrl = w => `progetto-vetrina.html?id=${w.id}`;
 // una frase breve per ogni lavoro
 const tagline = {
   '01': 'Every lead. One pipeline.', '01-site': 'A whole SaaS, explained in one scroll.', '02': 'Your parcels. Only when it matters.',
