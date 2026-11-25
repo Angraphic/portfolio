@@ -1,12 +1,12 @@
-// Parti condivise della versione vetrina (home-vetrina.html, progetto-vetrina.html): menu a schermo intero, footer, comparse allo scroll, video.
+// Parti condivise del sito (index.html e progetto.html): menu a schermo intero, footer, comparse allo scroll, video.
 // Va caricato dopo dati.js e motivi.js. La pagina dichiara chi è con <body data-page="home|project">.
 const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
 const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const pad = n => String(n).padStart(2, '0');
 const mail = 'mailto:antonio.nocella3@gmail.com';
 const isHome = document.body.dataset.page === 'home';
-const home = isHome ? '' : 'home-vetrina.html'; // i link alle sezioni della home
-const caseUrl = w => `progetto-vetrina.html?id=${w.id}`;
+const home = isHome ? '' : 'index.html'; // i link alle sezioni della home
+const caseUrl = w => `progetto.html?id=${w.id}`;
 // una frase breve per ogni lavoro
 const tagline = {
   '01': 'Every lead. One pipeline.', '01-site': 'A whole SaaS, explained in one scroll.', '02': 'Your parcels. Only when it matters.',
@@ -36,7 +36,7 @@ document.body.insertAdjacentHTML('beforeend', `
         <ul class="menu-contact"><li style="--i:3"><a href="${mail}">antonio.nocella3@gmail.com</a></li><li style="--i:4">Adelfia, Bari, Italy · also remotely</li><li style="--i:5"><a href="${mail}" class="pill pill-lg">Write to me ↗</a></li></ul>
       </div>
     </div>
-    <div class="wrap menu-foot"><span>© 2026 Antonio Nocella</span><a href="index.html">The classic site</a></div>
+    <div class="wrap menu-foot"><span>© 2026 Antonio Nocella</span><a href="classico.html">The classic site</a></div>
   </div>
 </div>`);
 {
@@ -59,7 +59,7 @@ document.body.insertAdjacentHTML('beforeend', `
 // footer
 $('#foot').innerHTML = `<div class="wrap">
   <div class="fcols">
-    <div><p class="mono-l">Sections</p><ul><li><a href="${home}#projects">Projects</a></li><li><a href="${home}#method">How I work</a></li><li><a href="${home}#experience">Experience</a></li><li><a href="index.html">The classic site</a></li></ul></div>
+    <div><p class="mono-l">Sections</p><ul><li><a href="${home}#projects">Projects</a></li><li><a href="${home}#method">How I work</a></li><li><a href="${home}#experience">Experience</a></li><li><a href="classico.html">The classic site</a></li></ul></div>
     <div><p class="mono-l">Latest work</p><ul>${works.slice(0, 5).map(w => `<li><a href="${caseUrl(w)}">${w.n}</a></li>`).join('')}</ul></div>
     <div><p class="mono-l">Contact</p><ul><li><a href="${mail}">antonio.nocella3@gmail.com</a></li><li>Adelfia, Bari, Italy</li><li>Also available remotely</li></ul></div>
     <div><p class="legal">© 2026 Antonio Nocella. All rights reserved. Design and code may not be copied or reused without permission. Videos are screen recordings of the live products; prototypes and personal projects are marked as such.</p></div>
